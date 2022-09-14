@@ -20,11 +20,21 @@ function main_theme_scripts() {
     $path          = get_stylesheet_directory();
     $template_name = basename( $template, ".php" );
     $css_name      = "/static/css/$template_name.css";
+    $js_name       = "/static/js/$template_name.min.js";
 
     if ( file_exists( $path . $css_name ) ) {
 
         //CSS template_name
         wp_enqueue_style( 'fscp-css-' . $template_name, get_stylesheet_directory_uri() . '/static/css/' . $template_name . '.css', array(), _S_VERSION );
+    }
+
+    if ( file_exists( $path . $js_name ) ) {
+
+        if ( $template_name === 'page-dashboard' ) {
+            wp_enqueue_script( 'fscp-chart-js', get_stylesheet_directory_uri() . '/static/lib/chart.js/dist/chart.js', array('jquery'), 'latest', true );
+
+            wp_enqueue_script( 'fscp-' . $template_name, get_stylesheet_directory_uri() . '/static/js/' . $template_name . '.min.js', array( 'jquery', 'fscp-chart-js' ), _S_VERSION );
+        }
     }
 }
 
