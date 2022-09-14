@@ -13,6 +13,24 @@ if ( !defined( '_S_VERSION' ) ) {
 }
 
 /**
+ * Enqueue scripts and styles.
+ */
+function main_theme_scripts() {
+    global $template;
+    $path          = get_stylesheet_directory();
+    $template_name = basename( $template, ".php" );
+    $css_name      = "/static/css/$template_name.css";
+
+    if ( file_exists( $path . $css_name ) ) {
+
+        //CSS template_name
+        wp_enqueue_style( 'fscp-css-' . $template_name, get_stylesheet_directory_uri() . '/static/css/' . $template_name . '.css', array(), _S_VERSION );
+    }
+}
+
+add_action( 'wp_enqueue_scripts', 'main_theme_scripts' );
+
+/**
  * Asynchronous scripts in the queue
  **/
 function add_async_to_script( $tag, $handle, $src ) {
