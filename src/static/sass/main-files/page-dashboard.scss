@@ -1,7 +1,7 @@
 @import "../variables-site/variables-site";
 
 body {
-  color: black;
+  background-color: #A2AFB5 !important;
 
   .mt-5 {
     margin-top: 3.5rem;
@@ -10,4 +10,109 @@ body {
   .content-graph {
     width: 33.33%;
   }
+
+  .container-dashboard {
+    display: grid;
+    grid-template-columns: 0.3fr 1.7fr;
+    grid-template-rows: 1fr;
+    grid-auto-columns: 1fr;
+    gap: 0 20px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    "left-menu content-dashboard";
+    min-height: 700px;
+
+    .left-menu {
+      grid-area: left-menu;
+      background-color: #27404C;
+      position: relative;
+
+      .nav-menu {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: .1fr 1.9fr;
+        gap: 10px 0;
+        grid-template-areas:
+          "navigation-title-dashboard"
+          "navigation-menu";
+        position: fixed;
+        height: 100%;
+        width: 14.85%;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 1px 8px 0 rgba(174, 174, 174, 0.15);
+
+        .navigation-title-dashboard {
+          padding-top: 110px;
+
+          p {
+            color: #FFFFFF;
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 19px;
+            line-height: 24px;
+            letter-spacing: 0.4px;
+            padding: 0 .5rem 0 10%;
+          }
+        }
+
+        .navigation-menu {
+          .menu-item {
+            color: #A4A6B3;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+            letter-spacing: 0.2px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0 10px;
+            padding: 1rem .8rem;
+
+            p {
+              margin: 0;
+            }
+
+            .dashboard-list-item-index {
+              width: 7.5px;
+              height: 7.5px;
+              background-color: #A4A6B3;
+              color: #ffffff;
+              border-radius: 50px 50px 50px 50px;
+            }
+
+            &.current-menu-item, &:hover {
+              background-color: #4C6F7F;
+
+              .dashboard-list-item-index {
+                width: 9px;
+                height: 9px;
+                background-color: #A3E635;
+              }
+
+              p.menu-title {
+                color: #EFF1FF;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .content-dashboard {
+    grid-area: content-dashboard;
+
+    .dashboard-title {
+      color: #FFFFFF;
+      font-family: 'Mulish';
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 30px;
+      letter-spacing: 0.3px;
+      margin-top: 60px;
+    }
+  }
+
 }
