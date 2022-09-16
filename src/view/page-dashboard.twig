@@ -1,8 +1,33 @@
 <section class="content-dashboard-country-profile mt-5">
-    <h1>{{ post.title }}</h1>
-    <div class="content-graph">
-        <canvas id="bar-chart-grouped" class="mt-5" width="800" height="450"></canvas>
-        <canvas id="radar-chart" width="800" height="600"></canvas>
-        <canvas id="bar-chart" width="800" height="450"></canvas>
+    <div class="container-dashboard mt-5">
+        <div class="left-menu">
+            <div class="nav-menu">
+                <div class="navigation-title-dashboard">
+                    <p>{{ post.title }}</p>
+                </div>
+                <div class="navigation-menu">
+                    {% for item in countries %}
+                        <a href="{{ function( 'get_permalink', post.ID ) }}?country={{ item.slug }}"
+                            class="{{ country == item.slug ? 'current-menu-item': '' }} menu-item">
+                            <div class="dashboard-list-item-index">
+                            </div>
+                            <p class="menu-title">{{ item.name }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="content-dashboard">
+            {% if ( country is empty ) %}
+                <h1 class="dashboard-title">Select Country</h1>
+            {% else %}
+                <h1 class="dashboard-title">You are seeing {{ country|capitalize }} food system dashboard</h1>
+                <div class="content-graph">
+                    <canvas id="bar-chart-grouped" class="mt-5" width="800" height="450"></canvas>
+                    <canvas id="radar-chart" width="800" height="600"></canvas>
+                    <canvas id="bar-chart" width="800" height="450"></canvas>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </section>
