@@ -41,19 +41,6 @@ function main_theme_scripts() {
 add_action( 'wp_enqueue_scripts', 'main_theme_scripts' );
 
 /**
- * Asynchronous scripts in the queue
- **/
-function add_async_to_script( $tag, $handle, $src ) {
-    if ( !is_admin() ) {
-        $tag = str_replace( ' src', ' defer src', $tag );
-    }
-
-    return $tag;
-}
-
-add_filter( 'script_loader_tag', 'add_async_to_script', 10, 3 );
-
-/**
  * Disable Gutenberg
  */
 add_filter( 'use_block_editor_for_post', '__return_false', 10 );
