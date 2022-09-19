@@ -8,7 +8,7 @@
                 <div class="navigation-menu">
                     {% for item in countries %}
                         <a href="{{ function( 'get_permalink', post.ID ) }}?country={{ item.slug }}"
-                            class="{{ country == item.slug ? 'current-menu-item': '' }} menu-item">
+                           class="{{ country == item.slug ? 'current-menu-item': '' }} menu-item">
                             <div class="dashboard-list-item-index">
                             </div>
                             <p class="menu-title">{{ item.name }}</p>
@@ -23,9 +23,14 @@
             {% else %}
                 <h1 class="dashboard-title">You are seeing {{ country|capitalize }} food system dashboard</h1>
                 <div class="content-graph">
-                    <canvas id="bar-chart-grouped" class="mt-5" width="800" height="450"></canvas>
-                    <canvas id="radar-chart" width="800" height="600"></canvas>
-                    <canvas id="bar-chart" width="800" height="450"></canvas>
+                    <div class="grid-left-graph">
+                        <div class="grid-narrative">
+                            <p>Learn more about the pilot project in <a href="#">{{ country|capitalize }}</a></p>
+                        </div>
+                        <div class="grid-graph-radar"></div>
+                        <div class="grid-graph-comparative-bars"></div>
+                        <div class="grid-graph-lineal"></div>
+                    </div>
                 </div>
             {% endif %}
         </div>
