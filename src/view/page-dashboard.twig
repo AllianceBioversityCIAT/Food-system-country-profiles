@@ -27,7 +27,14 @@
                         <div class="grid-narrative">
                             <p>Learn more about the pilot project in <a href="#">{{ country|capitalize }}</a></p>
                         </div>
-                        <div class="grid-graph-radar"></div>
+                        <div class="grid-graph-radar">
+                            <div class="radar-title-download">
+                                <p>{{ country|capitalize }}</p><i aria-hidden="true" class="fas fa-download"></i>
+                            </div>
+                            <div class="graph-radar">
+                                <canvas id="radar-chart" width="410" height="600"></canvas>
+                            </div>
+                        </div>
                         <div class="grid-graph-comparative-bars"></div>
                         <div class="grid-graph-lineal"></div>
                     </div>
