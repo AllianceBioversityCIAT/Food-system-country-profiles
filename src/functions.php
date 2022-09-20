@@ -34,6 +34,8 @@ function main_theme_scripts() {
             wp_enqueue_script( 'fscp-chart-js', get_stylesheet_directory_uri() . '/static/lib/chart.js/dist/chart.js', array('jquery'), 'latest', true );
 
             wp_enqueue_script( 'fscp-' . $template_name, get_stylesheet_directory_uri() . '/static/js/' . $template_name . '.min.js', array( 'jquery', 'fscp-chart-js' ), _S_VERSION );
+
+            wp_localize_script( 'fscp-' . $template_name, 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
         }
     }
 }

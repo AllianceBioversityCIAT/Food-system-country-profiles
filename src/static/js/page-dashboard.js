@@ -1,7 +1,13 @@
 jQuery( document ).ready( ( $ ) => {
-  console.log( 'Page Dashboard' );
 
-  new Chart( document.getElementById( "bar-chart-grouped" ), {
+  $( '.component-status' ).click(function() {
+    $( '.component-status' ).removeClass('active');
+    $( this ).addClass( "active" );
+  });
+
+  // Chart Bar Grouped.
+  const barGroupContainer = document.getElementById( "bar-chart-grouped" );
+  const chartBarGroup = new Chart( barGroupContainer, {
     type: 'bar',
     data: {
       labels: [ "1900", "1950", "1999", "2050" ],
@@ -25,16 +31,16 @@ jQuery( document ).ready( ( $ ) => {
     }
   } );
 
-  // radar-chart
-  var radarChart = document.getElementById( "radar-chart" ).getContext("2d")
-  new Chart( radarChart ,
+  // Chart Radar.
+  const radarContainer = document.getElementById( "radar-chart" ).getContext("2d");
+  const chartRadar = new Chart( radarContainer ,
     {
     type: 'radar',
     data: {
       labels: [ 'Drivers', 'Outcomes', ['Food', 'environment'], ['Consumer', 'behavior'], ['Actors and', 'activities'] ],
       datasets: [
         {
-          label: "Ethiopia",
+          label: constantVars.country,
           fill: true,
           backgroundColor: "rgba(144, 73, 201, 0.24)",
           borderColor: "#9049C9",
@@ -78,7 +84,8 @@ jQuery( document ).ready( ( $ ) => {
   } );
 
   // Bar chart
-  new Chart( document.getElementById( "bar-chart" ), {
+  const barContainer = document.getElementById( "bar-chart" );
+  const chartBar = new Chart( barContainer, {
     type: 'bar',
     data: {
       labels: [ "Africa", "Asia", "Europe", "Latin America", "North America" ],
