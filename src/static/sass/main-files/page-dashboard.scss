@@ -78,7 +78,7 @@ body {
               border-radius: 50px 50px 50px 50px;
             }
 
-            &.current-menu-item, &:hover {
+            &.current-menu-item {
               background-color: #4C6F7F;
 
               .dashboard-list-item-index {
@@ -86,6 +86,14 @@ body {
                 height: 9px;
                 background-color: #A3E635;
               }
+
+              p.menu-title {
+                color: #EFF1FF;
+              }
+            }
+
+            &:hover {
+              background-color: rgba(60, 83, 94, 1);
 
               p.menu-title {
                 color: #EFF1FF;
@@ -152,7 +160,38 @@ body {
         }
 
         .grid-graph-radar {
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
           grid-area: grid-graph-radar;
+
+          .radar-title-download {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: #3F677A;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 8px 15px;
+
+            p {
+              font-weight: 900;
+              font-size: 14px;
+              line-height: 18px;
+              letter-spacing: 0.2px;
+              color: #FFFFFF;
+              margin: 0;
+            }
+
+            i {
+              color: #68AACA;
+            }
+          }
+
+          .graph-radar {
+            background: #F7F8FC;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            padding: .5rem;
+          }
         }
 
         .grid-graph-comparative-bars {

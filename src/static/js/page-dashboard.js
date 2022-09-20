@@ -26,35 +26,53 @@ jQuery( document ).ready( ( $ ) => {
   } );
 
   // radar-chart
-  new Chart( document.getElementById( "radar-chart" ), {
+  var radarChart = document.getElementById( "radar-chart" ).getContext("2d")
+  new Chart( radarChart ,
+    {
     type: 'radar',
     data: {
-      labels: [ "Africa", "Asia", "Europe", "Latin America", "North America" ],
+      labels: [ 'Drivers', 'Outcomes', ['Food', 'environment'], ['Consumer', 'behavior'], ['Actors and', 'activities'] ],
       datasets: [
         {
-          label: "1950",
+          label: "Ethiopia",
           fill: true,
-          backgroundColor: "rgba(179,181,198,0.2)",
-          borderColor: "rgba(179,181,198,1)",
-          pointBorderColor: "#fff",
-          pointBackgroundColor: "rgba(179,181,198,1)",
-          data: [ 8.77, 55.61, 21.69, 6.62, 6.82 ]
-        }, {
-          label: "2050",
-          fill: true,
-          backgroundColor: "rgba(255,99,132,0.2)",
-          borderColor: "rgba(255,99,132,1)",
-          pointBorderColor: "#fff",
-          pointBackgroundColor: "rgba(255,99,132,1)",
-          pointBorderColor: "#fff",
-          data: [ 25.48, 54.16, 7.61, 8.06, 4.45 ]
-        }
+          backgroundColor: "rgba(144, 73, 201, 0.24)",
+          borderColor: "#9049C9",
+          pointBorderColor: ['#4671C3', '#B89612', '#4671C3', '#4671C3', '#4671C3', '#4671C3'],
+          pointBackgroundColor: ['#55EBFF', '#FFD326', '#55EBFF', '#55EBFF', '#55EBFF', '#55EBFF'],
+          radius: 5,
+          data: [ 20, 20, 19, 19, 21 ]
+        },
       ]
     },
     options: {
       title: {
         display: true,
         text: 'Distribution in % of world population'
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+      scales: {
+        r: {
+          max: 24,
+          min: 10,
+          ticks: {
+            stepSize: 2,
+            display: false
+          },
+          angleLines: {
+            color: "rgba(228, 228, 228, 1)",
+          },
+          pointLabels: {
+            color: '#3F3F51',
+            font: {
+              size: 10
+            }
+          }
+        }
       }
     }
   } );
