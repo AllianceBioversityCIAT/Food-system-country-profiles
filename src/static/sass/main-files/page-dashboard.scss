@@ -207,7 +207,7 @@ body {
       .grid-indicators-graph {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 0.3fr 0.7fr 2fr;
+        grid-template-rows: 0.3fr 0.6fr 2.1fr;
         gap: 10px 0;
         grid-template-areas:
           "grid-status-bar"
@@ -448,7 +448,33 @@ body {
         }
 
         .grid-graph-bar {
+          display: flex;
+          flex-direction: column;
+          padding: 10px 15px;
+          background: #F7F8FC;
+          gap: 45px;
+          border-radius: 8px;
           grid-area: grid-graph-bar;
+
+          .graph-bar-title {
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 0.2px;
+            color: #3F3F51;
+
+            strong {
+              font-weight: 900;
+            }
+          }
+
+          .graph-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5rem;
+            height: 100%;
+          }
         }
 
         .grid-tab-indicators {
