@@ -164,29 +164,6 @@ body {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
           grid-area: grid-graph-radar;
 
-          .radar-title-download {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            background-color: #3F677A;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            padding: 8px 15px;
-
-            p {
-              font-weight: 900;
-              font-size: 14px;
-              line-height: 18px;
-              letter-spacing: 0.2px;
-              color: #FFFFFF;
-              margin: 0;
-            }
-
-            i {
-              color: #68AACA;
-            }
-          }
-
           .graph-radar {
             background: #F7F8FC;
             border-bottom-right-radius: 8px;
@@ -197,10 +174,87 @@ body {
 
         .grid-graph-comparative-bars {
           grid-area: grid-graph-comparative-bars;
+
+          .graph-comparative-bars {
+            background: #F7F8FC;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            padding: 1.5rem;
+
+            .graph-bars-label {
+              display: grid;
+              grid-auto-columns: 1fr;
+              grid-template-columns: 1fr 1fr 1fr 1fr;
+              grid-template-rows: 1fr;
+              gap: 0 5px;
+              grid-template-areas:
+                ". . . .";
+
+              .bar-label {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                margin-top: 20px;
+
+                i {
+                  width: 10%;
+                  font-size: 10px;
+
+                  &.label-one {
+                    color: #9049C9;
+                  }
+
+                  &.label-two {
+                    color: #DB56F0;
+                  }
+
+                  &.label-three {
+                    color: #FF94D4;
+                  }
+
+                  &.label-four {
+                    color: #FC50A2;
+                  }
+                }
+
+                span {
+                  font-weight: 400;
+                  font-size: 10px;
+                  text-align: center;
+                  color: #3F3F51;
+                  width: 90%;
+                }
+              }
+            }
+          }
         }
 
         .grid-graph-lineal {
           grid-area: grid-graph-lineal;
+        }
+
+        .title-download {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          background-color: #3F677A;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+          padding: 8px 15px;
+
+          p {
+            font-weight: 900;
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 0.2px;
+            color: #FFFFFF;
+            margin: 0;
+          }
+
+          i {
+            color: #68AACA;
+          }
         }
       }
 

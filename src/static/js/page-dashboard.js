@@ -6,27 +6,56 @@ jQuery( document ).ready( ( $ ) => {
   } );
 
   // Chart Bar Grouped.
+  const xLabels           = {
+    0: '2010 2019',
+    1: '2010 2019',
+    2: '2010 2019',
+    3: '2010 2019',
+  }
   const barGroupContainer = document.getElementById( "bar-chart-grouped" );
   const chartBarGroup     = new Chart( barGroupContainer, {
     type: 'bar',
     data: {
-      labels: [ "1900", "1950", "1999", "2050" ],
+      labels: [ 'Bangladesh', 'Geographic neighbors', 'Countries with similar GDP per capital', 'World average' ],
       datasets: [
         {
-          label: "Africa",
-          backgroundColor: "#3e95cd",
-          data: [ 133, 221, 783, 2478 ]
+          label: '2010',
+          backgroundColor: [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ],
+          data: [ 40, 35, 20, 50 ],
+          barPercentage: 0.2,
+          borderRadius: 8,
+          borderSkipped: false,
         }, {
-          label: "Europe",
-          backgroundColor: "#8e5ea2",
-          data: [ 408, 547, 675, 734 ]
+          label: '2019',
+          backgroundColor: [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ],
+          data: [ 52, 42, 26, 55 ],
+          barPercentage: 0.2,
+          borderRadius: 8,
+          borderSkipped: false,
         }
       ]
     },
     options: {
-      title: {
-        display: true,
-        text: 'Population growth (millions)'
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          suggestedMin: 0,
+          suggestedMax: 3,
+          ticks: {
+            font: {
+              size: 12,
+            },
+            color: '#3F3F51',
+            callback: function ( value, index, values ) {
+              return xLabels[ value ];
+            }
+          },
+        },
       }
     }
   } );
