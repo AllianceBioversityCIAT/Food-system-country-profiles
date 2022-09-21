@@ -1,13 +1,13 @@
 jQuery( document ).ready( ( $ ) => {
 
-  $( '.component-status' ).click(function() {
-    $( '.component-status' ).removeClass('active');
+  $( '.component-status' ).click( function () {
+    $( '.component-status' ).removeClass( 'active' );
     $( this ).addClass( "active" );
-  });
+  } );
 
   // Chart Bar Grouped.
   const barGroupContainer = document.getElementById( "bar-chart-grouped" );
-  const chartBarGroup = new Chart( barGroupContainer, {
+  const chartBarGroup     = new Chart( barGroupContainer, {
     type: 'bar',
     data: {
       labels: [ "1900", "1950", "1999", "2050" ],
@@ -32,20 +32,19 @@ jQuery( document ).ready( ( $ ) => {
   } );
 
   // Chart Radar.
-  const radarContainer = document.getElementById( "radar-chart" ).getContext("2d");
-  const chartRadar = new Chart( radarContainer ,
-    {
+  const radarContainer = document.getElementById( "radar-chart" ).getContext( "2d" );
+  const chartRadar     = new Chart( radarContainer, {
     type: 'radar',
     data: {
-      labels: [ 'Drivers', 'Outcomes', ['Food', 'environment'], ['Consumer', 'behavior'], ['Actors and', 'activities'] ],
+      labels: [ 'Drivers', 'Outcomes', [ 'Food', 'environment' ], [ 'Consumer', 'behavior' ], [ 'Actors and', 'activities' ] ],
       datasets: [
         {
           label: constantVars.country,
           fill: true,
           backgroundColor: "rgba(144, 73, 201, 0.24)",
           borderColor: "#9049C9",
-          pointBorderColor: ['#4671C3', '#B89612', '#4671C3', '#4671C3', '#4671C3', '#4671C3'],
-          pointBackgroundColor: ['#55EBFF', '#FFD326', '#55EBFF', '#55EBFF', '#55EBFF', '#55EBFF'],
+          pointBorderColor: [ '#4671C3', '#B89612', '#4671C3', '#4671C3', '#4671C3', '#4671C3' ],
+          pointBackgroundColor: [ '#55EBFF', '#FFD326', '#55EBFF', '#55EBFF', '#55EBFF', '#55EBFF' ],
           radius: 5,
           data: [ 20, 20, 19, 19, 21 ]
         },
@@ -84,24 +83,57 @@ jQuery( document ).ready( ( $ ) => {
   } );
 
   // Bar chart
+  const yLabels      = {
+    0: ' ',
+    1: 'Very concerning',
+    2: 'Concerning',
+    3: 'Fair',
+    4: 'Good',
+    5: 'Excellent'
+  }
   const barContainer = document.getElementById( "bar-chart" );
-  const chartBar = new Chart( barContainer, {
+  const chartBar     = new Chart( barContainer, {
     type: 'bar',
     data: {
-      labels: [ "Africa", "Asia", "Europe", "Latin America", "North America" ],
+      labels: [ constantVars.country, [ 'Geographic', 'neighbors' ], [ 'Countries with similar', 'GDP per capital' ], 'World average' ],
       datasets: [
         {
-          label: "Population (millions)",
-          backgroundColor: [ "#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850" ],
-          data: [ 2478, 5267, 734, 784, 433 ]
+          label: constantVars.country,
+          backgroundColor: [ '#7732AE', '#B13FC4', '#D56CAB', '#C52B74' ],
+          data: [ 4, 2, 3, 3 ],
+          barPercentage: 0.3
         }
       ]
     },
     options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Predicted world population (millions) in 2050'
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMin: 0,
+          suggestedMax: 5,
+          ticks: {
+            font: {
+              size: 12,
+            },
+            color: '#3F3F51',
+            callback: function ( value, index, values ) {
+              return yLabels[ value ];
+            }
+          },
+        },
+        x: {
+          ticks: {
+            font: {
+              size: 12,
+            },
+            color: '#3F3F51',
+          }
+        }
       }
     }
   } );
