@@ -5,6 +5,10 @@ jQuery( document ).ready( ( $ ) => {
     $( this ).addClass( "active" );
   } );
 
+  $( '.note-closed' ).click( function () {
+    $( '.note-indicators' ).hide();
+  } );
+
   // Chart Bar Grouped.
   const xLabels           = {
     0: '2010 2019',
@@ -44,7 +48,7 @@ jQuery( document ).ready( ( $ ) => {
       scales: {
         y: {
           grid: {
-            borderDash: [10,2]
+            borderDash: [ 10, 2 ]
           }
         },
         x: {
@@ -62,7 +66,7 @@ jQuery( document ).ready( ( $ ) => {
           },
           grid: {
             display: false,
-            borderDash: [10,2]
+            borderDash: [ 10, 2 ]
           }
         },
       }
@@ -237,12 +241,12 @@ jQuery( document ).ready( ( $ ) => {
               stepSize: 15,
             },
             grid: {
-              borderDash: [10,5]
+              borderDash: [ 10, 5 ]
             }
           },
           x: {
             grid: {
-              borderDash: [10,5]
+              borderDash: [ 10, 5 ]
             },
           },
         }
