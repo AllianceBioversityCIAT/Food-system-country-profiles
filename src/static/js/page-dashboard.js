@@ -42,6 +42,11 @@ jQuery( document ).ready( ( $ ) => {
         },
       },
       scales: {
+        y: {
+          grid: {
+            borderDash: [10,2]
+          }
+        },
         x: {
           beginAtZero: true,
           suggestedMin: 0,
@@ -55,6 +60,10 @@ jQuery( document ).ready( ( $ ) => {
               return xLabels[ value ];
             }
           },
+          grid: {
+            display: false,
+            borderDash: [10,2]
+          }
         },
       }
     }
@@ -166,4 +175,78 @@ jQuery( document ).ready( ( $ ) => {
       }
     }
   } );
+
+  // Line chart
+  const lineContainer = document.getElementById( 'line-chart' );
+  const data          = {
+    labels: [ '', '2010', '2019', '' ],
+    datasets: [
+      {
+        label: constantVars.country,
+        data: [ NaN, 35, 45, NaN ],
+        backgroundColor: '#9049C9',
+        borderColor: '#9049C9',
+        borderWidth: 2,
+        pointStyle: 'triangle',
+        pointRadius: 5,
+      },
+      {
+        label: 'Geographic neighbors',
+        data: [ NaN, 17, 35, NaN ],
+        backgroundColor: '#DB56F0',
+        borderColor: '#DB56F0',
+        borderWidth: 2,
+        pointStyle: 'triangle',
+        pointRadius: 5,
+      },
+      {
+        label: 'CS GDP per capital',
+        data: [ NaN, 14, 25, NaN ],
+        backgroundColor: '#FF94D4',
+        borderColor: '#FF94D4',
+        borderWidth: 2,
+        pointStyle: 'triangle',
+        pointRadius: 5,
+      },
+      {
+        label: 'World average',
+        data: [ NaN, 50, 59, NaN ],
+        backgroundColor: '#FC50A2',
+        borderColor: '#FC50A2',
+        borderWidth: 2,
+        pointStyle: 'triangle',
+        pointRadius: 5,
+      },
+    ]
+  };
+  const myChart       = new Chart( lineContainer, {
+      type: 'line',
+      data,
+      options: {
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            suggestedMin: 0,
+            suggestedMax: 70,
+            ticks: {
+              stepSize: 15,
+            },
+            grid: {
+              borderDash: [10,5]
+            }
+          },
+          x: {
+            grid: {
+              borderDash: [10,5]
+            },
+          },
+        }
+      }
+    }
+  );
 } );

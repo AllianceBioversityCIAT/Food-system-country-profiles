@@ -161,11 +161,11 @@ body {
         }
 
         .grid-graph-radar {
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
           grid-area: grid-graph-radar;
 
           .graph-radar {
             background: #F7F8FC;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
             border-bottom-right-radius: 8px;
             border-bottom-left-radius: 8px;
             padding: .5rem;
@@ -181,57 +181,19 @@ body {
             border-bottom-right-radius: 8px;
             border-bottom-left-radius: 8px;
             padding: 1.5rem;
-
-            .graph-bars-label {
-              display: grid;
-              grid-auto-columns: 1fr;
-              grid-template-columns: 1fr 1fr 1fr 1fr;
-              grid-template-rows: 1fr;
-              gap: 0 5px;
-              grid-template-areas:
-                ". . . .";
-
-              .bar-label {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                margin-top: 20px;
-
-                i {
-                  width: 10%;
-                  font-size: 10px;
-
-                  &.label-one {
-                    color: #9049C9;
-                  }
-
-                  &.label-two {
-                    color: #DB56F0;
-                  }
-
-                  &.label-three {
-                    color: #FF94D4;
-                  }
-
-                  &.label-four {
-                    color: #FC50A2;
-                  }
-                }
-
-                span {
-                  font-weight: 400;
-                  font-size: 10px;
-                  text-align: center;
-                  color: #3F3F51;
-                  width: 90%;
-                }
-              }
-            }
           }
         }
 
         .grid-graph-lineal {
           grid-area: grid-graph-lineal;
+
+          .graph-line {
+            background: #F7F8FC;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            padding: 1.5rem;
+          }
         }
 
         .title-download {
@@ -254,6 +216,52 @@ body {
 
           i {
             color: #68AACA;
+          }
+        }
+
+        .graph-bars-label {
+          display: grid;
+          grid-auto-columns: 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          grid-template-rows: 1fr;
+          gap: 0 5px;
+          grid-template-areas:
+                ". . . .";
+
+          .bar-label {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 20px;
+
+            i {
+              width: 10%;
+              font-size: 10px;
+
+              &.label-one {
+                color: #9049C9;
+              }
+
+              &.label-two {
+                color: #DB56F0;
+              }
+
+              &.label-three {
+                color: #FF94D4;
+              }
+
+              &.label-four {
+                color: #FC50A2;
+              }
+            }
+
+            span {
+              font-weight: 400;
+              font-size: 10px;
+              text-align: center;
+              color: #3F3F51;
+              width: 90%;
+            }
           }
         }
       }
