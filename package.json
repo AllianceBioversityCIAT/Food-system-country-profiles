@@ -1,7 +1,7 @@
 {
   "name": "Food-system-country-profiles",
   "theme_name": "fscp-theme",
-  "version": "0.17.0",
+  "version": "1.1.0",
   "description": "FSCP theme.",
   "main": "gulpfile.js",
   "type": "module",
