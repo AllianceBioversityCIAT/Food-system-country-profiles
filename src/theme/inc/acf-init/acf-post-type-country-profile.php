@@ -180,9 +180,9 @@ function register_custom_acf_fields_post_type_country_profile() {
                     'maxlength'         => '',
                 ],
                 [
-                    'key'               => 'field_country_diferrence',
+                    'key'               => 'field_country_difference',
                     'label'             => 'Difference',
-                    'name'              => 'country_diferrence',
+                    'name'              => 'country_difference',
                     'type'              => 'text',
                     'instructions'      => '',
                     'required'          => 0,
@@ -213,22 +213,18 @@ function register_custom_acf_fields_post_type_country_profile() {
                     ],
                 ],
                 [
-                    'key'           => 'field_country_final_status',
-                    'label'         => 'Final Status',
-                    'name'          => 'country_final_status',
-                    'type'          => 'select',
-                    'instructions'  => '',
-                    'wrapper'       => [
+                    'key'               => 'field_country_final_status',
+                    'label'             => 'Final Status',
+                    'name'              => 'country_final_status',
+                    'type'              => 'text',
+                    'instructions'      => '',
+                    'required'          => 0,
+                    'conditional_logic' => 0,
+                    'wrapper'           => [
                         'width' => '50',
                         'class' => '',
                         'id'    => '',
                     ],
-                    'choices'       => [
-                        'improve'     => 'Improve',
-                        'unchanged'   => 'Unchanged',
-                        'deteriorate' => 'Deteriorate'
-                    ],
-                    'return_format' => 'array',
                 ],
                 [
                     'key'               => 'field_country_consolidated_value',
@@ -301,9 +297,9 @@ function register_custom_acf_fields_post_type_country_profile() {
                     'maxlength'         => '',
                 ),
                 [
-                    'key'               => 'field_gn_diferrence',
+                    'key'               => 'field_gn_difference',
                     'label'             => 'Difference',
-                    'name'              => 'gn_diferrence',
+                    'name'              => 'gn_difference',
                     'type'              => 'text',
                     'instructions'      => '',
                     'required'          => 0,
@@ -334,22 +330,18 @@ function register_custom_acf_fields_post_type_country_profile() {
                     ],
                 ],
                 [
-                    'key'           => 'field_gn_final_status',
-                    'label'         => 'Final Status',
-                    'name'          => 'gn_final_status',
-                    'type'          => 'select',
-                    'instructions'  => '',
-                    'wrapper'       => [
+                    'key'               => 'field_gn_final_status',
+                    'label'             => 'Final Status',
+                    'name'              => 'gn_final_status',
+                    'type'              => 'text',
+                    'instructions'      => '',
+                    'required'          => 0,
+                    'conditional_logic' => 0,
+                    'wrapper'           => [
                         'width' => '50',
                         'class' => '',
                         'id'    => '',
                     ],
-                    'choices'       => [
-                        'improve'     => 'Improve',
-                        'unchanged'   => 'Unchanged',
-                        'deteriorate' => 'Deteriorate'
-                    ],
-                    'return_format' => 'array',
                 ],
                 [
                     'key'               => 'field_gn_consolidated_value',
@@ -422,9 +414,9 @@ function register_custom_acf_fields_post_type_country_profile() {
                     'maxlength'         => '',
                 ),
                 [
-                    'key'               => 'field_gdp_diferrence',
+                    'key'               => 'field_gdp_difference',
                     'label'             => 'Difference',
-                    'name'              => 'gdp_diferrence',
+                    'name'              => 'gdp_difference',
                     'type'              => 'text',
                     'instructions'      => '',
                     'required'          => 0,
@@ -455,22 +447,18 @@ function register_custom_acf_fields_post_type_country_profile() {
                     ],
                 ],
                 [
-                    'key'           => 'field_gpd_final_status',
-                    'label'         => 'Final Status',
-                    'name'          => 'gdp_final_status',
-                    'type'          => 'select',
-                    'instructions'  => '',
-                    'wrapper'       => [
+                    'key'               => 'field_gdp_final_status',
+                    'label'             => 'Final Status',
+                    'name'              => 'gdp_final_status',
+                    'type'              => 'text',
+                    'instructions'      => '',
+                    'required'          => 0,
+                    'conditional_logic' => 0,
+                    'wrapper'           => [
                         'width' => '50',
                         'class' => '',
                         'id'    => '',
                     ],
-                    'choices'       => [
-                        'improve'     => 'Improve',
-                        'unchanged'   => 'Unchanged',
-                        'deteriorate' => 'Deteriorate'
-                    ],
-                    'return_format' => 'array',
                 ],
                 [
                     'key'               => 'field_gdp_consolidated_value',
@@ -543,9 +531,9 @@ function register_custom_acf_fields_post_type_country_profile() {
                     'maxlength'         => '',
                 ),
                 [
-                    'key'               => 'field_ga_diferrence',
+                    'key'               => 'field_ga_difference',
                     'label'             => 'Difference',
-                    'name'              => 'ga_diferrence',
+                    'name'              => 'ga_difference',
                     'type'              => 'text',
                     'instructions'      => '',
                     'required'          => 0,
@@ -576,22 +564,18 @@ function register_custom_acf_fields_post_type_country_profile() {
                     ],
                 ],
                 [
-                    'key'           => 'field_ga_final_status',
-                    'label'         => 'Final Status',
-                    'name'          => 'ga_final_status',
-                    'type'          => 'select',
-                    'instructions'  => '',
-                    'wrapper'       => [
+                    'key'               => 'field_ga_final_status',
+                    'label'             => 'Final Status',
+                    'name'              => 'ga_final_status',
+                    'type'              => 'text',
+                    'instructions'      => '',
+                    'required'          => 0,
+                    'conditional_logic' => 0,
+                    'wrapper'           => [
                         'width' => '50',
                         'class' => '',
                         'id'    => '',
                     ],
-                    'choices'       => [
-                        'improve'     => 'Improve',
-                        'unchanged'   => 'Unchanged',
-                        'deteriorate' => 'Deteriorate'
-                    ],
-                    'return_format' => 'array',
                 ],
                 [
                     'key'               => 'field_ga_consolidated_value',

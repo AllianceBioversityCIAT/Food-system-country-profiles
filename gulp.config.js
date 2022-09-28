@@ -25,7 +25,7 @@ const buildConfig = {
     sourceFolder: './src',
     allJsFiles: {
       front: './src/static/js/**/*.js',
-      admin: './src/theme/admin/js/**/*.js',
+      admin: './src/static/js/admin/**/*.js',
     },
     allScssFiles: {
       front: './src/static/sass/main-files/**/*.scss',
@@ -69,7 +69,7 @@ const buildConfig = {
     destFolder: destinationFolder,
     allJsFiles: {
       front: destinationFolder + '/static/js/',
-      admin: destinationFolder + '/theme/admin/js/',
+      admin: destinationFolder + '/static/js/admin/',
     },
     allScssFiles: {
       front: destinationFolder + '/static/css/',

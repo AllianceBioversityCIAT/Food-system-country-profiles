@@ -99,6 +99,25 @@ function jsTask() {
 }
 
 /**
+ * This function concatenates source *.js files into a single file.
+ * @function js
+ * @return { stream } - returns a gulp stream
+ */
+function jsAdminTask() {
+  return gulp.src( buildConfig.sources.allJsFiles.admin )
+    .pipe( sourcemaps.init() )
+    .pipe( babel( {
+      presets: [ "@babel/preset-env" ]
+    } ) )
+    .pipe( rename( {
+      suffix: '.min'
+    } ) )
+    .pipe( uglify() )
+    .pipe( ( sourcemaps.write( '/' ) ) )
+    .pipe( gulp.dest( buildConfig.destination.allJsFiles.admin ) );
+}
+
+/**
  * This function minify the images and transfers them to a location.
  * @function images
  * @return { stream } - returns a gulp stream
@@ -139,7 +158,7 @@ function watchTask() {
   gulp.watch( buildConfig.sources.sourceFolder + '/static/sass/**/*.scss', cssAll );
 
   // Watch Javascript files.
-  gulp.watch( buildConfig.sources.sourceFolder + '/static/js/**/*.js', jsTask );
+  gulp.watch( buildConfig.sources.sourceFolder + '/static/js/**/*.js', jsTask, jsAdminTask );
 
   // Watch images files.
   gulp.watch( buildConfig.sources.sourceFolder + '/static/images/**/*.{png,jpg,jpeg,gif}', imagesTask );
@@ -176,7 +195,7 @@ function packagefunction() {
 const buildFunction  = gulp.series(
   clean,
   scaffolding,
-  gulp.parallel( cssTask, cssAll, jsTask, LibrariesTask, imagesTask )
+  gulp.parallel( cssTask, cssAll, jsTask, jsAdminTask, LibrariesTask, imagesTask )
 );
 
 const reload = gulp.series( buildFunction, gulp.parallel( watchTask ) );
