@@ -6,6 +6,7 @@
 get_header();
 
 if ( class_exists( 'Timber' ) ) {
+    $page_ID         = get_the_ID();
     $countries_terms = get_terms( array(
         'taxonomy'   => 'country',
         'hide_empty' => false,
@@ -16,6 +17,7 @@ if ( class_exists( 'Timber' ) ) {
     $context[ 'post' ]      = new Timber\Post();
     $context[ 'country' ]   = $get_country;
     $context[ 'countries' ] = $countries_terms;
+    $context[ 'note' ]      = get_field( 'note_description_indicator', $page_ID );
 
     Timber::render( './view/page-dashboard.twig', $context );
 
