@@ -2,7 +2,7 @@
 
 Necessary steps to run the project, being a seed is to copy the whole project and change it to your liking.
 
-### Version 1.2.0 ###
+### Version 1.3.0 ###
 
 
 ### Getting started ###
