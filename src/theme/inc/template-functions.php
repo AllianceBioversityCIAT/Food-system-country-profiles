@@ -44,10 +44,10 @@ function wp_admin_cpt_enqueue( $hook_suffix ) {
 
     if ( in_array( $hook_suffix, [ 'post.php', 'post-new.php', 'edit.php' ] ) ) {
 
-        $screen   = get_current_screen();
-        $cpt      = ( !empty( $screen->post_type ) ) ? $screen->post_type : $screen->id;
-        $path     = get_theme_file_path();
-        $js_name  = "/static/js/admin/admin-$cpt.min.js";
+        $screen  = get_current_screen();
+        $cpt     = ( !empty( $screen->post_type ) ) ? $screen->post_type : $screen->id;
+        $path    = get_theme_file_path();
+        $js_name = "/static/js/admin/admin-$cpt.min.js";
 
         if ( file_exists( $path . $js_name ) ) {
             wp_enqueue_script( "admin-$cpt", get_stylesheet_directory_uri() . $js_name );
@@ -172,3 +172,43 @@ function consolidated_value( $status_growth ) {
 
     return 0;
 }
+
+/**
+ * Display a custom taxonomy dropdown in admin.
+ */
+function fscp_filter_cars_by_taxonomies( $post_type, $which ) {
+
+    // Apply this only on a specific post type
+    if ( 'country-profile' !== $post_type )
+        return;
+
+    // A list of taxonomy slugs to filter by
+    $taxonomies = [ 'country', 'component' ];
+
+    foreach ( $taxonomies as $taxonomy_slug ) {
+
+        // Retrieve taxonomy data
+        $taxonomy_obj  = get_taxonomy( $taxonomy_slug );
+        $taxonomy_name = $taxonomy_obj->labels->name;
+
+        // Retrieve taxonomy terms
+        $terms = get_terms( $taxonomy_slug );
+
+        // Display filter HTML
+        echo "<select name='{$taxonomy_slug}' id='{$taxonomy_slug}' class='postform'>";
+        echo '<option value="">' . sprintf( esc_html__( 'Show All %s', 'text_domain' ), $taxonomy_name ) . '</option>';
+        foreach ( $terms as $term ) {
+            printf(
+                '<option value="%1$s" %2$s>%3$s (%4$s)</option>',
+                $term->slug,
+                ( ( isset( $_GET[ $taxonomy_slug ] ) && ( $_GET[ $taxonomy_slug ] == $term->slug ) ) ? ' selected="selected"' : '' ),
+                $term->name,
+                $term->count
+            );
+        }
+        echo '</select>';
+    }
+
+}
+
+add_action( 'restrict_manage_posts', 'fscp_filter_cars_by_taxonomies', 10, 2 );

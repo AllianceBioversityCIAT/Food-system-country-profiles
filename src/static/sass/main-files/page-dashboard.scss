@@ -740,6 +740,11 @@ body {
                       background-color: #F8726C;
                       color: #630A06;
                     }
+
+                    &.unchanged {
+                      background-color: #E4E4E4;
+                      color: #6C6C6C;
+                    }
                   }
                 }
 
