@@ -99,8 +99,8 @@ function wp_update_fields_indicators( $post_id ) {
             // Fields Geographic neighbors.
             $gn_difference          = (float) $fields[ 'gn_last_measure' ] - $fields[ 'gn_initial_measure' ];
             $gn_growth_rate         = round( (float) ( $gn_difference / $fields[ 'gn_initial_measure' ] ) * 100, 2 );
-            $gn_final_status_growth = final_status_growth( $c_growth_rate, $fields[ 'type_growth_indicator' ][ 'value' ] );
-            $gn_consolidated_value  = consolidated_value( $c_final_status_growth );
+            $gn_final_status_growth = final_status_growth( $gn_growth_rate, $fields[ 'type_growth_indicator' ][ 'value' ] );
+            $gn_consolidated_value  = consolidated_value( $gn_final_status_growth );
 
             // Update fields Geographic neighbors.
             update_field( 'gn_difference', $gn_difference, $post_id );
@@ -133,10 +133,6 @@ function wp_update_fields_indicators( $post_id ) {
             update_field( 'ga_consolidated_value', $ga_consolidated_value, $post_id );
         }
     }
-
-    // update_field( 'email_staff', $user_data[ 'mail' ], $post_id );
-
-    //die();
 
     // finally return
     return;
