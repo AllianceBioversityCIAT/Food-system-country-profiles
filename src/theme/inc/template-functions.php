@@ -199,7 +199,7 @@ function fscp_filter_cars_by_taxonomies( $post_type, $which ) {
         echo '<option value="">' . sprintf( esc_html__( 'Show All %s', 'text_domain' ), $taxonomy_name ) . '</option>';
         foreach ( $terms as $term ) {
             printf(
-                '<option value="%1$s" %2$s>%3$s (%4$s)</option>',
+                '<option value="%1$s" %2$s>%3$s</option>',
                 $term->slug,
                 ( ( isset( $_GET[ $taxonomy_slug ] ) && ( $_GET[ $taxonomy_slug ] == $term->slug ) ) ? ' selected="selected"' : '' ),
                 $term->name,
