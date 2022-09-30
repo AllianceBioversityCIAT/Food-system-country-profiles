@@ -1,4 +1,17 @@
 jQuery( document ).ready( ( $ ) => {
+  const barGroupContainer = document.getElementById( "bar-chart-grouped" );
+  const barGroupColors    = [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ];
+  const chartLabels       = [ 'Bangladesh', 'Geographic neighbors', 'Countries with similar GDP per capital', 'World average' ]
+  let barGroupXLabels     = [];
+  var chartBarGroup;
+  var dataSetInitialGroupBar;
+  var dataSetLastGroupBar;
+
+  // View first indicator bar group chart.
+  const firstIndicatorSelected   = $( '#first-indicator-selected' );
+  const titleIndicatorSelected   = firstIndicatorSelected.attr( 'data-indicator-title' );
+  const contentIndicatorSelected = JSON.parse( firstIndicatorSelected.attr( 'data-indicator' ) );
+  chartGroupBar( contentIndicatorSelected, titleIndicatorSelected, true );
 
   $( '.component-status' ).click( function () {
     $( '.component-status' ).removeClass( 'active' );
@@ -8,6 +21,9 @@ jQuery( document ).ready( ( $ ) => {
   $( '.indicator-option' ).click( function () {
     $( '.indicator-option' ).removeClass( 'active' );
     $( this ).addClass( "active" );
+    var $indicator      = JSON.parse( $( this ).attr( 'data-indicator' ) );
+    var $indicatorTitle = $( this ).attr( 'data-indicator-title' );
+    chartGroupBar( $indicator, $indicatorTitle, );
   } );
 
   $( '.note-closed' ).click( function () {
@@ -15,85 +31,126 @@ jQuery( document ).ready( ( $ ) => {
   } );
 
   //When page loads...
-  $(".tab_content").hide(); //Hide all content
-  $("ul.tabs li:first").addClass("active").show(); //Activate first tab
-  $(".tab_content:first").show(); //Show first tab content
+  $( ".tab_content" ).hide(); //Hide all content
+  $( "ul.tabs li:first" ).addClass( "active" ).show(); //Activate first tab
+  $( ".tab_content:first" ).show(); //Show first tab content
 
   //On Click Event
-  $("ul.tabs li").click(function() {
+  $( "ul.tabs li" ).click( function () {
 
-    $("ul.tabs li").removeClass("active"); //Remove any "active" class
-    $(this).addClass("active"); //Add "active" class to selected tab
-    $(".tab_content").hide(); //Hide all tab content
+    $( "ul.tabs li" ).removeClass( "active" ); //Remove any "active" class
+    $( this ).addClass( "active" ); //Add "active" class to selected tab
+    $( ".tab_content" ).hide(); //Hide all tab content
 
-    var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
-    $(activeTab).fadeIn(); //Fade in the active ID content
+    var activeTab = $( this ).find( "a" ).attr( "href" ); //Find the href attribute value to identify the active tab +
+                                                          // content
+    $( activeTab ).fadeIn(); //Fade in the active ID content
     return false;
-  });
+  } );
 
-  // Chart Bar Grouped.
-  const xLabels           = {
-    0: '2010 2019',
-    1: '2010 2019',
-    2: '2010 2019',
-    3: '2010 2019',
+  /**
+   * This function updates the comparative bar chart with the new data for the selected indicator.
+   *
+   * @param indicator Object Get indicator data.
+   * @param indicatorTitle String Indicator Title.
+   * @param firstView Boolean If the indicator to be displayed is the first one.
+   */
+  function chartGroupBar( indicator, indicatorTitle, firstView ) {
+    barGroupXLabels        = {
+      0: `${ indicator.period_initial }  ${ indicator.period_recent }`,
+      1: `${ indicator.period_initial }  ${ indicator.period_recent }`,
+      2: `${ indicator.period_initial }  ${ indicator.period_recent }`,
+      3: `${ indicator.period_initial }  ${ indicator.period_recent }`,
+    }
+    dataSetInitialGroupBar = [ indicator.country_initial_measure, indicator.ga_initial_measure, indicator.gdp_initial_measure, indicator.gn_initial_measure ];
+    dataSetLastGroupBar    = [ indicator.country_last_measure, indicator.ga_last_measure, indicator.gdp_last_measure, indicator.gn_last_measure ];
+    $( '#title-bar-chart' ).text( indicatorTitle );
+
+    // Destroys a specific chart instance.
+    if ( !firstView ) {
+      chartBarGroup.destroy();
+    }
+
+    // We re-create the graph instance.
+    createBarGroupChart(
+      chartLabels,
+      indicator.period_initial,
+      indicator.period_recent,
+      dataSetInitialGroupBar,
+      dataSetLastGroupBar,
+      barGroupColors,
+      barGroupXLabels
+    );
   }
-  const barGroupContainer = document.getElementById( "bar-chart-grouped" );
-  const chartBarGroup     = new Chart( barGroupContainer, {
-    type: 'bar',
-    data: {
-      labels: [ 'Bangladesh', 'Geographic neighbors', 'Countries with similar GDP per capital', 'World average' ],
-      datasets: [
-        {
-          label: '2010',
-          backgroundColor: [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ],
-          data: [ 40, 35, 20, 50 ],
-          barPercentage: 0.2,
-          borderRadius: 8,
-          borderSkipped: false,
-        }, {
-          label: '2019',
-          backgroundColor: [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ],
-          data: [ 52, 42, 26, 55 ],
-          barPercentage: 0.2,
-          borderRadius: 8,
-          borderSkipped: false,
-        }
-      ]
-    },
-    options: {
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      scales: {
-        y: {
-          grid: {
-            borderDash: [ 10, 2 ]
+
+  /**
+   * Creates a bar chart image with the indicator data.
+   *
+   * @param barLabels Array Get titles labels.
+   * @param dataLabelInitial String Initial indicator value.
+   * @param dataLabelLAst String Final indicator value.
+   * @param dataInitial Array Get initial indicator data.
+   * @param dataLast Array Get final indicator data.
+   * @param colors Array Get color bars.
+   * @param xLabels Array Get label data.
+   */
+  function createBarGroupChart( barLabels, dataLabelInitial, dataLabelLAst, dataInitial, dataLast, colors, xLabels ) {
+    chartBarGroup = new Chart( barGroupContainer, {
+      type: 'bar',
+      data: {
+        labels: barLabels,
+        datasets: [
+          {
+            label: dataLabelInitial,
+            backgroundColor: colors,
+            data: dataInitial,
+            barPercentage: 0.2,
+            borderRadius: 8,
+            borderSkipped: false,
+          }, {
+            label: dataLabelLAst,
+            backgroundColor: colors,
+            data: dataLast,
+            barPercentage: 0.2,
+            borderRadius: 8,
+            borderSkipped: false,
           }
+        ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false,
+          },
         },
-        x: {
-          beginAtZero: true,
-          suggestedMin: 0,
-          suggestedMax: 3,
-          ticks: {
-            font: {
-              size: 12,
-            },
-            color: '#3F3F51',
-            callback: function ( value, index, values ) {
-              return xLabels[ value ];
+        scales: {
+          y: {
+            grid: {
+              borderDash: [ 10, 2 ]
             }
           },
-          grid: {
-            display: false,
-            borderDash: [ 10, 2 ]
-          }
-        },
+          x: {
+            beginAtZero: true,
+            suggestedMin: 0,
+            suggestedMax: 3,
+            ticks: {
+              font: {
+                size: 12,
+              },
+              color: '#3F3F51',
+              callback: function ( value, index, values ) {
+                return xLabels[ value ];
+              }
+            },
+            grid: {
+              display: false,
+              borderDash: [ 10, 2 ]
+            }
+          },
+        }
       }
-    }
-  } );
+    } );
+  }
 
   // Chart Radar.
   const radarContainer = document.getElementById( "radar-chart" ).getContext( "2d" );

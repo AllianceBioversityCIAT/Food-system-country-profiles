@@ -180,6 +180,7 @@ body {
 
         .grid-graph-comparative-bars {
           grid-area: grid-graph-comparative-bars;
+          align-self: center;
 
           .graph-comparative-bars {
             background: #F7F8FC;
@@ -218,6 +219,7 @@ body {
             letter-spacing: 0.2px;
             color: #FFFFFF;
             margin: 0;
+            width: 95%;
           }
 
           i {
