@@ -1,17 +1,24 @@
 jQuery( document ).ready( ( $ ) => {
-  const barGroupContainer = document.getElementById( "bar-chart-grouped" );
+  const colorCountry      = '#9049C9';
+  const colorGN           = '#DB56F0';
+  const colorGDP          = '#FF94D4';
+  const colorGA           = '#FC50A2';
+  const barGroupContainer = document.getElementById( 'bar-chart-grouped' );
+  const lineContainer     = document.getElementById( 'line-chart' );
   const barGroupColors    = [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ];
-  const chartLabels       = [ 'Bangladesh', 'Geographic neighbors', 'Countries with similar GDP per capita', 'World average' ]
+  const chartLabels       = [ constantVars.country, 'Geographic neighbors', 'Countries with similar GDP per capita', 'World average' ]
   let barGroupXLabels     = [];
   var chartBarGroup;
   var dataSetInitialGroupBar;
   var dataSetLastGroupBar;
+  var chartLine;
 
   // View first indicator bar group chart.
   const firstIndicatorSelected   = $( '#first-indicator-selected' );
   const titleIndicatorSelected   = firstIndicatorSelected.attr( 'data-indicator-title' );
   const contentIndicatorSelected = JSON.parse( firstIndicatorSelected.attr( 'data-indicator' ) );
   chartGroupBar( contentIndicatorSelected, titleIndicatorSelected, true );
+  chartLineView( contentIndicatorSelected, titleIndicatorSelected, true );
 
   $( '.component-status' ).click( function () {
     $( '.component-status' ).removeClass( 'active' );
@@ -24,6 +31,7 @@ jQuery( document ).ready( ( $ ) => {
     var $indicator      = JSON.parse( $( this ).attr( 'data-indicator' ) );
     var $indicatorTitle = $( this ).attr( 'data-indicator-title' );
     chartGroupBar( $indicator, $indicatorTitle, );
+    chartLineView( $indicator, $indicatorTitle );
   } );
 
   $( '.note-closed' ).click( function () {
@@ -62,8 +70,8 @@ jQuery( document ).ready( ( $ ) => {
       2: `${ indicator.period_initial }  ${ indicator.period_recent }`,
       3: `${ indicator.period_initial }  ${ indicator.period_recent }`,
     }
-    dataSetInitialGroupBar = [ indicator.country_initial_measure, indicator.ga_initial_measure, indicator.gdp_initial_measure, indicator.gn_initial_measure ];
-    dataSetLastGroupBar    = [ indicator.country_last_measure, indicator.ga_last_measure, indicator.gdp_last_measure, indicator.gn_last_measure ];
+    dataSetInitialGroupBar = [ indicator.country_initial_measure, indicator.gn_initial_measure, indicator.gdp_initial_measure, indicator.ga_initial_measure ];
+    dataSetLastGroupBar    = [ indicator.country_last_measure, indicator.gn_last_measure, indicator.gdp_last_measure, indicator.ga_last_measure ];
     $( '#title-bar-chart' ).text( indicatorTitle );
 
     // Destroys a specific chart instance.
@@ -95,6 +103,11 @@ jQuery( document ).ready( ( $ ) => {
    * @param xLabels Array Get label data.
    */
   function createBarGroupChart( barLabels, dataLabelInitial, dataLabelLAst, dataInitial, dataLast, colors, xLabels ) {
+    const $borderDashInit  = 10;
+    const $borderDashFinal = 2;
+    const $barPercentage   = 0.2;
+    const $borderRadius    = 8;
+
     chartBarGroup = new Chart( barGroupContainer, {
       type: 'bar',
       data: {
@@ -104,15 +117,15 @@ jQuery( document ).ready( ( $ ) => {
             label: dataLabelInitial,
             backgroundColor: colors,
             data: dataInitial,
-            barPercentage: 0.2,
-            borderRadius: 8,
+            barPercentage: $barPercentage,
+            borderRadius: $borderRadius,
             borderSkipped: false,
           }, {
             label: dataLabelLAst,
             backgroundColor: colors,
             data: dataLast,
-            barPercentage: 0.2,
-            borderRadius: 8,
+            barPercentage: $barPercentage,
+            borderRadius: $borderRadius,
             borderSkipped: false,
           }
         ]
@@ -126,7 +139,7 @@ jQuery( document ).ready( ( $ ) => {
         scales: {
           y: {
             grid: {
-              borderDash: [ 10, 2 ]
+              borderDash: [ $borderDashInit, $borderDashFinal ]
             }
           },
           x: {
@@ -144,12 +157,120 @@ jQuery( document ).ready( ( $ ) => {
             },
             grid: {
               display: false,
-              borderDash: [ 10, 2 ]
+              borderDash: [ $borderDashInit, $borderDashFinal ]
             }
           },
         }
       }
     } );
+  }
+
+  /**
+   * This function updates the line chart with the new data for the selected indicator.
+   *
+   * @param indicator Object Get indicator data.
+   * @param indicatorTitle String Indicator Title.
+   * @param firstView Boolean If the indicator to be displayed is the first one.
+   */
+  function chartLineView( indicator, indicatorTitle, firstView ) {
+    const $borderWidth = 2;
+    const $pointStyle  = 'triangle';
+    const $pointRadius = 5;
+    $( '#title-line-chart' ).text( indicatorTitle );
+
+    // Destroys a specific chart instance.
+    if ( !firstView ) {
+      chartLine.destroy();
+    }
+
+    const values      = Math.max( ...[ indicator.country_initial_measure, indicator.gn_initial_measure, indicator.gdp_initial_measure, indicator.ga_initial_measure, indicator.country_last_measure, indicator.gn_last_measure, indicator.gdp_last_measure, indicator.ga_last_measure ] );
+    const higherValue = values <= 5 ? ( values + 0.5 ) : ( values + 5 );
+    const data        = {
+      labels: [ '', indicator.period_initial, indicator.period_recent, '' ],
+      datasets: [
+        {
+          label: constantVars.country,
+          data: [ NaN, indicator.country_initial_measure, indicator.country_last_measure, NaN ],
+          backgroundColor: colorCountry,
+          borderColor: colorCountry,
+          borderWidth: $borderWidth,
+          pointStyle: $pointStyle,
+          pointRadius: $pointRadius,
+        },
+        {
+          label: 'Geographic neighbors',
+          data: [ NaN, indicator.gn_initial_measure, indicator.gn_last_measure, NaN ],
+          backgroundColor: colorGN,
+          borderColor: colorGN,
+          borderWidth: $borderWidth,
+          pointStyle: $pointStyle,
+          pointRadius: $pointRadius,
+        },
+        {
+          label: 'CS GDP per capita',
+          data: [ NaN, indicator.gdp_initial_measure, indicator.gdp_last_measure, NaN ],
+          backgroundColor: colorGDP,
+          borderColor: colorGDP,
+          borderWidth: $borderWidth,
+          pointStyle: $pointStyle,
+          pointRadius: $pointRadius,
+        },
+        {
+          label: 'World average',
+          data: [ NaN, indicator.ga_initial_measure, indicator.ga_last_measure, NaN ],
+          backgroundColor: colorGA,
+          borderColor: colorGA,
+          borderWidth: $borderWidth,
+          pointStyle: $pointStyle,
+          pointRadius: $pointRadius,
+        },
+      ]
+    };
+
+    createChartLine( data, higherValue );
+  }
+
+  /**
+   * Creates a line chart with the indicator data.
+   *
+   * @param data Array Get data to build the graph.
+   * @param yMax Int Get the largest Y-axis value.
+   */
+  function createChartLine( data, yMax ) {
+    const $borderDashInit  = 10;
+    const $borderDashFinal = 5;
+
+    chartLine = new Chart( lineContainer, {
+        type: 'line',
+        data,
+        options: {
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              suggestedMin: 0,
+              suggestedMax: yMax,
+              ticks: {
+                beginAtZero: true,
+                steps: 5,
+              },
+              grid: {
+                borderDash: [ $borderDashInit, $borderDashFinal ]
+              }
+            },
+            x: {
+              grid: {
+                borderDash: [ $borderDashInit, $borderDashFinal ]
+              },
+            },
+          }
+        }
+      }
+    );
   }
 
   // Chart Radar.
@@ -258,78 +379,4 @@ jQuery( document ).ready( ( $ ) => {
       }
     }
   } );
-
-  // Line chart
-  const lineContainer = document.getElementById( 'line-chart' );
-  const data          = {
-    labels: [ '', '2010', '2019', '' ],
-    datasets: [
-      {
-        label: constantVars.country,
-        data: [ NaN, 35, 45, NaN ],
-        backgroundColor: '#9049C9',
-        borderColor: '#9049C9',
-        borderWidth: 2,
-        pointStyle: 'triangle',
-        pointRadius: 5,
-      },
-      {
-        label: 'Geographic neighbors',
-        data: [ NaN, 17, 35, NaN ],
-        backgroundColor: '#DB56F0',
-        borderColor: '#DB56F0',
-        borderWidth: 2,
-        pointStyle: 'triangle',
-        pointRadius: 5,
-      },
-      {
-        label: 'CS GDP per capita',
-        data: [ NaN, 14, 25, NaN ],
-        backgroundColor: '#FF94D4',
-        borderColor: '#FF94D4',
-        borderWidth: 2,
-        pointStyle: 'triangle',
-        pointRadius: 5,
-      },
-      {
-        label: 'World average',
-        data: [ NaN, 50, 59, NaN ],
-        backgroundColor: '#FC50A2',
-        borderColor: '#FC50A2',
-        borderWidth: 2,
-        pointStyle: 'triangle',
-        pointRadius: 5,
-      },
-    ]
-  };
-  const myChart       = new Chart( lineContainer, {
-      type: 'line',
-      data,
-      options: {
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            suggestedMin: 0,
-            suggestedMax: 70,
-            ticks: {
-              stepSize: 15,
-            },
-            grid: {
-              borderDash: [ 10, 5 ]
-            }
-          },
-          x: {
-            grid: {
-              borderDash: [ 10, 5 ]
-            },
-          },
-        }
-      }
-    }
-  );
 } );
