@@ -130,15 +130,9 @@ body {
       margin-bottom: 60px;
 
       .grid-left-graph {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 0.1fr 1fr 1fr 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 10px 0;
-        grid-template-areas:
-          "grid-narrative"
-          "grid-graph-radar"
-          "grid-graph-comparative-bars"
-          "grid-graph-lineal";
         grid-area: grid-left-graph;
 
         .grid-narrative, .grid-graph-radar, .grid-graph-comparative-bars, .grid-graph-lineal {
