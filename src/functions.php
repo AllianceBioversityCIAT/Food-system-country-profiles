@@ -33,7 +33,9 @@ function main_theme_scripts() {
         if ( $template_name === 'page-dashboard' ) {
             wp_enqueue_script( 'fscp-chart-js', get_stylesheet_directory_uri() . '/static/lib/chart.js/dist/chart.js', array('jquery'), 'latest', true );
 
-            wp_enqueue_script( 'fscp-' . $template_name, get_stylesheet_directory_uri() . '/static/js/' . $template_name . '.min.js', array( 'jquery', 'fscp-chart-js' ), _S_VERSION );
+            wp_enqueue_script( 'fscp-html2canvas-js', get_stylesheet_directory_uri() . '/static/lib/html2canvas/dist/html2canvas.min.js', array('jquery'), 'latest', true );
+
+            wp_enqueue_script( 'fscp-' . $template_name, get_stylesheet_directory_uri() . '/static/js/' . $template_name . '.min.js', array( 'fscp-html2canvas-js', 'jquery', 'fscp-chart-js', ), _S_VERSION );
 
             wp_localize_script( 'fscp-' . $template_name, 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
         }

@@ -37,6 +37,8 @@ const buildConfig = {
       //ChartJS
       './node_modules/chart.js/dist/chart.js',
       './node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js',
+      //HTML2Canvas
+      './node_modules/html2canvas/dist/html2canvas.min.js',
     ],
     vendorScripts: [
       './vendor/**/*'

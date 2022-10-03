@@ -218,6 +218,10 @@ body {
 
           i {
             color: #68AACA;
+
+            &.click-download {
+              cursor: pointer;
+            }
           }
         }
 
@@ -779,5 +783,4 @@ body {
       }
     }
   }
-
 }

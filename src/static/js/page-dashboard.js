@@ -38,6 +38,46 @@ jQuery( document ).ready( ( $ ) => {
     $( '.note-indicators' ).hide();
   } );
 
+  $( '#group-bar-chart-download' ).click( function () {
+    const titleGraph = $( '#title-bar-chart' ).text();
+    $('.download-comparative-bars').remove();
+
+    html2canvas( document.getElementById( 'graph-comparative-bars' ), {
+      allowTaint: true,
+      useCORS: true,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
+      removeContainer: true,
+    } ).then( function ( canvas ) {
+      var anchorTag = document.createElement( 'a' );
+      anchorTag.className = 'download-comparative-bars';
+      document.body.appendChild( anchorTag );
+      anchorTag.download = `${ titleGraph } - Comparative Bars.jpg`;
+      anchorTag.href     = canvas.toDataURL();
+      anchorTag.target   = '_blank';
+      anchorTag.click();
+    } );
+  } );
+
+  $( '#line-chart-download' ).click( function () {
+    const titleGraph = $( '#title-line-chart' ).text();
+    $('.download-line').remove();
+
+    html2canvas( document.getElementById( 'graph-line' ), {
+      allowTaint: true,
+      useCORS: true,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
+      removeContainer: true,
+    } ).then( function ( canvas ) {
+      var anchorTag = document.createElement( 'a' );
+      anchorTag.className = 'download-line'
+      document.body.appendChild( anchorTag );
+      anchorTag.download = `${ titleGraph } - Line.jpg`;
+      anchorTag.href     = canvas.toDataURL();
+      anchorTag.target   = '_blank';
+      anchorTag.click();
+    } );
+  } );
+
   //When page loads...
   $( ".tab_content" ).hide(); //Hide all content
   $( "ul.tabs li:first" ).addClass( "active" ).show(); //Activate first tab
