@@ -98,7 +98,7 @@ if ( class_exists( 'Timber' ) ) {
             [
                 'taxonomy' => 'component',
                 'field'    => 'slug',
-                'terms'    => 'consumer-behavior',
+                'terms'    => 'outcomes',
             ],
         ],
     ];
