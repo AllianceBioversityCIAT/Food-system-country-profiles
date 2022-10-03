@@ -1,7 +1,7 @@
 jQuery( document ).ready( ( $ ) => {
   const barGroupContainer = document.getElementById( "bar-chart-grouped" );
   const barGroupColors    = [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ];
-  const chartLabels       = [ 'Bangladesh', 'Geographic neighbors', 'Countries with similar GDP per capital', 'World average' ]
+  const chartLabels       = [ 'Bangladesh', 'Geographic neighbors', 'Countries with similar GDP per capita', 'World average' ]
   let barGroupXLabels     = [];
   var chartBarGroup;
   var dataSetInitialGroupBar;
@@ -216,7 +216,7 @@ jQuery( document ).ready( ( $ ) => {
   const chartBar     = new Chart( barContainer, {
     type: 'bar',
     data: {
-      labels: [ constantVars.country, [ 'Geographic', 'neighbors' ], [ 'Countries with similar', 'GDP per capital' ], 'World average' ],
+      labels: [ constantVars.country, [ 'Geographic', 'neighbors' ], [ 'Countries with similar', 'GDP per capita' ], 'World average' ],
       datasets: [
         {
           label: constantVars.country,
@@ -283,7 +283,7 @@ jQuery( document ).ready( ( $ ) => {
         pointRadius: 5,
       },
       {
-        label: 'CS GDP per capital',
+        label: 'CS GDP per capita',
         data: [ NaN, 14, 25, NaN ],
         backgroundColor: '#FF94D4',
         borderColor: '#FF94D4',
