@@ -20,6 +20,7 @@ jQuery( document ).ready( ( $ ) => {
   const barGroupContainer = document.getElementById( 'bar-chart-grouped' );
   const lineContainer     = document.getElementById( 'line-chart' );
   const radarContainer    = document.getElementById( 'radar-chart' ).getContext( "2d" );
+  const barContainer      = document.getElementById( "bar-chart" );
   const barGroupColors    = [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ];
   const chartLabels       = [ constantVars.country, 'Geographic neighbors', 'Countries with similar GDP per capita', 'World average' ]
   let barGroupXLabels     = [];
@@ -28,6 +29,7 @@ jQuery( document ).ready( ( $ ) => {
   var dataSetLastGroupBar;
   var chartLine;
   var chartRadar;
+  var chartBar;
 
   // View first indicator chart.
   const firstIndicatorSelected   = $( '#first-indicator-selected' );
@@ -37,9 +39,23 @@ jQuery( document ).ready( ( $ ) => {
   chartLineView( contentIndicatorSelected, titleIndicatorSelected, true );
   createChartRadar();
 
+  const firstComponentSelected   = $( '#component-drivers' );
+  const titleComponentSelected   = firstComponentSelected.attr( 'data-component-title' );
+  const contentComponentSelected = JSON.parse( firstComponentSelected.attr( 'data-component' ) );
+  chartBarView( contentComponentSelected, titleComponentSelected, true );
+
   $( '.component-status' ).click( function () {
     $( '.component-status' ).removeClass( 'active' );
     $( this ).addClass( "active" );
+  } );
+
+  $( '.component-status' ).click( function () {
+    $( '.component-status' ).removeClass( 'active' );
+    $( this ).addClass( "active" );
+    var $component     = JSON.parse( $( this ).attr( 'data-component' ) );
+    var $componentTitle = $( this ).attr( 'data-component-title' );
+
+    chartBarView( $component, $componentTitle );
   } );
 
   $( '.indicator-option' ).click( function () {
@@ -47,6 +63,7 @@ jQuery( document ).ready( ( $ ) => {
     $( this ).addClass( "active" );
     var $indicator      = JSON.parse( $( this ).attr( 'data-indicator' ) );
     var $indicatorTitle = $( this ).attr( 'data-indicator-title' );
+
     chartGroupBar( $indicator, $indicatorTitle, );
     chartLineView( $indicator, $indicatorTitle );
   } );
@@ -330,6 +347,9 @@ jQuery( document ).ready( ( $ ) => {
     );
   }
 
+  /**
+   * Creates a Radar chart with the components data.
+   */
   function createChartRadar() {
     const $componentDriver   = $( '#component-drivers' )
     const $componentActors   = $( '#component-actors-and-activities' )
@@ -410,59 +430,89 @@ jQuery( document ).ready( ( $ ) => {
     } );
   }
 
-  // Bar chart
-  const yLabels      = {
-    0: ' ',
-    1: 'Very concerning',
-    2: 'Concerning',
-    3: 'Fair',
-    4: 'Good',
-    5: 'Excellent'
+  /**
+   * This function updates the Bar chart with the new data for the selected component.
+   *
+   * @param component Object Get component data.
+   * @param componentTitle String component title.
+   * @param firstView Boolean If the indicator to be displayed is the first one.
+   */
+  function chartBarView( component, componentTitle, firstView ) {
+    const $componentTitle = `<strong>${ componentTitle }</strong>  (aggregated value across the ${ component.total_component } individual indicators)`;
+    const yLabels = {
+      0: ' ',
+      1: 'Very concerning',
+      2: 'Concerning',
+      3: 'Fair',
+      4: 'Good',
+      5: 'Excellent'
+    };
+    const $backgroundColor = [ '#7732AE', '#B13FC4', '#D56CAB', '#C52B74' ];
+
+    $( '#graph-bar-title' ).html( $componentTitle );
+
+    const $data = [ component.c, component.gn, component.gdp, component.ga ];
+
+    // Destroys a specific chart instance.
+    if ( !firstView ) {
+      chartBar.destroy();
+    }
+
+    createChartBar( yLabels, $backgroundColor, $data )
   }
-  const barContainer = document.getElementById( "bar-chart" );
-  const chartBar     = new Chart( barContainer, {
-    type: 'bar',
-    data: {
-      labels: [ constantVars.country, [ 'Geographic', 'neighbors' ], [ 'Countries with similar', 'GDP per capita' ], 'World average' ],
-      datasets: [
-        {
-          label: constantVars.country,
-          backgroundColor: [ '#7732AE', '#B13FC4', '#D56CAB', '#C52B74' ],
-          data: [ 4, 2, 3, 3 ],
-          barPercentage: 0.3
-        }
-      ]
-    },
-    options: {
-      plugins: {
-        legend: {
-          display: false,
-        },
+
+  /**
+   * Creates a line chart with the indicator data.
+   *
+   * @param yLabels Array Get the largest Y-labels value.
+   * @param $backgroundColor Array Get the largest Y-axis value.
+   * @param $data Array Gets the colors for each bar.
+   */
+  function createChartBar( yLabels, $backgroundColor, $data ) {
+    chartBar = new Chart( barContainer, {
+      type: 'bar',
+      data: {
+        labels: [ constantVars.country, [ 'Geographic', 'neighbors' ], [ 'Countries with similar', 'GDP per capita' ], 'World average' ],
+        datasets: [
+          {
+            label: constantVars.country,
+            backgroundColor: $backgroundColor,
+            data: $data,
+            barPercentage: 0.3
+          }
+        ]
       },
-      scales: {
-        y: {
-          beginAtZero: true,
-          suggestedMin: 0,
-          suggestedMax: 5,
-          ticks: {
-            font: {
-              size: 12,
-            },
-            color: '#3F3F51',
-            callback: function ( value, index, values ) {
-              return yLabels[ value ];
-            }
+      options: {
+        plugins: {
+          legend: {
+            display: false,
           },
         },
-        x: {
-          ticks: {
-            font: {
-              size: 12,
+        scales: {
+          y: {
+            beginAtZero: true,
+            suggestedMin: 0,
+            suggestedMax: 5,
+            ticks: {
+              font: {
+                size: 12,
+              },
+              color: '#3F3F51',
+              callback: function ( value, index, values ) {
+                return yLabels[ value ];
+              }
             },
-            color: '#3F3F51',
+          },
+          x: {
+            ticks: {
+              font: {
+                size: 12,
+              },
+              color: '#3F3F51',
+            }
           }
         }
       }
-    }
-  } );
+    } );
+  }
 } );
