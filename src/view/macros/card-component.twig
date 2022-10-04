@@ -1,0 +1,50 @@
+{% macro component( componentName, data, first ) %}
+    {% set componentPercentage        = (( data.c / data.total_component ) * 100)|round(2, 'floor') %}
+    {% set componentClass             = '' %}
+    {% set componentStatusTitle       = '' %}
+    {% set componentStatusPercentage = '' %}
+    {% set componentStatusDescription = '' %}
+
+    {% if ( componentPercentage >= 85 and componentPercentage <= 100 ) %}
+        {% set componentClass             = 'component-excellent' %}
+        {% set componentStatusTitle       = 'Excellent' %}
+        {% set componentStatusPercentage = '<strong>85-100%</strong>' %}
+
+    {% elseif ( componentPercentage >= 65 and componentPercentage <= 84 ) %}
+        {% set componentClass             = 'component-good' %}
+        {% set componentStatusTitle       = 'Good' %}
+        {% set componentStatusPercentage = '<strong>65-84%</strong>' %}
+
+    {% elseif ( componentPercentage >= 50 and componentPercentage <= 64 ) %}
+        {% set componentClass             = 'component-fair' %}
+        {% set componentStatusTitle       = 'Fair' %}
+        {% set componentStatusPercentage = '<strong>50-64%</strong>' %}
+
+    {% elseif ( componentPercentage >= 25 and componentPercentage <= 49 ) %}
+        {% set componentClass             = 'component-concerning' %}
+        {% set componentStatusTitle       = 'Concerning' %}
+        {% set componentStatusPercentage = '<strong>25-49%</strong>' %}
+
+    {% else %}
+        {% set componentClass             = 'component-very-concerning' %}
+        {% set componentStatusTitle       = 'Very concerning' %}
+        {% set componentStatusPercentage = '<strong>0-24%</strong>' %}
+
+    {% endif %}
+
+    {% set componentStatusDescription = componentStatusPercentage ~ ' of all indicators for ' ~ componentName ~ ' have improved or remained unchanged over the time period considered' %}
+
+    <div class="component-status {{ componentClass }} {{ first ? 'active' }} component-driver"
+         data-component='{{ data|json_encode() }}'>
+        <h3>{{ componentName }}</h3>
+        <div class="status-progress">
+            <p>{{ componentStatusTitle }}</p>
+            <div class="bar">
+                <div class="bar-progress" style="width: {{ componentPercentage }}%;"></div>
+                <div class="message-info">
+                    {{ componentStatusDescription }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
