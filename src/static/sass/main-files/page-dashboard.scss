@@ -289,7 +289,7 @@ body {
           grid-template-rows: 1fr;
           gap: 0 10px;
           grid-template-areas:
-            "component-driver component-actors component-food component-consumer component-outcomes";
+            ". . . . .";
           grid-area: grid-status-bar;
 
           .component-status {
@@ -380,7 +380,6 @@ body {
               .status-progress .bar {
                 .bar-progress {
                   background-color: #A9F629;
-                  width: 100%;
                 }
 
                 .message-info {
@@ -401,7 +400,6 @@ body {
               .status-progress .bar {
                 .bar-progress {
                   background-color: #26EFFF;
-                  width: 75%;
                 }
 
                 .message-info {
@@ -422,7 +420,6 @@ body {
               .status-progress .bar {
                 .bar-progress {
                   background-color: #FFEB00;
-                  width: 50%;
                 }
 
                 .message-info {
@@ -447,7 +444,6 @@ body {
               .status-progress .bar {
                 .bar-progress {
                   background-color: #FFC13D;
-                  width: 25%;
                 }
 
                 .message-info {
@@ -472,7 +468,6 @@ body {
               .status-progress .bar {
                 .bar-progress {
                   background-color: #FF7B7B;
-                  width: 10%;
                 }
 
                 .message-info {
@@ -492,26 +487,6 @@ body {
                 }
               }
             }
-          }
-
-          .component-driver {
-            grid-area: component-driver;
-          }
-
-          .component-actors {
-            grid-area: component-actors;
-          }
-
-          .component-food {
-            grid-area: component-food;
-          }
-
-          .component-consumer {
-            grid-area: component-consumer;
-          }
-
-          .component-outcomes {
-            grid-area: component-outcomes;
           }
         }
 

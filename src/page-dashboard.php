@@ -6,14 +6,13 @@
 get_header();
 
 if ( class_exists( 'Timber' ) ) {
-    $page_ID         = get_the_ID();
-    $countries_terms = get_terms( array(
+    $page_ID                = get_the_ID();
+    $countries_terms        = get_terms( array(
         'taxonomy'   => 'country',
         'hide_empty' => false,
     ) );
-    $get_country     = ( isset( $_GET[ 'country' ] ) ) ? sanitize_text_field( $_GET[ 'country' ] ) : '';
-
-    $arg_indicator_driven = [
+    $get_country            = ( isset( $_GET[ 'country' ] ) ) ? sanitize_text_field( $_GET[ 'country' ] ) : '';
+    $arg_indicator_driven   = [
         'post_type'      => 'country-profile',
         'posts_per_page' => -1,
         'tax_query'      => [
@@ -30,8 +29,7 @@ if ( class_exists( 'Timber' ) ) {
             ],
         ],
     ];
-
-    $arg_indicator_actors = [
+    $arg_indicator_actors   = [
         'post_type'      => 'country-profile',
         'posts_per_page' => -1,
         'tax_query'      => [
@@ -48,8 +46,7 @@ if ( class_exists( 'Timber' ) ) {
             ],
         ],
     ];
-
-    $arg_indicator_food = [
+    $arg_indicator_food     = [
         'post_type'      => 'country-profile',
         'posts_per_page' => -1,
         'tax_query'      => [
@@ -66,7 +63,6 @@ if ( class_exists( 'Timber' ) ) {
             ],
         ],
     ];
-
     $arg_indicator_consumer = [
         'post_type'      => 'country-profile',
         'posts_per_page' => -1,
@@ -84,7 +80,6 @@ if ( class_exists( 'Timber' ) ) {
             ],
         ],
     ];
-
     $arg_indicator_outcomes = [
         'post_type'      => 'country-profile',
         'posts_per_page' => -1,
@@ -113,6 +108,12 @@ if ( class_exists( 'Timber' ) ) {
     $context[ 'indicatorFood' ]     = Timber::get_posts( $arg_indicator_food );
     $context[ 'indicatorConsumer' ] = Timber::get_posts( $arg_indicator_consumer );
     $context[ 'indicatorOutcomes' ] = Timber::get_posts( $arg_indicator_outcomes );
+
+    $context[ 'componentDrivers' ]  = fscp_calculate_component_value( $context[ 'indicatorDrivers' ], count( $context[ 'indicatorDrivers' ] ) );
+    $context[ 'componentActors' ]   = fscp_calculate_component_value( $context[ 'indicatorActors' ], count( $context[ 'indicatorActors' ] ) );
+    $context[ 'componentFood' ]     = fscp_calculate_component_value( $context[ 'indicatorFood' ], count( $context[ 'indicatorFood' ] ) );
+    $context[ 'componentConsumer' ] = fscp_calculate_component_value( $context[ 'indicatorConsumer' ], count( $context[ 'indicatorConsumer' ] ) );
+    $context[ 'componentOutcomes' ] = fscp_calculate_component_value( $context[ 'indicatorOutcomes' ], count( $context[ 'indicatorOutcomes' ] ) );
 
     Timber::render( './view/page-dashboard.twig', $context );
 

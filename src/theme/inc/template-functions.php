@@ -212,3 +212,16 @@ function fscp_filter_cars_by_taxonomies( $post_type, $which ) {
 }
 
 add_action( 'restrict_manage_posts', 'fscp_filter_cars_by_taxonomies', 10, 2 );
+
+function fscp_calculate_component_value( $component, $count ) {
+    $component_result = [ 'c' => $count, 'gn' => $count, 'gdp' => $count, 'ga' => $count, 'total_component' => $count ];
+
+    foreach ( $component as $value ) {
+        $component_result['c'] = $component_result['c'] + ( $value->custom['country_consolidated_value'] );
+        $component_result['gn'] = $component_result['gn'] + ( $value->custom['gn_consolidated_value'] );
+        $component_result['gdp'] = $component_result['gdp'] + ( $value->custom['gdp_consolidated_value'] );
+        $component_result['ga'] = $component_result['ga'] + ( $value->custom['ga_consolidated_value'] );
+    }
+
+    return $component_result;
+}
