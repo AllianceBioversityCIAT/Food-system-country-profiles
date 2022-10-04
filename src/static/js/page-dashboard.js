@@ -451,7 +451,8 @@ jQuery( document ).ready( ( $ ) => {
 
     $( '#graph-bar-title' ).html( $componentTitle );
 
-    const $data = [ component.c, component.gn, component.gdp, component.ga ];
+    const $data = groupValuePercentage( component );
+    console.log($data);
 
     // Destroys a specific chart instance.
     if ( !firstView ) {
@@ -514,5 +515,40 @@ jQuery( document ).ready( ( $ ) => {
         }
       }
     } );
+  }
+
+  function groupValuePercentage( data ) {
+    const percentageC = Math.round( (( data.c / data.total_component ) * 100), -2);
+    const percentageGN = Math.round( (( data.gn / data.total_component ) * 100), -2);
+    const percentageGDP = Math.round( (( data.gdp / data.total_component ) * 100), -2);
+    const percentageGA = Math.round( (( data.ga / data.total_component ) * 100), -2);
+
+    return [
+      convertPercentage(percentageC),
+      convertPercentage(percentageGN),
+      convertPercentage(percentageGDP),
+      convertPercentage(percentageGA)
+    ];
+  }
+
+  function convertPercentage( number ) {
+
+    if ( number >= 85 && number <= 100 ) {
+      return 5;
+
+    } else if ( number >= 65 && number <= 84 ) {
+      return 4;
+
+    } else if ( number >= 50 && number <= 64 ) {
+      return 3;
+
+    } else if ( number >= 25 && number <= 49 ) {
+      return 2;
+
+    } else if ( number >= 0 && number <= 24 ) {
+      return 1;
+    }
+
+    return 0
   }
 } );
