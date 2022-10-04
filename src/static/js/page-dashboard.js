@@ -3,8 +3,23 @@ jQuery( document ).ready( ( $ ) => {
   const colorGN           = '#DB56F0';
   const colorGDP          = '#FF94D4';
   const colorGA           = '#FC50A2';
+  const colorStatus       = {
+    'excellent': '#8EF041',
+    'good': '#55EBFF',
+    'fair': '#FFD326',
+    'concerning': '#F1B51B',
+    'very-concerning': '#F15B1B'
+  };
+  const colorBorderStatus = {
+    'excellent': '#37A842',
+    'good': '#4671C3',
+    'fair': '#B89612',
+    'concerning': 'rgba(188, 68, 0, 1)',
+    'very-concerning': 'rgba(188, 23, 0, 1)'
+  };
   const barGroupContainer = document.getElementById( 'bar-chart-grouped' );
   const lineContainer     = document.getElementById( 'line-chart' );
+  const radarContainer    = document.getElementById( 'radar-chart' ).getContext( "2d" );
   const barGroupColors    = [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ];
   const chartLabels       = [ constantVars.country, 'Geographic neighbors', 'Countries with similar GDP per capita', 'World average' ]
   let barGroupXLabels     = [];
@@ -12,13 +27,15 @@ jQuery( document ).ready( ( $ ) => {
   var dataSetInitialGroupBar;
   var dataSetLastGroupBar;
   var chartLine;
+  var chartRadar;
 
-  // View first indicator bar group chart.
+  // View first indicator chart.
   const firstIndicatorSelected   = $( '#first-indicator-selected' );
   const titleIndicatorSelected   = firstIndicatorSelected.attr( 'data-indicator-title' );
   const contentIndicatorSelected = JSON.parse( firstIndicatorSelected.attr( 'data-indicator' ) );
   chartGroupBar( contentIndicatorSelected, titleIndicatorSelected, true );
   chartLineView( contentIndicatorSelected, titleIndicatorSelected, true );
+  createChartRadar();
 
   $( '.component-status' ).click( function () {
     $( '.component-status' ).removeClass( 'active' );
@@ -40,7 +57,7 @@ jQuery( document ).ready( ( $ ) => {
 
   $( '#group-bar-chart-download' ).click( function () {
     const titleGraph = $( '#title-bar-chart' ).text();
-    $('.download-comparative-bars').remove();
+    $( '.download-comparative-bars' ).remove();
 
     html2canvas( document.getElementById( 'graph-comparative-bars' ), {
       allowTaint: true,
@@ -48,7 +65,7 @@ jQuery( document ).ready( ( $ ) => {
       backgroundColor: 'rgba(255, 255, 255, 1)',
       removeContainer: true,
     } ).then( function ( canvas ) {
-      var anchorTag = document.createElement( 'a' );
+      var anchorTag       = document.createElement( 'a' );
       anchorTag.className = 'download-comparative-bars';
       document.body.appendChild( anchorTag );
       anchorTag.download = `${ titleGraph } - Comparative Bars.jpg`;
@@ -60,7 +77,7 @@ jQuery( document ).ready( ( $ ) => {
 
   $( '#line-chart-download' ).click( function () {
     const titleGraph = $( '#title-line-chart' ).text();
-    $('.download-line').remove();
+    $( '.download-line' ).remove();
 
     html2canvas( document.getElementById( 'graph-line' ), {
       allowTaint: true,
@@ -68,7 +85,7 @@ jQuery( document ).ready( ( $ ) => {
       backgroundColor: 'rgba(255, 255, 255, 1)',
       removeContainer: true,
     } ).then( function ( canvas ) {
-      var anchorTag = document.createElement( 'a' );
+      var anchorTag       = document.createElement( 'a' );
       anchorTag.className = 'download-line'
       document.body.appendChild( anchorTag );
       anchorTag.download = `${ titleGraph } - Line.jpg`;
@@ -313,56 +330,85 @@ jQuery( document ).ready( ( $ ) => {
     );
   }
 
-  // Chart Radar.
-  const radarContainer = document.getElementById( "radar-chart" ).getContext( "2d" );
-  const chartRadar     = new Chart( radarContainer, {
-    type: 'radar',
-    data: {
-      labels: [ 'Drivers', 'Outcomes', [ 'Food', 'environment' ], [ 'Consumer', 'behavior' ], [ 'Actors and', 'activities' ] ],
-      datasets: [
-        {
-          label: constantVars.country,
-          fill: true,
-          backgroundColor: "rgba(144, 73, 201, 0.24)",
-          borderColor: "#9049C9",
-          pointBorderColor: [ '#4671C3', '#B89612', '#4671C3', '#4671C3', '#4671C3', '#4671C3' ],
-          pointBackgroundColor: [ '#55EBFF', '#FFD326', '#55EBFF', '#55EBFF', '#55EBFF', '#55EBFF' ],
-          radius: 5,
-          data: [ 20, 20, 19, 19, 21 ]
-        },
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Distribution in % of world population'
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      scales: {
-        r: {
-          max: 24,
-          min: 10,
-          ticks: {
-            stepSize: 2,
-            display: false
+  function createChartRadar() {
+    const $componentDriver   = $( '#component-drivers' )
+    const $componentActors   = $( '#component-actors-and-activities' )
+    const $componentFood     = $( '#component-food-environment' )
+    const $componentConsumer = $( '#component-consumer-behavior' )
+    const $componentOutcomes = $( '#component-outcomes' )
+
+    const $pointBackgroundColor = [
+      colorStatus[ $componentDriver.attr( 'data-component-status' ) ],
+      colorStatus[ $componentOutcomes.attr( 'data-component-status' ) ],
+      colorStatus[ $componentFood.attr( 'data-component-status' ) ],
+      colorStatus[ $componentConsumer.attr( 'data-component-status' ) ],
+      colorStatus[ $componentActors.attr( 'data-component-status' ) ],
+
+    ];
+    const $pointBorderColor     = [
+      colorBorderStatus[ $componentDriver.attr( 'data-component-status' ) ],
+      colorBorderStatus[ $componentOutcomes.attr( 'data-component-status' ) ],
+      colorBorderStatus[ $componentFood.attr( 'data-component-status' ) ],
+      colorBorderStatus[ $componentConsumer.attr( 'data-component-status' ) ],
+      colorBorderStatus[ $componentActors.attr( 'data-component-status' ) ],
+    ];
+    const $data                 = [
+      $componentDriver.attr( 'data-component-percentage' ),
+      $componentOutcomes.attr( 'data-component-percentage' ),
+      $componentFood.attr( 'data-component-percentage' ),
+      $componentConsumer.attr( 'data-component-percentage' ),
+      $componentActors.attr( 'data-component-percentage' ),
+    ];
+
+    chartRadar = new Chart( radarContainer, {
+      type: 'radar',
+      data: {
+        labels: [ 'Drivers', 'Outcomes', [ 'Food', 'environment' ], [ 'Consumer', 'behavior' ], [ 'Actors and', 'activities' ] ],
+        datasets: [
+          {
+            label: constantVars.country,
+            fill: true,
+            backgroundColor: 'rgba(144, 73, 201, 0.24)',
+            borderColor: '#9049C9',
+            pointBorderColor: $pointBorderColor,
+            pointBackgroundColor: $pointBackgroundColor,
+            radius: 5,
+            data: $data
           },
-          angleLines: {
-            color: "rgba(228, 228, 228, 1)",
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Distribution in % of world population'
+        },
+        plugins: {
+          legend: {
+            display: false,
           },
-          pointLabels: {
-            color: '#3F3F51',
-            font: {
-              size: 10
+        },
+        scales: {
+          r: {
+            max: 100,
+            min: 0,
+            ticks: {
+              stepSize: 10,
+              display: false
+            },
+            angleLines: {
+              color: 'rgba(228, 228, 228, 1)',
+            },
+            pointLabels: {
+              color: '#3F3F51',
+              font: {
+                size: 10
+              }
             }
           }
         }
       }
-    }
-  } );
+    } );
+  }
 
   // Bar chart
   const yLabels      = {

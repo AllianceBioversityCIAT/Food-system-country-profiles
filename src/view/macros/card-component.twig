@@ -34,7 +34,9 @@
 
     {% set componentStatusDescription = componentStatusPercentage ~ ' of all indicators for ' ~ componentName ~ ' have improved or remained unchanged over the time period considered' %}
 
-    <div class="component-status {{ componentClass }} {{ first ? 'active' }} component-driver"
+    <div id="{{ function( 'sanitize_title', 'component-' ~ componentName ) }}" class="component-status {{ componentClass }} {{ first ? 'active' }}"
+         data-component-percentage='{{ componentPercentage }}'
+         data-component-status='{{ function( 'sanitize_title', componentStatusTitle ) }}'
          data-component='{{ data|json_encode() }}'>
         <h3>{{ componentName }}</h3>
         <div class="status-progress">
