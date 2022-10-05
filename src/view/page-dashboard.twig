@@ -32,10 +32,11 @@
                         </div>
                         <div class="grid-graph-radar">
                             <div class="title-download">
-                                <p>{{ country|capitalize }}</p><i aria-hidden="true" class="fas fa-download"></i>
+                                <p>{{ country|capitalize }}</p>
+                                <i id="radar-chart-download" aria-hidden="true" class="fas fa-download click-download"></i>
                             </div>
-                            <div class="graph-radar">
-                                <canvas id="radar-chart" width="410" height="410"></canvas>
+                            <div id="graph-radar" class="graph-radar">
+                                <canvas id="radar-chart" width="410" height="410" style="background-color: #f7f8fc;"></canvas>
                             </div>
                         </div>
                         <div class="grid-graph-comparative-bars">
@@ -77,10 +78,13 @@
                             {{ cardComponent.component( 'Consumer behavior', componentConsumer ) }}
                             {{ cardComponent.component( 'Outcomes', componentOutcomes ) }}
                         </div>
-                        <div class="grid-graph-bar">
+                        <div id="grid-graph-bar" class="grid-graph-bar">
                             <p id="graph-bar-title" class="graph-bar-title"></p>
                             <div class="graph-bar">
                                 <canvas id="bar-chart" width="800" height="200"></canvas>
+                            </div>
+                            <div class="button-download">
+                                <i id="bar-chart-download" aria-hidden="true" class="fas fa-download click-download"></i>
                             </div>
                         </div>
                         <div class="grid-tab-indicators">

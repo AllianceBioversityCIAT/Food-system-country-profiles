@@ -218,10 +218,10 @@ body {
 
           i {
             color: #68AACA;
+          }
 
-            &.click-download {
-              cursor: pointer;
-            }
+          .click-download {
+            cursor: pointer;
           }
         }
 
@@ -269,6 +269,19 @@ body {
               width: 90%;
             }
           }
+        }
+      }
+
+      .button-download {
+        justify-content: end;
+        display: flex;
+
+        i {
+          color: #68AACA;
+        }
+
+        .click-download {
+          cursor: pointer;
         }
       }
 
