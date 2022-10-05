@@ -9,7 +9,7 @@ if ( class_exists( 'Timber' ) ) {
     $page_ID                = get_the_ID();
     $countries_terms        = get_terms( array(
         'taxonomy'   => 'country',
-        'hide_empty' => false,
+        'hide_empty' => true,
     ) );
     $get_country            = ( isset( $_GET[ 'country' ] ) ) ? sanitize_text_field( $_GET[ 'country' ] ) : '';
     $arg_indicator_driven   = [

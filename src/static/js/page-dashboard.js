@@ -112,6 +112,45 @@ jQuery( document ).ready( ( $ ) => {
     } );
   } );
 
+  $( '#radar-chart-download' ).click( function () {
+    $( '.download-radar' ).remove();
+
+    html2canvas( document.getElementById( 'radar-chart' ), {
+      allowTaint: true,
+      useCORS: true,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
+      removeContainer: true,
+    } ).then( function ( canvas ) {
+      var anchorTag       = document.createElement( 'a' );
+      anchorTag.className = 'download-radar'
+      document.body.appendChild( anchorTag );
+      anchorTag.download = `${ constantVars.country } - Radar.jpg`;
+      anchorTag.href     = canvas.toDataURL();
+      anchorTag.target   = '_blank';
+      anchorTag.click();
+    } );
+  } );
+
+  $( '#bar-chart-download' ).click( function () {
+    const titleGraph = $( '#graph-bar-title' ).text();
+    $( '.download-radar' ).remove();
+
+    html2canvas( document.getElementById( 'grid-graph-bar' ), {
+      allowTaint: true,
+      useCORS: true,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
+      removeContainer: true,
+    } ).then( function ( canvas ) {
+      var anchorTag       = document.createElement( 'a' );
+      anchorTag.className = 'download-bar'
+      document.body.appendChild( anchorTag );
+      anchorTag.download = `${ titleGraph } - Bar.jpg`;
+      anchorTag.href     = canvas.toDataURL();
+      anchorTag.target   = '_blank';
+      anchorTag.click();
+    } );
+  } );
+
   //When page loads...
   $( ".tab_content" ).hide(); //Hide all content
   $( "ul.tabs li:first" ).addClass( "active" ).show(); //Activate first tab
@@ -452,7 +491,6 @@ jQuery( document ).ready( ( $ ) => {
     $( '#graph-bar-title' ).html( $componentTitle );
 
     const $data = groupValuePercentage( component );
-    console.log($data);
 
     // Destroys a specific chart instance.
     if ( !firstView ) {
