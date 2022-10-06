@@ -9,7 +9,7 @@ body {
 
   .container-dashboard {
     display: grid;
-    grid-template-columns: 0.3fr 1.7fr;
+    grid-template-columns: 14% 85%;
     grid-template-rows: 1fr;
     grid-auto-columns: 1fr;
     gap: 0 20px;
@@ -21,7 +21,9 @@ body {
     .left-menu {
       grid-area: left-menu;
       background-color: #27404C;
-      position: relative;
+      position: fixed;
+      width: 14%;
+      height: 100%;
 
       .nav-menu {
         display: grid;
@@ -31,9 +33,7 @@ body {
         grid-template-areas:
           "navigation-title-dashboard"
           "navigation-menu";
-        position: fixed;
         height: 100%;
-        width: 14.85%;
         flex-direction: column;
         justify-content: space-between;
         box-shadow: 0 1px 8px 0 rgba(174, 174, 174, 0.15);
@@ -46,7 +46,7 @@ body {
             font-family: 'Mulish';
             font-style: normal;
             font-weight: 700;
-            font-size: 19px;
+            font-size: 1.18rem;
             line-height: 24px;
             letter-spacing: 0.4px;
             padding: 0 .5rem 0 10%;
@@ -57,7 +57,7 @@ body {
           .menu-item {
             color: #A4A6B3;
             font-weight: 400;
-            font-size: 16px;
+            font-size: 1rem;
             line-height: 20px;
             letter-spacing: 0.2px;
             display: flex;
@@ -122,12 +122,16 @@ body {
     .content-graph {
       display: grid;
       grid-auto-columns: 1fr;
-      grid-template-columns: 0.5fr 1.5fr;
+      grid-template-columns: 24% 75%;
       grid-template-rows: 1fr;
       gap: 0 10px;
       grid-template-areas:
       "grid-left-graph grid-indicators-graph";
       margin-bottom: 60px;
+
+      @include respond-below( xl ) {
+        grid-template-columns: 29% 70%;
+      }
 
       .grid-left-graph {
         display: flex;
@@ -136,8 +140,12 @@ body {
         grid-area: grid-left-graph;
 
         .grid-narrative, .grid-graph-radar, .grid-graph-comparative-bars, .grid-graph-lineal {
-          width: 410px;
+          width: 100%;
           height: auto;
+
+          canvas {
+            width: 100% !important;
+          }
         }
 
         .grid-narrative {
@@ -234,6 +242,14 @@ body {
           grid-template-areas:
                 ". . . .";
 
+          @include respond-below( xl ) {
+            grid-template-columns: 50% 50%;
+            grid-template-rows: 50% 50%;
+            grid-template-areas:
+                ". ."
+                ". .";
+          }
+
           .bar-label {
             display: flex;
             flex-wrap: wrap;
@@ -242,7 +258,7 @@ body {
 
             i {
               width: 10%;
-              font-size: 10px;
+              font-size: 8px;
 
               &.label-one {
                 color: #9049C9;
@@ -267,6 +283,10 @@ body {
               text-align: center;
               color: #3F3F51;
               width: 90%;
+
+              @include respond-below( xl ) {
+                text-align: left;
+              }
             }
           }
         }
@@ -530,6 +550,14 @@ body {
             text-align: center;
             padding: 0 5rem;
             height: 100%;
+
+            @include respond-below( xl ) {
+              padding: 0;
+            }
+
+            canvas {
+              width: 100% !important;
+            }
           }
         }
 
