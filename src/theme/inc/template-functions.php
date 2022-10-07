@@ -24,7 +24,7 @@ function register_vars_js() {
         if ( $template_name === 'page-dashboard' ) {
             $get_country   = ( isset( $_GET[ 'country' ] ) ) ? sanitize_text_field( $_GET[ 'country' ] ) : '';
             $constant_vars = [
-                'country' => $get_country,
+                'country' => ucfirst( $get_country ),
             ];
 
             wp_localize_script( 'fscp-' . $template_name, 'constantVars', $constant_vars );
