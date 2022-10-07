@@ -434,7 +434,7 @@ jQuery( document ).ready( ( $ ) => {
             borderColor: '#9049C9',
             pointBorderColor: $pointBorderColor,
             pointBackgroundColor: $pointBackgroundColor,
-            radius: 5,
+            radius: 6,
             data: $data
           },
         ]
@@ -464,7 +464,7 @@ jQuery( document ).ready( ( $ ) => {
             pointLabels: {
               color: '#3F3F51',
               font: {
-                size: 10
+                size: 11
               }
             }
           }
