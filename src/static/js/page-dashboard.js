@@ -52,7 +52,7 @@ jQuery( document ).ready( ( $ ) => {
   $( '.component-status' ).click( function () {
     $( '.component-status' ).removeClass( 'active' );
     $( this ).addClass( "active" );
-    var $component     = JSON.parse( $( this ).attr( 'data-component' ) );
+    var $component      = JSON.parse( $( this ).attr( 'data-component' ) );
     var $componentTitle = $( this ).attr( 'data-component-title' );
 
     chartBarView( $component, $componentTitle );
@@ -244,6 +244,7 @@ jQuery( document ).ready( ( $ ) => {
         ]
       },
       options: {
+        responsive: true,
         plugins: {
           legend: {
             display: false,
@@ -261,6 +262,7 @@ jQuery( document ).ready( ( $ ) => {
             suggestedMax: 3,
             ticks: {
               font: {
+                family: 'Roboto',
                 size: 12,
               },
               color: '#3F3F51',
@@ -357,6 +359,7 @@ jQuery( document ).ready( ( $ ) => {
         type: 'line',
         data,
         options: {
+          responsive: true,
           plugins: {
             legend: {
               display: false,
@@ -437,6 +440,7 @@ jQuery( document ).ready( ( $ ) => {
         ]
       },
       options: {
+        responsive: true,
         title: {
           display: true,
           text: 'Distribution in % of world population'
@@ -477,8 +481,8 @@ jQuery( document ).ready( ( $ ) => {
    * @param firstView Boolean If the indicator to be displayed is the first one.
    */
   function chartBarView( component, componentTitle, firstView ) {
-    const $componentTitle = `<strong>${ componentTitle }</strong>  (aggregated value across the ${ component.total_component } individual indicators)`;
-    const yLabels = {
+    const $componentTitle  = `<strong>${ componentTitle }</strong>  (aggregated value across the ${ component.total_component } individual indicators)`;
+    const yLabels          = {
       0: ' ',
       1: 'Very concerning',
       2: 'Concerning',
@@ -522,6 +526,8 @@ jQuery( document ).ready( ( $ ) => {
         ]
       },
       options: {
+        events: [],
+        responsive: true,
         plugins: {
           legend: {
             display: false,
@@ -556,16 +562,16 @@ jQuery( document ).ready( ( $ ) => {
   }
 
   function groupValuePercentage( data ) {
-    const percentageC = Math.round( (( data.c / data.total_component ) * 100), -2);
-    const percentageGN = Math.round( (( data.gn / data.total_component ) * 100), -2);
-    const percentageGDP = Math.round( (( data.gdp / data.total_component ) * 100), -2);
-    const percentageGA = Math.round( (( data.ga / data.total_component ) * 100), -2);
+    const percentageC   = Math.round( ( ( data.c / data.total_component ) * 100 ), -2 );
+    const percentageGN  = Math.round( ( ( data.gn / data.total_component ) * 100 ), -2 );
+    const percentageGDP = Math.round( ( ( data.gdp / data.total_component ) * 100 ), -2 );
+    const percentageGA  = Math.round( ( ( data.ga / data.total_component ) * 100 ), -2 );
 
     return [
-      convertPercentage(percentageC),
-      convertPercentage(percentageGN),
-      convertPercentage(percentageGDP),
-      convertPercentage(percentageGA)
+      convertPercentage( percentageC ),
+      convertPercentage( percentageGN ),
+      convertPercentage( percentageGDP ),
+      convertPercentage( percentageGA )
     ];
   }
 
