@@ -22,13 +22,16 @@
         </div>
         <div class="content-dashboard">
             {% if ( country is empty ) %}
-                <h1 class="dashboard-title">Select Country</h1>
+                <div class="content-dashboard-empty">
+                    <img class="empty-graph" width="155" height="90" src="{{ theme.link ~ '/static/images/empty_graph.png' }}" alt="Empty Graph">
+                    <h1 class="dashboard-title">Select a country to show indicators</h1>
+                </div>
             {% else %}
                 <h1 class="dashboard-title">You are seeing {{ country|capitalize }} food system dashboard</h1>
                 <div class="content-graph">
                     <div class="grid-left-graph">
                         <div class="grid-narrative">
-                            <p>Learn more about the pilot project in <a href="#">{{ country|capitalize }}</a></p>
+                            <p>Learn more about the pilot project in <a href="{{ countryFields.narrative_page }}">{{ country|capitalize }}</a></p>
                         </div>
                         <div class="grid-graph-radar">
                             <div class="title-download">

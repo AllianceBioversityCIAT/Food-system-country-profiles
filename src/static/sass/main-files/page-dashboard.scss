@@ -119,6 +119,18 @@ body {
       margin-top: 60px;
     }
 
+    .content-dashboard-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+
+      .dashboard-title {
+        margin-top: 40px;
+      }
+    }
+
     .content-graph {
       display: grid;
       grid-auto-columns: 1fr;

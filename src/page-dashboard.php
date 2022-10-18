@@ -12,6 +12,7 @@ if ( class_exists( 'Timber' ) ) {
         'hide_empty' => true,
     ) );
     $get_country            = ( isset( $_GET[ 'country' ] ) ) ? sanitize_text_field( $_GET[ 'country' ] ) : '';
+    $country_term           = get_term_by( 'slug', $get_country, 'country' );
     $arg_indicator_driven   = [
         'post_type'      => 'country-profile',
         'posts_per_page' => -1,
@@ -114,6 +115,10 @@ if ( class_exists( 'Timber' ) ) {
     $context[ 'componentFood' ]     = fscp_calculate_component_value( $context[ 'indicatorFood' ], count( $context[ 'indicatorFood' ] ) );
     $context[ 'componentConsumer' ] = fscp_calculate_component_value( $context[ 'indicatorConsumer' ], count( $context[ 'indicatorConsumer' ] ) );
     $context[ 'componentOutcomes' ] = fscp_calculate_component_value( $context[ 'indicatorOutcomes' ], count( $context[ 'indicatorOutcomes' ] ) );
+
+    if ( $country_term ) {
+        $context[ 'countryFields' ] = get_fields( 'country_' . $country_term->term_id );
+    }
 
     Timber::render( './view/page-dashboard.twig', $context );
 
