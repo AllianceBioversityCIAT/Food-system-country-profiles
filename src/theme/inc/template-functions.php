@@ -238,3 +238,25 @@ function fscp_calculate_component_value( $component, $count ) {
 
     return $component_result;
 }
+
+/**
+ * Used to perform custom validation on the field’s $value before it is saved into the database.
+ *
+ * @param $valid (mixed) Whether or not the value is valid (boolean) or a custom error message (string).
+ * @param $value (mixed) The field value.
+ * @param $field (array) The field array containing all settings.
+ * @param $input  (string) The field DOM element name attribute.
+ *
+ * @return mixed Get the text valid.
+ */
+function fscp_acf_validate_value_number( $valid, $value, $field, $input ) {
+
+    if (!preg_match('/^(?!-0(\.0+)?$)-?(0|[1-9]\d*)(\.\d+)?$/', $value)){
+        $valid = __( 'Only numbers are allowed in this field.' );
+    }
+
+    // return
+    return $valid;
+}
+
+add_filter('acf/validate_value/type=number', 'fscp_acf_validate_value_number', 10, 4);
