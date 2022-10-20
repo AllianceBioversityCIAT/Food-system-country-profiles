@@ -24,6 +24,46 @@ function register_custom_acf_fields_taxonomy_country() {
                         'allow_archives'    => 0,
                         'multiple'          => 0,
                     ],
+                    [
+                        'key'          => 'field_neighboring_countries_repeater',
+                        'name'         => 'neighboring_countries_repeater',
+                        'label'        => 'Countries Neighboring',
+                        'type'         => 'repeater',
+                        'required'     => 1,
+                        'min'          => 1,
+                        'layout'       => 'table',
+                        'button_label' => 'Add country',
+                        'sub_fields'   => [
+                            [
+                                'key'          => 'field_neighboring_country',
+                                'label'        => 'Country',
+                                'name'         => 'neighboring_country',
+                                'type'         => 'text',
+                                'instructions' => '',
+                                'required'     => 1,
+                            ],
+                        ],
+                    ],
+                    [
+                        'key'          => 'field_countries_similar_dgp_repeater',
+                        'name'         => 'countries_similar_dgp_repeater',
+                        'label'        => 'Countries with similar GDP',
+                        'type'         => 'repeater',
+                        'required'     => 1,
+                        'min'          => 1,
+                        'layout'       => 'table',
+                        'button_label' => 'Add country',
+                        'sub_fields'   => [
+                            [
+                                'key'          => 'field_similar_dgp_country',
+                                'label'        => 'Country',
+                                'name'         => 'similar_dgp_country',
+                                'type'         => 'text',
+                                'instructions' => '',
+                                'required'     => 1,
+                            ],
+                        ],
+                    ],
                 ],
                 'location'              => [
                     [
