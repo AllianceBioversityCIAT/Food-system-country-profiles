@@ -68,10 +68,6 @@ jQuery( document ).ready( ( $ ) => {
     chartLineView( $indicator, $indicatorTitle );
   } );
 
-  $( '.note-closed' ).click( function () {
-    $( '.note-indicators' ).hide();
-  } );
-
   $( '#group-bar-chart-download' ).click( function () {
     const titleGraph = $( '#title-bar-chart' ).text();
     $( '.download-comparative-bars' ).remove();
