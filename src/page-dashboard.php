@@ -103,7 +103,6 @@ if ( class_exists( 'Timber' ) ) {
     $context[ 'post' ]              = new Timber\Post();
     $context[ 'country' ]           = $get_country;
     $context[ 'countries' ]         = $countries_terms;
-    $context[ 'note' ]              = get_field( 'note_description_indicator', $page_ID );
     $context[ 'indicatorDrivers' ]  = Timber::get_posts( $arg_indicator_driven );
     $context[ 'indicatorActors' ]   = Timber::get_posts( $arg_indicator_actors );
     $context[ 'indicatorFood' ]     = Timber::get_posts( $arg_indicator_food );
