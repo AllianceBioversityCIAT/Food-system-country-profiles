@@ -27,6 +27,9 @@
             </div>
             <div class="status">
                 <span class="{{ indicator.meta( 'country_final_status' ) }}">{{ indicator.meta( 'country_final_status' )|capitalize }}</span>
+                <span class="comparison-world {{ indicator.meta( 'country_better_than_world' ) == 'true' ? 'better' : 'worse' }} ">
+                    {{ indicator.meta( 'country_comparison_with_world' )|capitalize }}
+                </span>
             </div>
         </div>
     {% endfor %}
