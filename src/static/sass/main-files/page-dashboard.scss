@@ -780,6 +780,7 @@ body {
                   display: flex;
                   justify-content: center;
                   align-items: center;
+                  flex-direction: column;
 
                   span {
                     border-radius: 12.5px;
@@ -803,6 +804,22 @@ body {
                     &.unchanged {
                       background-color: #E4E4E4;
                       color: #6C6C6C;
+                    }
+                  }
+
+                  span.comparison-world {
+                    font-family: 'Mulish';
+                    margin-top: 9px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 15px;
+
+                    &.better {
+                      color: #18CD87;
+                    }
+
+                    &.worse {
+                      color: #F8726C;
                     }
                   }
                 }
@@ -832,6 +849,16 @@ body {
 
                     .period {
                       color: #AEAEAE;
+                    }
+                  }
+
+                  .status span.comparison-world {
+                    &.better {
+                      color: #15E897;
+                    }
+
+                    &.worse {
+                      color: #F27E79;
                     }
                   }
                 }

@@ -91,11 +91,11 @@
                     </div>
                     <div class="grid-indicators-graph">
                         <div class="grid-status-bar">
-                            {{ cardComponent.component( 'Drivers', componentDrivers, true ) }}
-                            {{ cardComponent.component( 'Actors and activities', componentActors ) }}
-                            {{ cardComponent.component( 'Food environment', componentFood ) }}
-                            {{ cardComponent.component( 'Consumer behavior', componentConsumer ) }}
-                            {{ cardComponent.component( 'Outcomes', componentOutcomes ) }}
+                            {{ cardComponent.component( 'Drivers', componentDrivers, 'tab-drivers', true ) }}
+                            {{ cardComponent.component( 'Actors and activities', componentActors, 'tab-actors-activities' ) }}
+                            {{ cardComponent.component( 'Food environment', componentFood, 'tab-food-environment' ) }}
+                            {{ cardComponent.component( 'Consumer behavior', componentConsumer, 'tab-consumer-behavior' ) }}
+                            {{ cardComponent.component( 'Outcomes', componentOutcomes, 'tab-outcomes' ) }}
                         </div>
                         <div id="grid-graph-bar" class="grid-graph-bar">
                             <p id="graph-bar-title" class="graph-bar-title"></p>
@@ -143,17 +143,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <i id="bar-chart-download" aria-hidden="true" class="fas fa-download click-download"></i>
+                                <i id="bar-chart-download" aria-hidden="true"
+                                   class="fas fa-download click-download"></i>
                             </div>
                         </div>
                         <div class="grid-tab-indicators">
                             <div class="indicators-tabs">
                                 <ul class="tabs">
-                                    <li><a href="#indicator-drivers">Drivers</a></li>
-                                    <li><a href="#indicator-actors-activities">Actors and activities</a></li>
-                                    <li><a href="#indicator-food-environment">Food environment</a></li>
-                                    <li><a href="#indicator-consumer-behavior">Consumer behavior</a></li>
-                                    <li><a href="#indicator-outcomes">Outcomes</a></li>
+                                    <li id="tab-drivers" data-component-id="component-drivers"><a href="#indicator-drivers">Drivers</a></li>
+                                    <li id="tab-actors-activities" data-component-id="component-actors-and-activities"><a href="#indicator-actors-activities">Actors and activities</a></li>
+                                    <li id="tab-food-environment" data-component-id="component-food-environment"><a href="#indicator-food-environment">Food environment</a></li>
+                                    <li id="tab-consumer-behavior" data-component-id="component-consumer-behavior"><a href="#indicator-consumer-behavior">Consumer behavior</a></li>
+                                    <li id="tab-outcomes" data-component-id="component-outcomes"><a href="#indicator-outcomes">Outcomes</a></li>
                                 </ul>
 
                                 <div class="tab_container">

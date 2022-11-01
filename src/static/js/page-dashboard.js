@@ -47,14 +47,26 @@ jQuery( document ).ready( ( $ ) => {
   $( '.component-status' ).click( function () {
     $( '.component-status' ).removeClass( 'active' );
     $( this ).addClass( "active" );
-  } );
+    var $tabId = $( this ).attr( 'data-tab-id' );
 
-  $( '.component-status' ).click( function () {
-    $( '.component-status' ).removeClass( 'active' );
-    $( this ).addClass( "active" );
+    $( "ul.tabs li" ).removeClass( "active" ); //Remove any "active" class
+    $( '#' + $tabId ).addClass( "active" ); //Add "active" class to selected tab
+
+    $( ".tab_content" ).hide(); //Hide all tab content
+    var $tabContentId = $( '#' + $tabId ).find( "a" ).attr( "href" );
+    $( $tabContentId ).fadeIn(); //Fade in the active ID content
+
+    $( '.indicator-option' ).removeClass( 'active' );
+    $( $tabContentId + ' .indicator-option:first' ).addClass( "active" );
+
     var $component      = JSON.parse( $( this ).attr( 'data-component' ) );
     var $componentTitle = $( this ).attr( 'data-component-title' );
 
+    var $indicator      = JSON.parse( $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator' ) );
+    var $indicatorTitle = $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator-title' );
+
+    chartGroupBar( $indicator, $indicatorTitle, );
+    chartLineView( $indicator, $indicatorTitle );
     chartBarView( $component, $componentTitle );
   } );
 
@@ -162,6 +174,22 @@ jQuery( document ).ready( ( $ ) => {
     var activeTab = $( this ).find( "a" ).attr( "href" ); //Find the href attribute value to identify the active tab +
                                                           // content
     $( activeTab ).fadeIn(); //Fade in the active ID content
+
+    var $componentId    = $( this ).attr( 'data-component-id' );
+    var $component      = JSON.parse( $( '#' + $componentId ).attr( 'data-component' ) );
+    var $componentTitle = $( '#' + $componentId ).attr( 'data-component-title' );
+    $( '.component-status' ).removeClass( 'active' );
+    $( '#' + $componentId ).addClass( "active" );
+
+    $( '.indicator-option' ).removeClass( 'active' );
+    $( activeTab + ' .indicator-option:first' ).addClass( "active" );
+    var $indicator      = JSON.parse( $( activeTab + ' .indicator-option:first' ).attr( 'data-indicator' ) );
+    var $indicatorTitle = $( activeTab + ' .indicator-option:first' ).attr( 'data-indicator-title' );
+
+    chartGroupBar( $indicator, $indicatorTitle, );
+    chartLineView( $indicator, $indicatorTitle );
+    chartBarView( $component, $componentTitle );
+
     return false;
   } );
 

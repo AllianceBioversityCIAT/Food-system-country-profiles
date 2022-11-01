@@ -91,7 +91,6 @@ function wp_update_fields_indicators( $post_id ) {
             update_field( 'country_difference', $c_calculated_values[ 'difference' ], $post_id );
             update_field( 'country_growth_rate', $c_calculated_values[ 'growth_rate' ], $post_id );
             update_field( 'country_final_status', $c_calculated_values[ 'final_status' ], $post_id );
-            update_field( 'country_consolidated_value', $c_calculated_values[ 'consolidated' ], $post_id );
 
             // Fields Geographic neighbors.
             $gn_calculated_values = fscp_calculate_group_indicators( $fields[ 'gn_initial_measure' ], $fields[ 'gn_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
@@ -119,6 +118,15 @@ function wp_update_fields_indicators( $post_id ) {
             update_field( 'ga_growth_rate', $ga_calculated_values[ 'growth_rate' ], $post_id );
             update_field( 'ga_final_status', $ga_calculated_values[ 'final_status' ], $post_id );
             update_field( 'ga_consolidated_value', $ga_calculated_values[ 'consolidated' ], $post_id );
+
+            $country_better_than_world = fscp_country_better_than_world( $fields[ 'country_last_measure' ], $fields[ 'ga_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
+            update_field( 'country_better_than_world', $country_better_than_world, $post_id );
+
+            $c_score_better = better_world_value( $country_better_than_world );
+            update_field( 'country_score_better', $c_score_better, $post_id );
+
+            $c_comparison_world = fscp_comparison_with_world_average( $country_better_than_world, $c_calculated_values[ 'final_status' ] );
+            update_field( 'country_comparison_with_world', $c_comparison_world, $post_id );
         }
     }
 
@@ -155,6 +163,15 @@ function final_status_growth( $growth_value, $type_growth ) {
 function consolidated_value( $status_growth ) {
 
     if ( $status_growth === 'deteriorate' ) {
+        return -1;
+    }
+
+    return 0;
+}
+
+function better_world_value( $better_than_world ) {
+
+    if ( $better_than_world === 'false' ) {
         return -1;
     }
 
@@ -202,9 +219,9 @@ function fscp_filter_cars_by_taxonomies( $post_type, $which ) {
 add_action( 'restrict_manage_posts', 'fscp_filter_cars_by_taxonomies', 10, 2 );
 
 function fscp_calculate_group_indicators( $initial_measure, $last_measure, $type_growth ) {
-    $calculate_result = [ 'difference' => 0, 'growth_rate' => 0, 'final_status' => 0, 'consolidated' => 0 ];
+    $calculate_result = [ 'difference' => 0, 'growth_rate' => 0, 'final_status' => 0, 'consolidated' => 0, 'score_indicator' => '' ];
 
-    if ( $last_measure == 0 && $initial_measure == 0  ) {
+    if ( $last_measure == 0 && $initial_measure == 0 ) {
         $calculate_result[ 'difference' ]   = 0;
         $calculate_result[ 'growth_rate' ]  = 0;
         $calculate_result[ 'final_status' ] = final_status_growth( $calculate_result[ 'growth_rate' ], $type_growth );
@@ -230,12 +247,12 @@ function fscp_calculate_component_value( $component, $count ) {
     $component_result = [ 'c' => $count, 'gn' => $count, 'gdp' => $count, 'ga' => $count, 'total_component' => $count ];
 
     foreach ( $component as $value ) {
-        $component_result[ 'c' ]   = $component_result[ 'c' ] + ( $value->custom[ 'country_consolidated_value' ] );
+        $component_result[ 'c' ]   = $component_result[ 'c' ] + ( $value->custom[ 'country_score_better' ] );
         $component_result[ 'gn' ]  = $component_result[ 'gn' ] + ( $value->custom[ 'gn_consolidated_value' ] );
         $component_result[ 'gdp' ] = $component_result[ 'gdp' ] + ( $value->custom[ 'gdp_consolidated_value' ] );
         $component_result[ 'ga' ]  = $component_result[ 'ga' ] + ( $value->custom[ 'ga_consolidated_value' ] );
-    }
 
+    }
     return $component_result;
 }
 
@@ -245,13 +262,13 @@ function fscp_calculate_component_value( $component, $count ) {
  * @param $valid (mixed) Whether or not the value is valid (boolean) or a custom error message (string).
  * @param $value (mixed) The field value.
  * @param $field (array) The field array containing all settings.
- * @param $input  (string) The field DOM element name attribute.
+ * @param $input (string) The field DOM element name attribute.
  *
  * @return mixed Get the text valid.
  */
 function fscp_acf_validate_value_number( $valid, $value, $field, $input ) {
 
-    if (!preg_match('/^(?!-0(\.0+)?$)-?(0|[1-9]\d*)(\.\d+)?$/', $value)){
+    if ( !preg_match( '/^(?!-0(\.0+)?$)-?(0|[1-9]\d*)(\.\d+)?$/', $value ) ) {
         $valid = __( 'Only numbers are allowed in this field.' );
     }
 
@@ -259,4 +276,31 @@ function fscp_acf_validate_value_number( $valid, $value, $field, $input ) {
     return $valid;
 }
 
-add_filter('acf/validate_value/type=number', 'fscp_acf_validate_value_number', 10, 4);
+add_filter( 'acf/validate_value/type=number', 'fscp_acf_validate_value_number', 10, 4 );
+
+function fscp_country_better_than_world( $c_last_measure, $ga_last_measure, $type_growth ) {
+
+    if ( ( ( $type_growth === 'normal' ) && ( $c_last_measure >= $ga_last_measure ) ) || ( ( $type_growth === 'inverted' ) && ( $c_last_measure <= $ga_last_measure ) ) ) {
+        return 'true';
+    }
+
+    return 'false';
+}
+
+function fscp_comparison_with_world_average( $country_better, $c_final_status ) {
+
+    if ( ( $c_final_status === 'improve' && $country_better === 'true' ) || ( $c_final_status === 'unchanged' && $country_better === 'true' ) ) {
+        return 'and doing better than the World Average';
+
+    } else if ( ( $c_final_status === 'improve' && $country_better === 'false' ) || ( $c_final_status === 'unchanged' && $country_better === 'false' ) ) {
+        return 'but doing worse than the World Average';
+
+    } else if ( $c_final_status === 'deteriorate' && $country_better === 'true' ) {
+        return 'but doing better than the World Average';
+
+    } else if ( $c_final_status === 'deteriorate' && $country_better === 'false' ) {
+        return 'and doing worse than the World Average';
+    }
+
+    return;
+}

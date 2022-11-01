@@ -7,8 +7,10 @@ jQuery( document ).ready( ( $ ) => {
       // Fields Country
       $( '#acf-field_country_difference' ).attr( 'readonly', true );
       $( '#acf-field_country_growth_rate' ).attr( 'readonly', true );
-      $( '#acf-field_country_consolidated_value' ).attr( 'readonly', true );
+      $( '#acf-field_country_score_better' ).attr( 'readonly', true );
       $( '#acf-field_country_final_status' ).attr( 'readonly', true );
+      $( '#acf-field_country_better_than_world' ).attr( 'readonly', true );
+      $( '#acf-field_country_comparison_with_world' ).attr( 'readonly', true );
 
       // Fields Geographic neighbors.
       $( '#acf-field_gn_difference' ).attr( 'readonly', true );
