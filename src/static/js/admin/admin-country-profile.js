@@ -17,12 +17,16 @@ jQuery( document ).ready( ( $ ) => {
       $( '#acf-field_gn_growth_rate' ).attr( 'readonly', true );
       $( '#acf-field_gn_consolidated_value' ).attr( 'readonly', true );
       $( '#acf-field_gn_final_status' ).attr( 'readonly', true );
+      $( '#acf-field_gn_score_better' ).attr( 'readonly', true );
+      $( '#acf-field_gn_better_than_world' ).attr( 'readonly', true );
 
       // Fields Countries with similar GDP.
       $( '#acf-field_gdp_difference' ).attr( 'readonly', true );
       $( '#acf-field_gdp_growth_rate' ).attr( 'readonly', true );
       $( '#acf-field_gdp_consolidated_value' ).attr( 'readonly', true );
       $( '#acf-field_gdp_final_status' ).attr( 'readonly', true );
+      $( '#acf-field_gdp_score_better' ).attr( 'readonly', true );
+      $( '#acf-field_gdp_better_than_world' ).attr( 'readonly', true );
 
       // Fields Global average.
       $( '#acf-field_ga_difference' ).attr( 'readonly', true );

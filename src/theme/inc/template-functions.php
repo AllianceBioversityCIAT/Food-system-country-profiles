@@ -92,6 +92,15 @@ function wp_update_fields_indicators( $post_id ) {
             update_field( 'country_growth_rate', $c_calculated_values[ 'growth_rate' ], $post_id );
             update_field( 'country_final_status', $c_calculated_values[ 'final_status' ], $post_id );
 
+            $country_better_than_world = fscp_country_better_than_world( $fields[ 'country_last_measure' ], $fields[ 'ga_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
+            update_field( 'country_better_than_world', $country_better_than_world, $post_id );
+
+            $c_score_better = better_world_value( $country_better_than_world );
+            update_field( 'country_score_better', $c_score_better, $post_id );
+
+            $c_comparison_world = fscp_comparison_with_world_average( $country_better_than_world, $c_calculated_values[ 'final_status' ] );
+            update_field( 'country_comparison_with_world', $c_comparison_world, $post_id );
+
             // Fields Geographic neighbors.
             $gn_calculated_values = fscp_calculate_group_indicators( $fields[ 'gn_initial_measure' ], $fields[ 'gn_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
 
@@ -99,7 +108,12 @@ function wp_update_fields_indicators( $post_id ) {
             update_field( 'gn_difference', $gn_calculated_values[ 'difference' ], $post_id );
             update_field( 'gn_growth_rate', $gn_calculated_values[ 'growth_rate' ], $post_id );
             update_field( 'gn_final_status', $gn_calculated_values[ 'final_status' ], $post_id );
-            update_field( 'gn_consolidated_value', $gn_calculated_values[ 'consolidated' ], $post_id );
+
+            $gn_better_than_world = fscp_country_better_than_world( $fields[ 'gn_last_measure' ], $fields[ 'ga_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
+            update_field( 'gn_better_than_world', $gn_better_than_world, $post_id );
+
+            $gn_score_better = better_world_value( $gn_better_than_world );
+            update_field( 'gn_score_better', $gn_score_better, $post_id );
 
             // Fields Countries with similar GDP.
             $gdp_calculated_values = fscp_calculate_group_indicators( $fields[ 'gdp_initial_measure' ], $fields[ 'gdp_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
@@ -108,7 +122,12 @@ function wp_update_fields_indicators( $post_id ) {
             update_field( 'gdp_difference', $gdp_calculated_values[ 'difference' ], $post_id );
             update_field( 'gdp_growth_rate', $gdp_calculated_values[ 'growth_rate' ], $post_id );
             update_field( 'gdp_final_status', $gdp_calculated_values[ 'final_status' ], $post_id );
-            update_field( 'gdp_consolidated_value', $gdp_calculated_values[ 'consolidated' ], $post_id );
+
+            $gdp_better_than_world = fscp_country_better_than_world( $fields[ 'gdp_last_measure' ], $fields[ 'ga_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
+            update_field( 'gdp_better_than_world', $gdp_better_than_world, $post_id );
+
+            $gdp_score_better = better_world_value( $gdp_better_than_world );
+            update_field( 'gdp_score_better', $gdp_score_better, $post_id );
 
             // Fields Global average.
             $ga_calculated_values = fscp_calculate_group_indicators( $fields[ 'ga_initial_measure' ], $fields[ 'ga_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
@@ -118,15 +137,6 @@ function wp_update_fields_indicators( $post_id ) {
             update_field( 'ga_growth_rate', $ga_calculated_values[ 'growth_rate' ], $post_id );
             update_field( 'ga_final_status', $ga_calculated_values[ 'final_status' ], $post_id );
             update_field( 'ga_consolidated_value', $ga_calculated_values[ 'consolidated' ], $post_id );
-
-            $country_better_than_world = fscp_country_better_than_world( $fields[ 'country_last_measure' ], $fields[ 'ga_last_measure' ], $fields[ 'type_growth_indicator' ][ 'value' ] );
-            update_field( 'country_better_than_world', $country_better_than_world, $post_id );
-
-            $c_score_better = better_world_value( $country_better_than_world );
-            update_field( 'country_score_better', $c_score_better, $post_id );
-
-            $c_comparison_world = fscp_comparison_with_world_average( $country_better_than_world, $c_calculated_values[ 'final_status' ] );
-            update_field( 'country_comparison_with_world', $c_comparison_world, $post_id );
         }
     }
 
@@ -248,8 +258,8 @@ function fscp_calculate_component_value( $component, $count ) {
 
     foreach ( $component as $value ) {
         $component_result[ 'c' ]   = $component_result[ 'c' ] + ( $value->custom[ 'country_score_better' ] );
-        $component_result[ 'gn' ]  = $component_result[ 'gn' ] + ( $value->custom[ 'gn_consolidated_value' ] );
-        $component_result[ 'gdp' ] = $component_result[ 'gdp' ] + ( $value->custom[ 'gdp_consolidated_value' ] );
+        $component_result[ 'gn' ]  = $component_result[ 'gn' ] + ( $value->custom[ 'gn_score_better' ] );
+        $component_result[ 'gdp' ] = $component_result[ 'gdp' ] + ( $value->custom[ 'gdp_score_better' ] );
         $component_result[ 'ga' ]  = $component_result[ 'ga' ] + ( $value->custom[ 'ga_consolidated_value' ] );
 
     }

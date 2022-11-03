@@ -1,3 +1,28 @@
 @import "variables-site/version";
 
 @import "variables-site/variables-site";
+
+body {
+  .elementor-location-header .elementor-element
+  .elementor-widget-nav-menu .elementor-nav-menu .current-menu-parent a.has-submenu {
+    color: #8FFA8C;
+  }
+
+  &.page-template-page-countries.page-template-page-countries-php {
+    .elementor-location-header .elementor-element
+    .elementor-widget-nav-menu .elementor-nav-menu .county-profiles-pages {
+
+      a.has-submenu {
+        color: #8FFA8C;
+      }
+
+      ul.sub-menu li:first-child {
+        background-color: #212130;
+
+        a.elementor-sub-item {
+          color: #8FFA8C;
+        }
+      }
+    }
+  }
+}
