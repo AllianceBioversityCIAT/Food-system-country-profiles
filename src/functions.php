@@ -22,6 +22,8 @@ function main_theme_scripts() {
     $css_name      = "/static/css/$template_name.css";
     $js_name       = "/static/js/$template_name.min.js";
 
+    wp_enqueue_style( 'fscp-css-style-main', get_stylesheet_directory_uri() . '/style.css', array(), _S_VERSION );
+
     if ( file_exists( $path . $css_name ) ) {
 
         //CSS template_name
