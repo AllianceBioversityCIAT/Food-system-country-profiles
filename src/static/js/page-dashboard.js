@@ -550,12 +550,19 @@ jQuery( document ).ready( ( $ ) => {
         ]
       },
       options: {
-        events: [],
+        //events: [],
         responsive: true,
         plugins: {
           legend: {
             display: false,
           },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return ' ' + yLabels[ context.parsed.y ];
+              },
+            }
+          }
         },
         scales: {
           y: {
