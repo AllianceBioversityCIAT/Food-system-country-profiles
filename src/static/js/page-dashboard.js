@@ -17,6 +17,13 @@ jQuery( document ).ready( ( $ ) => {
     'concerning': 'rgba(188, 68, 0, 1)',
     'very-concerning': 'rgba(188, 23, 0, 1)'
   };
+  const componentStatus = {
+    5: 'excellent',
+    4: 'good',
+    3: 'fair',
+    2: 'concerning',
+    1: 'very-concerning'
+  };
   const barGroupContainer = document.getElementById( 'bar-chart-grouped' );
   const lineContainer     = document.getElementById( 'line-chart' );
   const radarContainer    = document.getElementById( 'radar-chart' ).getContext( "2d" );
@@ -35,7 +42,6 @@ jQuery( document ).ready( ( $ ) => {
   const firstIndicatorSelected   = $( '#first-indicator-selected' );
   const titleIndicatorSelected   = firstIndicatorSelected.attr( 'data-indicator-title' );
   const contentIndicatorSelected = JSON.parse( firstIndicatorSelected.attr( 'data-indicator' ) );
-  chartGroupBar( contentIndicatorSelected, titleIndicatorSelected, true );
   chartLineView( contentIndicatorSelected, titleIndicatorSelected, true );
   createChartRadar();
 
@@ -65,7 +71,6 @@ jQuery( document ).ready( ( $ ) => {
     var $indicator      = JSON.parse( $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator' ) );
     var $indicatorTitle = $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator-title' );
 
-    chartGroupBar( $indicator, $indicatorTitle, );
     chartLineView( $indicator, $indicatorTitle );
     chartBarView( $component, $componentTitle );
   } );
@@ -76,28 +81,7 @@ jQuery( document ).ready( ( $ ) => {
     var $indicator      = JSON.parse( $( this ).attr( 'data-indicator' ) );
     var $indicatorTitle = $( this ).attr( 'data-indicator-title' );
 
-    chartGroupBar( $indicator, $indicatorTitle, );
     chartLineView( $indicator, $indicatorTitle );
-  } );
-
-  $( '#group-bar-chart-download' ).click( function () {
-    const titleGraph = $( '#title-bar-chart' ).text();
-    $( '.download-comparative-bars' ).remove();
-
-    html2canvas( document.getElementById( 'graph-comparative-bars' ), {
-      allowTaint: true,
-      useCORS: true,
-      backgroundColor: 'rgba(255, 255, 255, 1)',
-      removeContainer: true,
-    } ).then( function ( canvas ) {
-      var anchorTag       = document.createElement( 'a' );
-      anchorTag.className = 'download-comparative-bars';
-      document.body.appendChild( anchorTag );
-      anchorTag.download = `${ titleGraph } - Comparative Bars.jpg`;
-      anchorTag.href     = canvas.toDataURL();
-      anchorTag.target   = '_blank';
-      anchorTag.click();
-    } );
   } );
 
   $( '#line-chart-download' ).click( function () {
@@ -186,123 +170,11 @@ jQuery( document ).ready( ( $ ) => {
     var $indicator      = JSON.parse( $( activeTab + ' .indicator-option:first' ).attr( 'data-indicator' ) );
     var $indicatorTitle = $( activeTab + ' .indicator-option:first' ).attr( 'data-indicator-title' );
 
-    chartGroupBar( $indicator, $indicatorTitle, );
     chartLineView( $indicator, $indicatorTitle );
     chartBarView( $component, $componentTitle );
 
     return false;
   } );
-
-  /**
-   * This function updates the comparative bar chart with the new data for the selected indicator.
-   *
-   * @param indicator Object Get indicator data.
-   * @param indicatorTitle String Indicator Title.
-   * @param firstView Boolean If the indicator to be displayed is the first one.
-   */
-  function chartGroupBar( indicator, indicatorTitle, firstView ) {
-    barGroupXLabels        = {
-      0: `${ indicator.period_initial }  ${ indicator.period_recent }`,
-      1: `${ indicator.period_initial }  ${ indicator.period_recent }`,
-      2: `${ indicator.period_initial }  ${ indicator.period_recent }`,
-      3: `${ indicator.period_initial }  ${ indicator.period_recent }`,
-    }
-    dataSetInitialGroupBar = [ indicator.country_initial_measure, indicator.gn_initial_measure, indicator.gdp_initial_measure, indicator.ga_initial_measure ];
-    dataSetLastGroupBar    = [ indicator.country_last_measure, indicator.gn_last_measure, indicator.gdp_last_measure, indicator.ga_last_measure ];
-    $( '#title-bar-chart' ).text( indicatorTitle );
-
-    // Destroys a specific chart instance.
-    if ( !firstView ) {
-      chartBarGroup.destroy();
-    }
-
-    // We re-create the graph instance.
-    createBarGroupChart(
-      chartLabels,
-      indicator.period_initial,
-      indicator.period_recent,
-      dataSetInitialGroupBar,
-      dataSetLastGroupBar,
-      barGroupColors,
-      barGroupXLabels
-    );
-  }
-
-  /**
-   * Creates a bar chart image with the indicator data.
-   *
-   * @param barLabels Array Get titles labels.
-   * @param dataLabelInitial String Initial indicator value.
-   * @param dataLabelLAst String Final indicator value.
-   * @param dataInitial Array Get initial indicator data.
-   * @param dataLast Array Get final indicator data.
-   * @param colors Array Get color bars.
-   * @param xLabels Array Get label data.
-   */
-  function createBarGroupChart( barLabels, dataLabelInitial, dataLabelLAst, dataInitial, dataLast, colors, xLabels ) {
-    const $borderDashInit  = 10;
-    const $borderDashFinal = 2;
-    const $barPercentage   = 0.2;
-    const $borderRadius    = 8;
-
-    chartBarGroup = new Chart( barGroupContainer, {
-      type: 'bar',
-      data: {
-        labels: barLabels,
-        datasets: [
-          {
-            label: dataLabelInitial,
-            backgroundColor: colors,
-            data: dataInitial,
-            barPercentage: $barPercentage,
-            borderRadius: $borderRadius,
-            borderSkipped: false,
-          }, {
-            label: dataLabelLAst,
-            backgroundColor: colors,
-            data: dataLast,
-            barPercentage: $barPercentage,
-            borderRadius: $borderRadius,
-            borderSkipped: false,
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          y: {
-            grid: {
-              borderDash: [ $borderDashInit, $borderDashFinal ]
-            }
-          },
-          x: {
-            beginAtZero: true,
-            suggestedMin: 0,
-            suggestedMax: 3,
-            ticks: {
-              font: {
-                family: 'Roboto',
-                size: 12,
-              },
-              color: '#3F3F51',
-              callback: function ( value, index, values ) {
-                return xLabels[ value ];
-              }
-            },
-            grid: {
-              display: false,
-              borderDash: [ $borderDashInit, $borderDashFinal ]
-            }
-          },
-        }
-      }
-    } );
-  }
 
   /**
    * This function updates the line chart with the new data for the selected indicator.
@@ -473,6 +345,14 @@ jQuery( document ).ready( ( $ ) => {
           legend: {
             display: false,
           },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const number = convertPercentage( context.parsed.r );
+                return ' ' + componentStatus[ number ];
+              },
+            }
+          }
         },
         scales: {
           r: {

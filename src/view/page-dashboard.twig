@@ -35,6 +35,47 @@
                             <p>Learn more about the pilot project in <a
                                         href="{{ countryFields.narrative_page }}">{{ country|capitalize }}</a></p>
                         </div>
+                        <div class="grid-graph-comparative-bars">
+                            <div class="col">
+                                <div class="tabs">
+                                    <div class="tab">
+                                        <input type="radio" class="sfsc-radio-component" id="radio-driven" name="rd" checked>
+                                        <label class="tab-label" for="radio-driven">
+                                            {{ post.meta( 'dash_driver_title_text' ) }}
+                                        </label>
+                                        <div class="tab-content">{{ post.meta( 'dash_driver_description' ) }}</div>
+                                    </div>
+                                    <div class="tab">
+                                        <input type="radio" class="sfsc-radio-component" id="radio-actors" name="rd">
+                                        <label class="tab-label" for="radio-actors">
+                                            {{ post.meta( 'dash_actors_title_text' ) }}
+                                        </label>
+                                        <div class="tab-content">{{ post.meta( 'dash_actors_description' ) }}</div>
+                                    </div>
+                                    <div class="tab">
+                                        <input type="radio" class="sfsc-radio-component" id="radio-environment" name="rd">
+                                        <label class="tab-label" for="radio-environment">
+                                            {{ post.meta( 'dash_environment_title_text' ) }}
+                                        </label>
+                                        <div class="tab-content">{{ post.meta( 'dash_environment_description' ) }}</div>
+                                    </div>
+                                    <div class="tab">
+                                        <input type="radio" class="sfsc-radio-component" id="radio-behavior" name="rd">
+                                        <label class="tab-label" for="radio-behavior">
+                                            {{ post.meta( 'dash_behavior_title_text' ) }}
+                                        </label>
+                                        <div class="tab-content">{{ post.meta( 'dash_behavior_description' ) }}</div>
+                                    </div>
+                                    <div class="tab">
+                                        <input type="radio" class="sfsc-radio-component" id="radio-outcomes" name="rd">
+                                        <label class="tab-label" for="radio-outcomes">
+                                            {{ post.meta( 'dash_outcomes_title_text' ) }}
+                                        </label>
+                                        <div class="tab-content">{{ post.meta( 'dash_outcomes_description' ) }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="grid-graph-radar">
                             <div class="title-download">
                                 <p>{{ country|capitalize }}</p>
@@ -44,27 +85,6 @@
                             <div id="graph-radar" class="graph-radar">
                                 <canvas id="radar-chart" width="410" height="410"
                                         style="background-color: #f7f8fc;"></canvas>
-                            </div>
-                        </div>
-                        <div class="grid-graph-comparative-bars">
-                            <div class="title-download">
-                                <p id="title-bar-chart"></p>
-                                <i id="group-bar-chart-download" aria-hidden="true"
-                                   class="fas fa-download click-download"></i>
-                            </div>
-                            <div id="graph-comparative-bars" class="graph-comparative-bars">
-                                <canvas id="bar-chart-grouped" width="410" height="310"></canvas>
-                                <div class="graph-bars-label">
-                                    <div class="bar-label"><i
-                                                class="fas fa-circle label-one"></i><span>{{ country|capitalize }}</span>
-                                    </div>
-                                    <div class="bar-label"><i class="fas fa-circle label-two"></i><span>Geographic neighbors</span>
-                                    </div>
-                                    <div class="bar-label"><i class="fas fa-circle label-three"></i><span>Countries with similar GDP per capita</span>
-                                    </div>
-                                    <div class="bar-label"><i
-                                                class="fas fa-circle label-four"></i><span>World average</span></div>
-                                </div>
                             </div>
                         </div>
                         <div class="grid-graph-lineal">
