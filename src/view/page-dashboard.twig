@@ -32,41 +32,53 @@
                 <div class="content-graph">
                     <div class="grid-left-graph">
                         <div class="grid-narrative">
-                            <p>Learn more about the pilot project in <a
-                                        href="{{ countryFields.narrative_page }}">{{ country|capitalize }}</a></p>
+                            <p>Learn more about the pilot project in
+                                <a href="{{ countryFields.narrative_page }}">{{ country|capitalize }}</a></p>
                         </div>
                         <div class="grid-graph-comparative-bars">
                             <div class="col">
                                 <div class="tabs">
-                                    <div class="tab">
-                                        <input type="radio" class="sfsc-radio-component" id="radio-driven" name="rd" checked>
+                                    <div id="accordion-drivers" class="tab sfsc-accordion"
+                                         data-tab-id="tab-drivers"
+                                         data-component-id="component-drivers">
+                                        <input type="radio" class="sfsc-radio-component" id="radio-driven" name="rd"
+                                               checked="checked">
                                         <label class="tab-label" for="radio-driven">
                                             {{ post.meta( 'dash_driver_title_text' ) }}
                                         </label>
                                         <div class="tab-content">{{ post.meta( 'dash_driver_description' ) }}</div>
                                     </div>
-                                    <div class="tab">
+                                    <div id="accordion-actors-activities" class="tab sfsc-accordion"
+                                         data-tab-id="tab-actors-activities"
+                                         data-component-id="component-actors-and-activities">
                                         <input type="radio" class="sfsc-radio-component" id="radio-actors" name="rd">
                                         <label class="tab-label" for="radio-actors">
                                             {{ post.meta( 'dash_actors_title_text' ) }}
                                         </label>
                                         <div class="tab-content">{{ post.meta( 'dash_actors_description' ) }}</div>
                                     </div>
-                                    <div class="tab">
-                                        <input type="radio" class="sfsc-radio-component" id="radio-environment" name="rd">
+                                    <div id="accordion-food-environment" class="tab sfsc-accordion"
+                                         data-tab-id="tab-food-environment"
+                                         data-component-id="component-food-environment">
+                                        <input type="radio" class="sfsc-radio-component" id="radio-environment"
+                                               name="rd">
                                         <label class="tab-label" for="radio-environment">
                                             {{ post.meta( 'dash_environment_title_text' ) }}
                                         </label>
                                         <div class="tab-content">{{ post.meta( 'dash_environment_description' ) }}</div>
                                     </div>
-                                    <div class="tab">
+                                    <div id="accordion-consumer-behavior" class="tab sfsc-accordion"
+                                         data-tab-id="tab-consumer-behavior"
+                                         data-component-id="component-consumer-behavior">
                                         <input type="radio" class="sfsc-radio-component" id="radio-behavior" name="rd">
                                         <label class="tab-label" for="radio-behavior">
                                             {{ post.meta( 'dash_behavior_title_text' ) }}
                                         </label>
                                         <div class="tab-content">{{ post.meta( 'dash_behavior_description' ) }}</div>
                                     </div>
-                                    <div class="tab">
+                                    <div id="accordion-outcomes" class="tab sfsc-accordion"
+                                         data-tab-id="tab-outcomes"
+                                         data-component-id="component-outcomes">
                                         <input type="radio" class="sfsc-radio-component" id="radio-outcomes" name="rd">
                                         <label class="tab-label" for="radio-outcomes">
                                             {{ post.meta( 'dash_outcomes_title_text' ) }}
@@ -111,11 +123,11 @@
                     </div>
                     <div class="grid-indicators-graph">
                         <div class="grid-status-bar">
-                            {{ cardComponent.component( 'Drivers', componentDrivers, 'tab-drivers', true ) }}
-                            {{ cardComponent.component( 'Actors and activities', componentActors, 'tab-actors-activities' ) }}
-                            {{ cardComponent.component( 'Food environment', componentFood, 'tab-food-environment' ) }}
-                            {{ cardComponent.component( 'Consumer behavior', componentConsumer, 'tab-consumer-behavior' ) }}
-                            {{ cardComponent.component( 'Outcomes', componentOutcomes, 'tab-outcomes' ) }}
+                            {{ cardComponent.component( 'Drivers', componentDrivers, 'tab-drivers', 'accordion-drivers', true ) }}
+                            {{ cardComponent.component( 'Actors and activities', componentActors, 'tab-actors-activities', 'accordion-actors-activities' ) }}
+                            {{ cardComponent.component( 'Food environment', componentFood, 'tab-food-environment', 'accordion-food-environment' ) }}
+                            {{ cardComponent.component( 'Consumer behavior', componentConsumer, 'tab-consumer-behavior', 'accordion-consumer-behavior' ) }}
+                            {{ cardComponent.component( 'Outcomes', componentOutcomes, 'tab-outcomes', 'accordion-outcomes' ) }}
                         </div>
                         <div id="grid-graph-bar" class="grid-graph-bar">
                             <p id="graph-bar-title" class="graph-bar-title"></p>
@@ -170,11 +182,16 @@
                         <div class="grid-tab-indicators">
                             <div class="indicators-tabs">
                                 <ul class="tabs">
-                                    <li id="tab-drivers" data-component-id="component-drivers"><a href="#indicator-drivers">Drivers</a></li>
-                                    <li id="tab-actors-activities" data-component-id="component-actors-and-activities"><a href="#indicator-actors-activities">Actors and activities</a></li>
-                                    <li id="tab-food-environment" data-component-id="component-food-environment"><a href="#indicator-food-environment">Food environment</a></li>
-                                    <li id="tab-consumer-behavior" data-component-id="component-consumer-behavior"><a href="#indicator-consumer-behavior">Consumer behavior</a></li>
-                                    <li id="tab-outcomes" data-component-id="component-outcomes"><a href="#indicator-outcomes">Outcomes</a></li>
+                                    <li id="tab-drivers" data-component-id="component-drivers" data-accordion-id='accordion-drivers'>
+                                        <a href="#indicator-drivers">Drivers</a></li>
+                                    <li id="tab-actors-activities" data-component-id="component-actors-and-activities" data-accordion-id='accordion-actors-activities'>
+                                        <a href="#indicator-actors-activities">Actors and activities</a></li>
+                                    <li id="tab-food-environment" data-component-id="component-food-environment" data-accordion-id='accordion-food-environment'>
+                                        <a href="#indicator-food-environment">Food environment</a></li>
+                                    <li id="tab-consumer-behavior" data-component-id="component-consumer-behavior" data-accordion-id='accordion-consumer-behavior'>
+                                        <a href="#indicator-consumer-behavior">Consumer behavior</a></li>
+                                    <li id="tab-outcomes" data-component-id="component-outcomes" data-accordion-id='accordion-outcomes'>
+                                        <a href="#indicator-outcomes">Outcomes</a></li>
                                 </ul>
 
                                 <div class="tab_container">

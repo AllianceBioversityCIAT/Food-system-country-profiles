@@ -1,4 +1,4 @@
-{% macro component( componentName, data, tabID, first ) %}
+{% macro component( componentName, data, tabID, accordionID, first ) %}
     {% set componentPercentage        = (( data.c / data.total_component ) * 100)|round(2, 'floor') %}
     {% set componentClass             = '' %}
     {% set componentStatusTitle       = '' %}
@@ -36,6 +36,7 @@
 
     <div id="{{ function( 'sanitize_title', 'component-' ~ componentName ) }}" class="component-status {{ componentClass }} {{ first ? 'active' }}"
          data-tab-id='{{ tabID }}'
+         data-accordion-id='{{ accordionID }}'
          data-component-title='{{ componentName }}'
          data-component-percentage='{{ componentPercentage }}'
          data-component-status='{{ function( 'sanitize_title', componentStatusTitle ) }}'
