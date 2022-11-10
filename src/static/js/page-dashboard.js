@@ -18,11 +18,11 @@ jQuery( document ).ready( ( $ ) => {
     'very-concerning': 'rgba(188, 23, 0, 1)'
   };
   const componentStatus = {
-    5: 'excellent',
-    4: 'good',
-    3: 'fair',
-    2: 'concerning',
-    1: 'very-concerning'
+    5: 'Excellent',
+    4: 'Good',
+    3: 'Fair',
+    2: 'Concerning',
+    1: 'Very Concerning'
   };
   const barGroupContainer = document.getElementById( 'bar-chart-grouped' );
   const lineContainer     = document.getElementById( 'line-chart' );
@@ -381,6 +381,9 @@ jQuery( document ).ready( ( $ ) => {
             display: false,
           },
           tooltip: {
+            bodyFont: {
+              weight: 'bold',
+            },
             callbacks: {
               label: function(context) {
                 const number = convertPercentage( context.parsed.r );
@@ -433,14 +436,14 @@ jQuery( document ).ready( ( $ ) => {
 
     $( '#graph-bar-title' ).html( $componentTitle );
 
-    const $data = groupValuePercentage( component );
+    const $data = groupValuePercentage( component, componentTitle, constantVars.country );
 
     // Destroys a specific chart instance.
     if ( !firstView ) {
       chartBar.destroy();
     }
 
-    createChartBar( yLabels, $backgroundColor, $data )
+    createChartBar( yLabels, $backgroundColor, $data.percentage, $data.toText )
   }
 
   /**
@@ -449,8 +452,9 @@ jQuery( document ).ready( ( $ ) => {
    * @param yLabels Array Get the largest Y-labels value.
    * @param $backgroundColor Array Get the largest Y-axis value.
    * @param $data Array Gets the colors for each bar.
+   * @param $toText Array Gets the text for each bar.
    */
-  function createChartBar( yLabels, $backgroundColor, $data ) {
+  function createChartBar( yLabels, $backgroundColor, $data, $toText ) {
     chartBar = new Chart( barContainer, {
       type: 'bar',
       data: {
@@ -472,11 +476,19 @@ jQuery( document ).ready( ( $ ) => {
             display: false,
           },
           tooltip: {
+            yAlign: 'bottom',
+            displayColors: false,
+            bodyFont: {
+              weight: 'bold',
+            },
             callbacks: {
               label: function(context) {
-                return ' ' + yLabels[ context.parsed.y ];
+                return $toText[ context.dataIndex ];
               },
-            }
+              title: (TooltipItem) => {
+                return '';
+              }
+            },
           }
         },
         scales: {
@@ -507,18 +519,26 @@ jQuery( document ).ready( ( $ ) => {
     } );
   }
 
-  function groupValuePercentage( data ) {
+  function groupValuePercentage( data, component, country ) {
     const percentageC   = Math.round( ( ( data.c / data.total_component ) * 100 ), -2 );
     const percentageGN  = Math.round( ( ( data.gn / data.total_component ) * 100 ), -2 );
     const percentageGDP = Math.round( ( ( data.gdp / data.total_component ) * 100 ), -2 );
     const percentageGA  = Math.round( ( ( data.ga / data.total_component ) * 100 ), -2 );
 
-    return [
-      convertPercentage( percentageC ),
-      convertPercentage( percentageGN ),
-      convertPercentage( percentageGDP ),
-      convertPercentage( percentageGA )
-    ];
+    return {
+      percentage: [
+        convertPercentage( percentageC ),
+        convertPercentage( percentageGN ),
+        convertPercentage( percentageGDP ),
+        convertPercentage( percentageGA )
+      ],
+      toText: [
+        convertPercentageToTextCountry( percentageC, component, country ),
+        convertPercentageToTextCountry( percentageGN, component, country ),
+        convertPercentageToTextCountry( percentageGDP, component, country ),
+        convertPercentageToTextWorld( percentageGA )
+      ],
+    };
   }
 
   function convertPercentage( number ) {
@@ -540,5 +560,47 @@ jQuery( document ).ready( ( $ ) => {
     }
 
     return 0
+  }
+
+  function convertPercentageToTextCountry( number, component, country ) {
+
+    if ( number >= 85 && number <= 100 ) {
+      return '85%-100% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+
+    } else if ( number >= 65 && number <= 84 ) {
+      return '65%-84% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+
+    } else if ( number >= 50 && number <= 64 ) {
+      return '50%-64% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+
+    } else if ( number >= 25 && number <= 49 ) {
+      return '25%-49% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+
+    } else if ( number >= 0 && number <= 24 ) {
+      return '0%-24% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+    }
+
+    return ''
+  }
+
+  function convertPercentageToTextWorld( number ) {
+
+    if ( number >= 85 && number <= 100 ) {
+      return '85%-100% of all indicators have improved or remained unchanged over the time period considered';
+
+    } else if ( number >= 65 && number <= 84 ) {
+      return '65%-84% of all indicators have improved or remained unchanged over the time period considered';
+
+    } else if ( number >= 50 && number <= 64 ) {
+      return '50%-64% of all indicators have improved or remained unchanged over the time period considered';
+
+    } else if ( number >= 25 && number <= 49 ) {
+      return '25%-49% of all indicators have improved or remained unchanged over the time period considered';
+
+    } else if ( number >= 0 && number <= 24 ) {
+      return '0%-24% of all indicators have improved or remained unchanged over the time period considered';
+    }
+
+    return ''
   }
 } );
