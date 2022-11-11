@@ -485,9 +485,6 @@ jQuery( document ).ready( ( $ ) => {
               label: function(context) {
                 return $toText[ context.dataIndex ];
               },
-              title: (TooltipItem) => {
-                return '';
-              }
             },
           }
         },

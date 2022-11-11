@@ -1,4 +1,4 @@
-{% macro component( componentName, data, tabID, accordionID, first ) %}
+{% macro component( componentName, data, country, tabID, accordionID, first ) %}
     {% set componentPercentage        = (( data.c / data.total_component ) * 100)|round(2, 'floor') %}
     {% set componentClass             = '' %}
     {% set componentStatusTitle       = '' %}
@@ -32,7 +32,7 @@
 
     {% endif %}
 
-    {% set componentStatusDescription = componentStatusPercentage ~ ' of all indicators for ' ~ componentName ~ ' have improved or remained unchanged over the time period considered' %}
+    {% set componentStatusDescription = componentStatusPercentage ~ ' of all indicators for ' ~ componentName ~ ' in ' ~ country ~ ' are doing better than the same indicators in the rest of the World' %}
 
     <div id="{{ function( 'sanitize_title', 'component-' ~ componentName ) }}" class="component-status {{ componentClass }} {{ first ? 'active' }}"
          data-tab-id='{{ tabID }}'
