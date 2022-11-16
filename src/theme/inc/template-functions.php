@@ -313,3 +313,15 @@ function fscp_comparison_with_world_average( $country_better, $c_final_status ) 
 
     return;
 }
+
+function normalizeDecimal($val, int $precision = 4): string
+{
+    $input = str_replace(' ', '', $val);
+    $number = str_replace(',', '.', $input);
+    if (strpos($number, '.')) {
+        $groups = explode('.', str_replace(',', '.', $number));
+        $lastGroup = array_pop($groups);
+        $number = implode('', $groups) . '.' . $lastGroup;
+    }
+    return bcadd($number, 0, $precision);
+}
