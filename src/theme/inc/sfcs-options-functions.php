@@ -12,7 +12,7 @@ function sfcs_acf_op_init() {
 
         // Add parent.
         acf_add_options_page( array(
-            'page_title'      => __( 'Theme General Settings' ),
+            'page_title'      => __( 'Create Indicators' ),
             'menu_title'      => __( 'Theme Settings' ),
             'menu_slug'       => 'sfcs-theme-general-settings',
             'capability'      => 'edit_posts',
@@ -22,23 +22,33 @@ function sfcs_acf_op_init() {
             'updated_message' => 'Options saved',
             'post_id'         => 'sfcs-theme-general-settings',
         ) );
+
+        acf_add_options_sub_page( array(
+            'page_title'      => __( 'Update Indicators' ),
+            'menu_title'      => __( 'Update Indicators' ),
+            'menu_slug'       => 'sfcs-update-indicators',
+            'capability'      => 'edit_posts',
+            'update_button'   => 'Save options',
+            'updated_message' => 'Options saved',
+            'parent_slug'     => 'sfcs-theme-general-settings',
+        ) );
     }
 }
 
 add_action( 'acf/init', 'sfcs_acf_op_init' );
 
 function acf_enqueue_admin_script_sfcs( $hook ) {
+    if ( 'toplevel_page_sfcs-theme-general-settings' == $hook || 'theme-settings_page_sfcs-update-indicators' == $hook ) {
 
-    if ( 'toplevel_page_sfcs-theme-general-settings' != $hook ) {
-        return;
+        wp_enqueue_script( 'acf-settings-page', get_stylesheet_directory_uri() . '/static/js/admin/acf-settings-page.min.js' );
+        wp_localize_script( 'acf-settings-page', 'ajax_var', array(
+            'url'          => admin_url( 'admin-ajax.php' ),
+            'nonce'        => wp_create_nonce( 'sfcs-ajax-nonce' ),
+            'fileCreation' => get_stylesheet_directory_uri() . '/static/files/creation-indicators.csv',
+        ) );
     }
 
-    wp_enqueue_script( 'acf-settings-page', get_stylesheet_directory_uri() . '/static/js/admin/acf-settings-page.min.js' );
-    wp_localize_script( 'acf-settings-page', 'ajax_var', array(
-        'url'          => admin_url( 'admin-ajax.php' ),
-        'nonce'        => wp_create_nonce( 'foresight-ajax-nonce' ),
-        'fileCreation' => get_stylesheet_directory_uri() . '/static/files/creation-indicators.csv',
-    ) );
+    return;
 }
 
 add_action( 'admin_enqueue_scripts', 'acf_enqueue_admin_script_sfcs' );
@@ -64,6 +74,7 @@ function acf_load_select_country( $field ) {
 }
 
 add_filter( 'acf/load_field/key=field_indicator_country', 'acf_load_select_country' );
+add_filter( 'acf/load_field/key=field_update_indicator_country', 'acf_load_select_country' );
 
 /**
  * This function gets the country and the csv to create the indicators.
@@ -96,6 +107,7 @@ function wp_import_csv_indicators() {
         $rows              = [];
         $ind               = [];
         $indicators        = [];
+        $term_country      = get_term_by( 'slug', $term_slug_country, 'country' );
 
         if ( !empty( $fileID ) ) {
             ob_start();
@@ -121,12 +133,14 @@ function wp_import_csv_indicators() {
 
             foreach ( $indicators as $indicator ) {
                 $term_slug_component = $indicator[ 'component' ];
+                $term_component      = get_term_by( 'slug', $term_slug_component, 'component' );
                 $post                = [
                     'post_title'  => $indicator[ 'name' ],
                     'post_type'   => 'country-profile',
                     'post_status' => 'publish',
                     'post_author' => get_current_user_id(),
                 ];
+
 
                 // Converting calculation variables to float.
                 $c_initial   = (float) normalizeDecimal( $indicator[ 'country-initial-measure' ] );
@@ -145,6 +159,8 @@ function wp_import_csv_indicators() {
                     wp_set_post_terms( $post_id, $term_slug_country, 'country' );
 
                     // Main Fields.
+                    update_field( 'country', $term_country->term_id, $post_id );
+                    update_field( 'components', $term_component->term_id, $post_id );
                     update_field( 'short_description_indicator', $indicator[ 'short-description' ], $post_id );
                     update_field( 'indicator_units', $indicator[ 'indicator-units' ], $post_id );
                     update_field( 'period_initial', $indicator[ 'period-initial' ], $post_id );
