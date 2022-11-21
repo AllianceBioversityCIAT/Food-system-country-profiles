@@ -32,7 +32,7 @@
 
     {% endif %}
 
-    {% set componentStatusDescription = componentStatusPercentage ~ ' of all indicators for ' ~ componentName ~ ' in ' ~ country ~ ' are doing better than the same indicators in the rest of the World' %}
+    {% set componentStatusDescription = componentStatusPercentage ~ ' of all indicators for ' ~ componentName ~ ' are doing better than the same indicators in the rest of the World' %}
 
     <div id="{{ function( 'sanitize_title', 'component-' ~ componentName ) }}" class="component-status {{ componentClass }} {{ first ? 'active' }}"
          data-tab-id='{{ tabID }}'
