@@ -57,7 +57,7 @@ jQuery( document ).ready( function ( $ ) {
               hiddenElement.className = 'download-update-indicators';
               hiddenElement.href      = 'data:text/csv;charset=utf-8,' + encodeURI( dataCSV );
               hiddenElement.target    = '_blank';
-              hiddenElement.download  = 'update-indicators.csv';
+              hiddenElement.download  = 'update-indicators' + selectedCountry + '.csv';
               hiddenElement.click();
             }
 

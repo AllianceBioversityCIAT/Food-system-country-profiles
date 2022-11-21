@@ -66,7 +66,7 @@ function register_custom_acf_fields_sub_settings_page() {
                         'aria-label'        => '',
                         'type'              => 'file',
                         'instructions'      => '',
-                        'required'          => 0,
+                        'required'          => 1,
                         'conditional_logic' => 0,
                         'wrapper'           => [
                             'width' => '100',
