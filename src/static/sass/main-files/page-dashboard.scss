@@ -770,10 +770,33 @@ body {
               background: #3F677A;
               border-radius: 0 0 8px 8px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+              .content-download-doc {
+                text-align: center;
+                padding-bottom: 40px;
+
+                .btn-download-doc {
+                  color: #FFFFFF;
+                  background-color: #68AACA;
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+                  border-radius: 17.5px;
+                  padding: 8px 20px;
+                  display: inline-flex;
+                  align-items: center;
+
+                  svg {
+                    margin-left: 10px;
+                  }
+
+                  &:hover {
+                    background-color: #27404c;
+                  }
+                }
+              }
             }
 
             .tab_content {
-              padding: 20px 20px 70px;
+              padding: 20px 20px 30px;
 
               .indicator-option {
                 display: grid;

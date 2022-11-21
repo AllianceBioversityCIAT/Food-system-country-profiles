@@ -64,6 +64,24 @@ function register_custom_acf_fields_taxonomy_country() {
                             ],
                         ],
                     ],
+                    [
+                        'key'               => 'field_download_doc_country',
+                        'label'             => 'Download Doc.',
+                        'name'              => 'download_doc_country',
+                        'aria-label'        => '',
+                        'type'              => 'file',
+                        'instructions'      => '',
+                        'required'          => 1,
+                        'conditional_logic' => 0,
+                        'wrapper'           => [
+                            'width' => '100',
+                        ],
+                        'return_format'     => 'array',
+                        'library'           => 'all',
+                        'min_size'          => '',
+                        'max_size'          => '',
+                        'mime_types'        => '',
+                    ],
                 ],
                 'location'              => [
                     [
