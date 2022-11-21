@@ -28,13 +28,26 @@
                     <h1 class="dashboard-title">Select a country to show indicators</h1>
                 </div>
             {% else %}
-                <h1 class="dashboard-title">You are seeing {{ country|capitalize }} food system dashboard</h1>
+                <h1 class="dashboard-title">
+                    You are seeing {{ country|capitalize }} food system dashboard
+                    <span> - Click on each of the 5 components below to see the detailed figures.</span>
+                </h1>
+                <div class="content-grid-components-status">
+                    <div class="components-status-title">
+                        <span>The five food system components compared to the world average</span>
+                    </div>
+                    <div class="components-items">
+                        <div class="grid-status-bar">
+                            {{ cardComponent.component( 'Drivers', componentDrivers, country|capitalize, 'tab-drivers', 'accordion-drivers', true ) }}
+                            {{ cardComponent.component( 'Actors and activities', componentActors, country|capitalize, 'tab-actors-activities', 'accordion-actors-activities' ) }}
+                            {{ cardComponent.component( 'Food environment', componentFood, country|capitalize, 'tab-food-environment', 'accordion-food-environment' ) }}
+                            {{ cardComponent.component( 'Consumer behavior', componentConsumer, country|capitalize, 'tab-consumer-behavior', 'accordion-consumer-behavior' ) }}
+                            {{ cardComponent.component( 'Outcomes', componentOutcomes, country|capitalize, 'tab-outcomes', 'accordion-outcomes' ) }}
+                        </div>
+                    </div>
+                </div>
                 <div class="content-graph">
                     <div class="grid-left-graph">
-                        <div class="grid-narrative">
-                            <p>Learn more about the pilot project in
-                                <a href="{{ countryFields.narrative_page }}">{{ country|capitalize }}</a></p>
-                        </div>
                         <div class="grid-graph-comparative-bars">
                             <div class="col">
                                 <div class="tabs">
@@ -122,13 +135,6 @@
                         </div>
                     </div>
                     <div class="grid-indicators-graph">
-                        <div class="grid-status-bar">
-                            {{ cardComponent.component( 'Drivers', componentDrivers, country|capitalize, 'tab-drivers', 'accordion-drivers', true ) }}
-                            {{ cardComponent.component( 'Actors and activities', componentActors, country|capitalize, 'tab-actors-activities', 'accordion-actors-activities' ) }}
-                            {{ cardComponent.component( 'Food environment', componentFood, country|capitalize, 'tab-food-environment', 'accordion-food-environment' ) }}
-                            {{ cardComponent.component( 'Consumer behavior', componentConsumer, country|capitalize, 'tab-consumer-behavior', 'accordion-consumer-behavior' ) }}
-                            {{ cardComponent.component( 'Outcomes', componentOutcomes, country|capitalize, 'tab-outcomes', 'accordion-outcomes' ) }}
-                        </div>
                         <div id="grid-graph-bar" class="grid-graph-bar">
                             <p id="graph-bar-title" class="graph-bar-title"></p>
                             <div class="graph-bar">
