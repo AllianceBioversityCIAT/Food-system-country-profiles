@@ -49,56 +49,20 @@
                 <div class="content-graph">
                     <div class="grid-left-graph">
                         <div class="grid-graph-comparative-bars">
-                            <div class="col">
-                                <div class="tabs">
-                                    <div id="accordion-drivers" class="tab sfsc-accordion"
-                                         data-tab-id="tab-drivers"
-                                         data-component-id="component-drivers">
-                                        <input type="radio" class="sfsc-radio-component" id="radio-driven" name="rd"
-                                               checked="checked">
-                                        <label class="tab-label" for="radio-driven">
-                                            {{ post.meta( 'dash_driver_title_text' ) }}
-                                        </label>
-                                        <div class="tab-content">{{ post.meta( 'dash_driver_description' ) }}</div>
-                                    </div>
-                                    <div id="accordion-actors-activities" class="tab sfsc-accordion"
-                                         data-tab-id="tab-actors-activities"
-                                         data-component-id="component-actors-and-activities">
-                                        <input type="radio" class="sfsc-radio-component" id="radio-actors" name="rd">
-                                        <label class="tab-label" for="radio-actors">
-                                            {{ post.meta( 'dash_actors_title_text' ) }}
-                                        </label>
-                                        <div class="tab-content">{{ post.meta( 'dash_actors_description' ) }}</div>
-                                    </div>
-                                    <div id="accordion-food-environment" class="tab sfsc-accordion"
-                                         data-tab-id="tab-food-environment"
-                                         data-component-id="component-food-environment">
-                                        <input type="radio" class="sfsc-radio-component" id="radio-environment"
-                                               name="rd">
-                                        <label class="tab-label" for="radio-environment">
-                                            {{ post.meta( 'dash_environment_title_text' ) }}
-                                        </label>
-                                        <div class="tab-content">{{ post.meta( 'dash_environment_description' ) }}</div>
-                                    </div>
-                                    <div id="accordion-consumer-behavior" class="tab sfsc-accordion"
-                                         data-tab-id="tab-consumer-behavior"
-                                         data-component-id="component-consumer-behavior">
-                                        <input type="radio" class="sfsc-radio-component" id="radio-behavior" name="rd">
-                                        <label class="tab-label" for="radio-behavior">
-                                            {{ post.meta( 'dash_behavior_title_text' ) }}
-                                        </label>
-                                        <div class="tab-content">{{ post.meta( 'dash_behavior_description' ) }}</div>
-                                    </div>
-                                    <div id="accordion-outcomes" class="tab sfsc-accordion"
-                                         data-tab-id="tab-outcomes"
-                                         data-component-id="component-outcomes">
-                                        <input type="radio" class="sfsc-radio-component" id="radio-outcomes" name="rd">
-                                        <label class="tab-label" for="radio-outcomes">
-                                            {{ post.meta( 'dash_outcomes_title_text' ) }}
-                                        </label>
-                                        <div class="tab-content">{{ post.meta( 'dash_outcomes_description' ) }}</div>
-                                    </div>
-                                </div>
+                            <div id="accordion-drivers" class="item-component-description active">
+                                <p><span>{{ post.meta( 'dash_driver_title_text' ) }}</span> {{ post.meta( 'dash_driver_description' ) }}</p>
+                            </div>
+                            <div id="accordion-actors-activities" class="item-component-description">
+                                <p><span>{{ post.meta( 'dash_actors_title_text' ) }}</span> {{ post.meta( 'dash_actors_description' ) }}</p>
+                            </div>
+                            <div id="accordion-food-environment" class="item-component-description">
+                                <p><span>{{ post.meta( 'dash_environment_title_text' ) }}</span> {{ post.meta( 'dash_environment_description' ) }}</p>
+                            </div>
+                            <div id="accordion-consumer-behavior" class="item-component-description">
+                                <p><span>{{ post.meta( 'dash_behavior_title_text' ) }}</span> {{ post.meta( 'dash_behavior_description' ) }}</p>
+                            </div>
+                            <div id="accordion-outcomes" class="item-component-description">
+                                <p><span>{{ post.meta( 'dash_outcomes_title_text' ) }}</span> {{ post.meta( 'dash_outcomes_description' ) }}</p>
                             </div>
                         </div>
                         <div class="grid-graph-radar">
