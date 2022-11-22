@@ -101,6 +101,7 @@ if ( class_exists( 'Timber' ) ) {
 
     $context                        = Timber::context();
     $context[ 'post' ]              = new Timber\Post();
+    $context[ 'directoryURL' ]      = get_stylesheet_directory_uri();
     $context[ 'country' ]           = $get_country;
     $context[ 'countries' ]         = $countries_terms;
     $context[ 'indicatorDrivers' ]  = Timber::get_posts( $arg_indicator_driven );

@@ -75,6 +75,10 @@ jQuery( document ).ready( ( $ ) => {
     var $accordionId = $( this ).attr( 'data-accordion-id' );
     $( '#' + $accordionId ).addClass( 'active' );
 
+    $( '.world-average-status' ).removeClass( 'active' );
+    var $worldId = $( this ).attr( 'data-world-id' );
+    $( '#' + $worldId ).addClass( 'active' );
+
     chartLineView( $indicator, $indicatorTitle );
     chartBarView( $component, $componentTitle );
   } );
@@ -177,6 +181,10 @@ jQuery( document ).ready( ( $ ) => {
     $( '.item-component-description' ).removeClass( 'active' );
     var $accordionId = $( this ).attr( 'data-accordion-id' );
     $( '#' + $accordionId ).addClass( 'active' );
+
+    $( '.world-average-status' ).removeClass( 'active' );
+    var $worldId = $( this ).attr( 'data-world-id' );
+    $( '#' + $worldId ).addClass( 'active' );
 
     chartLineView( $indicator, $indicatorTitle );
     chartBarView( $component, $componentTitle );
@@ -396,7 +404,7 @@ jQuery( document ).ready( ( $ ) => {
    * @param firstView Boolean If the indicator to be displayed is the first one.
    */
   function chartBarView( component, componentTitle, firstView ) {
-    const $componentTitle  = `<strong>${ componentTitle }</strong>  (aggregated value across the ${ component.total_component } individual indicators)`;
+    const $componentTitle  = `<strong>${ componentTitle }</strong> - aggregated value across the ${ component.total_component } individual indicators`;
     const yLabels          = {
       0: ' ',
       1: 'Very concerning',
@@ -431,7 +439,7 @@ jQuery( document ).ready( ( $ ) => {
     chartBar = new Chart( barContainer, {
       type: 'bar',
       data: {
-        labels: [ constantVars.country, [ 'Geographic', 'neighbors' ], [ 'Countries with similar', 'GDP per capita' ], 'World average' ],
+        labels: [ constantVars.country, [ 'Geographic', 'neighbors' ], [ 'Countries with similar', 'GDP per capita' ] ],
         datasets: [
           {
             label: constantVars.country,

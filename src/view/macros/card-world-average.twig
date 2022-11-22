@@ -1,0 +1,49 @@
+{% macro card( componentName, data, directoryURL, first ) %}
+    {% set componentPercentage       = (( data.ga / data.total_component ) * 100)|round(2, 'floor') %}
+    {% set worldIcon                 = '' %}
+    {% set worldStatusTitle          = '' %}
+    {% set componentStatusPercentage = '' %}
+    {% set worldStatusDescription    = '' %}
+
+    {% if ( componentPercentage >= 85 and componentPercentage <= 100 ) %}
+        {% set worldIcon             = directoryURL ~ '/static/images/improving-rapidly.svg' %}
+        {% set worldStatusTitle       = 'Improving rapidly' %}
+        {% set componentStatusPercentage = '85-100%' %}
+
+    {% elseif ( componentPercentage >= 65 and componentPercentage <= 84 ) %}
+        {% set worldIcon             = directoryURL ~ '/static/images/improving.svg' %}
+        {% set worldStatusTitle       = 'Improving' %}
+        {% set componentStatusPercentage = '65-84%' %}
+
+    {% elseif ( componentPercentage >= 50 and componentPercentage <= 64 ) %}
+        {% set worldIcon             = directoryURL ~ '/static/images/uncertain.svg' %}
+        {% set worldStatusTitle       = 'Uncertain' %}
+        {% set componentStatusPercentage = '50-64%' %}
+
+    {% elseif ( componentPercentage >= 25 and componentPercentage <= 49 ) %}
+        {% set worldIcon             = directoryURL ~ '/static/images/deteriorating.svg' %}
+        {% set worldStatusTitle       = 'Deteriorating' %}
+        {% set componentStatusPercentage = '25-49%' %}
+
+    {% else %}
+        {% set worldIcon             = directoryURL ~ '/static/images/deteriorating-rapidly.svg' %}
+        {% set worldStatusTitle       = 'Deteriorating rapidly' %}
+        {% set componentStatusPercentage = '0-24%' %}
+
+    {% endif %}
+
+    {% set worldStatusDescription = '<strong>' ~ componentStatusPercentage ~ ' of all indicators for world average</strong> have improved or remained unchanged over the time period considered.' %}
+
+    <div id="{{ function( 'sanitize_title', 'world-' ~ componentName ) }}"
+         class="world-average-status {{ first ? 'active' }}">
+        <div class="wa-card-title">
+            <h2><strong>{{ componentName }}</strong> - World Average</h2>
+        </div>
+        <div class="wa-card-body">
+            <img src="{{ worldIcon }}" width="90"/>
+            <h3>{{ worldStatusTitle }}</h3>
+            <p>{{ worldStatusDescription }}</p>
+        </div>
+
+    </div>
+{% endmacro %}
