@@ -71,9 +71,9 @@ jQuery( document ).ready( ( $ ) => {
     var $indicator      = JSON.parse( $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator' ) );
     var $indicatorTitle = $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator-title' );
 
+    $( '.item-component-description' ).removeClass( 'active' );
     var $accordionId = $( this ).attr( 'data-accordion-id' );
-    $( '.sfsc-radio-component' ).prop( 'checked', false );
-    $( '#' + $accordionId + ' input' ).prop( 'checked', true );
+    $( '#' + $accordionId ).addClass( 'active' );
 
     chartLineView( $indicator, $indicatorTitle );
     chartBarView( $component, $componentTitle );
@@ -86,33 +86,6 @@ jQuery( document ).ready( ( $ ) => {
     var $indicatorTitle = $( this ).attr( 'data-indicator-title' );
 
     chartLineView( $indicator, $indicatorTitle );
-  } );
-
-  $( '.sfsc-accordion' ).click( function () {
-    var $tabId = $( this ).attr( 'data-tab-id' );
-
-    $( "ul.tabs li" ).removeClass( "active" ); //Remove any "active" class
-    $( '#' + $tabId ).addClass( "active" ); //Add "active" class to selected tab
-
-    $( ".tab_content" ).hide(); //Hide all tab content
-    var $tabContentId = $( '#' + $tabId ).find( "a" ).attr( "href" );
-    $( $tabContentId ).show();
-
-    $( '.indicator-option' ).removeClass( 'active' );
-    $( $tabContentId + ' .indicator-option:first' ).addClass( "active" );
-
-    var $indicator      = JSON.parse( $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator' ) );
-    var $indicatorTitle = $( $tabContentId + ' .indicator-option:first' ).attr( 'data-indicator-title' );
-
-    var $componentId    = $( this ).attr( 'data-component-id' );
-    var $component      = JSON.parse( $( '#' + $componentId ).attr( 'data-component' ) );
-    var $componentTitle = $( '#' + $componentId ).attr( 'data-component-title' );
-
-    $( '.component-status' ).removeClass( 'active' );
-    $( '#' + $componentId ).addClass( "active" );
-
-    chartLineView( $indicator, $indicatorTitle );
-    chartBarView( $component, $componentTitle );
   } );
 
   $( '#line-chart-download' ).click( function () {
@@ -201,9 +174,9 @@ jQuery( document ).ready( ( $ ) => {
     var $indicator      = JSON.parse( $( activeTab + ' .indicator-option:first' ).attr( 'data-indicator' ) );
     var $indicatorTitle = $( activeTab + ' .indicator-option:first' ).attr( 'data-indicator-title' );
 
+    $( '.item-component-description' ).removeClass( 'active' );
     var $accordionId = $( this ).attr( 'data-accordion-id' );
-    $( '.sfsc-radio-component' ).prop( 'checked', false );
-    $( '#' + $accordionId + ' input.sfsc-radio-component' ).prop( 'checked', true );
+    $( '#' + $accordionId ).addClass( 'active' );
 
     chartLineView( $indicator, $indicatorTitle );
     chartBarView( $component, $componentTitle );
