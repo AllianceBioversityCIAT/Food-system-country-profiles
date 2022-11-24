@@ -1,5 +1,6 @@
 {% import "./view/macros/card-indicator.twig" as cardIndicator %}
 {% import "./view/macros/card-component.twig" as cardComponent %}
+{% import "./view/macros/card-world-average.twig" as cardWorld %}
 
 <section class="content-dashboard-country-profile mt-5" style="overflow-x: hidden; overflow-y: hidden;">
     <div class="container-dashboard">
@@ -38,11 +39,11 @@
                     </div>
                     <div class="components-items">
                         <div class="grid-status-bar">
-                            {{ cardComponent.component( 'Drivers', componentDrivers, country|capitalize, 'tab-drivers', 'accordion-drivers', true ) }}
-                            {{ cardComponent.component( 'Actors and activities', componentActors, country|capitalize, 'tab-actors-activities', 'accordion-actors-activities' ) }}
-                            {{ cardComponent.component( 'Food environment', componentFood, country|capitalize, 'tab-food-environment', 'accordion-food-environment' ) }}
-                            {{ cardComponent.component( 'Consumer behavior', componentConsumer, country|capitalize, 'tab-consumer-behavior', 'accordion-consumer-behavior' ) }}
-                            {{ cardComponent.component( 'Outcomes', componentOutcomes, country|capitalize, 'tab-outcomes', 'accordion-outcomes' ) }}
+                            {{ cardComponent.component( 'Drivers', componentDrivers, country|capitalize, 'tab-drivers', 'accordion-drivers', 'world-drivers', true ) }}
+                            {{ cardComponent.component( 'Actors and activities', componentActors, country|capitalize, 'tab-actors-activities', 'accordion-actors-activities', 'world-actors-and-activities' ) }}
+                            {{ cardComponent.component( 'Food environment', componentFood, country|capitalize, 'tab-food-environment', 'accordion-food-environment', 'world-food-environment' ) }}
+                            {{ cardComponent.component( 'Consumer behavior', componentConsumer, country|capitalize, 'tab-consumer-behavior', 'accordion-consumer-behavior', 'world-consumer-behavior' ) }}
+                            {{ cardComponent.component( 'Outcomes', componentOutcomes, country|capitalize, 'tab-outcomes', 'accordion-outcomes', 'world-outcomes' ) }}
                         </div>
                     </div>
                 </div>
@@ -50,19 +51,29 @@
                     <div class="grid-left-graph">
                         <div class="grid-graph-comparative-bars">
                             <div id="accordion-drivers" class="item-component-description active">
-                                <p><span>{{ post.meta( 'dash_driver_title_text' ) }}</span> {{ post.meta( 'dash_driver_description' ) }}</p>
+                                <p>
+                                    <span>{{ post.meta( 'dash_driver_title_text' ) }}</span> {{ post.meta( 'dash_driver_description' ) }}
+                                </p>
                             </div>
                             <div id="accordion-actors-activities" class="item-component-description">
-                                <p><span>{{ post.meta( 'dash_actors_title_text' ) }}</span> {{ post.meta( 'dash_actors_description' ) }}</p>
+                                <p>
+                                    <span>{{ post.meta( 'dash_actors_title_text' ) }}</span> {{ post.meta( 'dash_actors_description' ) }}
+                                </p>
                             </div>
                             <div id="accordion-food-environment" class="item-component-description">
-                                <p><span>{{ post.meta( 'dash_environment_title_text' ) }}</span> {{ post.meta( 'dash_environment_description' ) }}</p>
+                                <p>
+                                    <span>{{ post.meta( 'dash_environment_title_text' ) }}</span> {{ post.meta( 'dash_environment_description' ) }}
+                                </p>
                             </div>
                             <div id="accordion-consumer-behavior" class="item-component-description">
-                                <p><span>{{ post.meta( 'dash_behavior_title_text' ) }}</span> {{ post.meta( 'dash_behavior_description' ) }}</p>
+                                <p>
+                                    <span>{{ post.meta( 'dash_behavior_title_text' ) }}</span> {{ post.meta( 'dash_behavior_description' ) }}
+                                </p>
                             </div>
                             <div id="accordion-outcomes" class="item-component-description">
-                                <p><span>{{ post.meta( 'dash_outcomes_title_text' ) }}</span> {{ post.meta( 'dash_outcomes_description' ) }}</p>
+                                <p>
+                                    <span>{{ post.meta( 'dash_outcomes_title_text' ) }}</span> {{ post.meta( 'dash_outcomes_description' ) }}
+                                </p>
                             </div>
                         </div>
                         <div class="grid-graph-radar">
@@ -99,73 +110,107 @@
                         </div>
                     </div>
                     <div class="grid-indicators-graph">
+
                         <div id="grid-graph-bar" class="grid-graph-bar">
-                            <p id="graph-bar-title" class="graph-bar-title"></p>
-                            <div class="graph-bar">
-                                <canvas id="bar-chart" width="800" height="200"></canvas>
-                            </div>
-                            <div class="button-download">
-                                <div class="alert-message-gn">
-                                    <div class='message-hover'>
-                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M17.5 9C17.5 13.6944 13.6944 17.5 9 17.5C4.30558 17.5 0.5 13.6944 0.5 9C0.5 4.30558 4.30558 0.5 9 0.5C13.6944 0.5 17.5 4.30558 17.5 9Z"
-                                                  fill="white" stroke="#777777"/>
-                                            <path d="M8.8507 6.24046C9.6355 6.24046 10.2717 5.60425 10.2717 4.81945C10.2717 4.03465 9.6355 3.39844 8.8507 3.39844C8.0659 3.39844 7.42969 4.03465 7.42969 4.81945C7.42969 5.60425 8.0659 6.24046 8.8507 6.24046Z"
-                                                  fill="#777777"/>
-                                            <path d="M9.80864 7.16406H7.98319C7.72065 7.16406 7.50781 7.3769 7.50781 7.63944V14.1572C7.50781 14.4198 7.72065 14.6326 7.98319 14.6326H9.80864C10.0712 14.6326 10.284 14.4198 10.284 14.1572V7.63944C10.284 7.3769 10.0712 7.16406 9.80864 7.16406Z"
-                                                  fill="#777777"/>
-                                        </svg>
-                                        <div class='message-info'>
+                            <div class="content-graph-bar">
+                                <div class="graph-bar-title-download">
+                                    <p id="graph-bar-title" class="graph-bar-title"></p>
+                                    <i id="bar-chart-download" aria-hidden="true"
+                                       class="fas fa-download click-download"></i>
+                                </div>
+                                <div class="graph-bar">
+                                    <canvas id="bar-chart" width="800" height="200"></canvas>
+                                </div>
+                                <div class="button-download">
+                                    <div class="alert-message-gn">
+                                        <div class='message-hover'>
+                                            <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <g clip-path="url(#clip0_3431_91553)">
+                                                    <path d="M9.5 18C14.4706 18 18.5 13.9706 18.5 9C18.5 4.02944 14.4706 0 9.5 0C4.52944 0 0.5 4.02944 0.5 9C0.5 13.9706 4.52944 18 9.5 18Z"
+                                                          fill="#CECECE"/>
+                                                    <path d="M9.3507 6.24046C10.1355 6.24046 10.7717 5.60425 10.7717 4.81945C10.7717 4.03465 10.1355 3.39844 9.3507 3.39844C8.5659 3.39844 7.92969 4.03465 7.92969 4.81945C7.92969 5.60425 8.5659 6.24046 9.3507 6.24046Z"
+                                                          fill="#737373"/>
+                                                    <path d="M10.3091 7.16406H8.48368C8.22113 7.16406 8.0083 7.3769 8.0083 7.63944V14.1572C8.0083 14.4198 8.22113 14.6326 8.48368 14.6326H10.3091C10.5717 14.6326 10.7845 14.4198 10.7845 14.1572V7.63944C10.7845 7.3769 10.5717 7.16406 10.3091 7.16406Z"
+                                                          fill="#737373"/>
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_3431_91553">
+                                                        <rect width="18" height="18" fill="white"
+                                                              transform="translate(0.5)"/>
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                            <div class='message-info'>
                                             <span>
                                                 {% for item in countryFields.neighboring_countries_repeater %}
                                                     {{ item.neighboring_country }}{{ not loop.last ? ',': '.' }}
                                                 {% endfor %}
                                             </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="alert-message-gdp">
-                                    <div class='message-hover'>
-                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M17.5 9C17.5 13.6944 13.6944 17.5 9 17.5C4.30558 17.5 0.5 13.6944 0.5 9C0.5 4.30558 4.30558 0.5 9 0.5C13.6944 0.5 17.5 4.30558 17.5 9Z"
-                                                  fill="white" stroke="#777777"/>
-                                            <path d="M8.8507 6.24046C9.6355 6.24046 10.2717 5.60425 10.2717 4.81945C10.2717 4.03465 9.6355 3.39844 8.8507 3.39844C8.0659 3.39844 7.42969 4.03465 7.42969 4.81945C7.42969 5.60425 8.0659 6.24046 8.8507 6.24046Z"
-                                                  fill="#777777"/>
-                                            <path d="M9.80864 7.16406H7.98319C7.72065 7.16406 7.50781 7.3769 7.50781 7.63944V14.1572C7.50781 14.4198 7.72065 14.6326 7.98319 14.6326H9.80864C10.0712 14.6326 10.284 14.4198 10.284 14.1572V7.63944C10.284 7.3769 10.0712 7.16406 9.80864 7.16406Z"
-                                                  fill="#777777"/>
-                                        </svg>
-                                        <div class='message-info'>
+                                    <div class="alert-message-gdp">
+                                        <div class='message-hover'>
+                                            <svg width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <g clip-path="url(#clip0_3431_91553)">
+                                                    <path d="M9.5 18C14.4706 18 18.5 13.9706 18.5 9C18.5 4.02944 14.4706 0 9.5 0C4.52944 0 0.5 4.02944 0.5 9C0.5 13.9706 4.52944 18 9.5 18Z"
+                                                          fill="#CECECE"/>
+                                                    <path d="M9.3507 6.24046C10.1355 6.24046 10.7717 5.60425 10.7717 4.81945C10.7717 4.03465 10.1355 3.39844 9.3507 3.39844C8.5659 3.39844 7.92969 4.03465 7.92969 4.81945C7.92969 5.60425 8.5659 6.24046 9.3507 6.24046Z"
+                                                          fill="#737373"/>
+                                                    <path d="M10.3091 7.16406H8.48368C8.22113 7.16406 8.0083 7.3769 8.0083 7.63944V14.1572C8.0083 14.4198 8.22113 14.6326 8.48368 14.6326H10.3091C10.5717 14.6326 10.7845 14.4198 10.7845 14.1572V7.63944C10.7845 7.3769 10.5717 7.16406 10.3091 7.16406Z"
+                                                          fill="#737373"/>
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_3431_91553">
+                                                        <rect width="18" height="18" fill="white"
+                                                              transform="translate(0.5)"/>
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+
+                                            <div class='message-info'>
                                             <span>
                                                 {% for item in countryFields.countries_similar_dgp_repeater %}
                                                     {{ item.similar_dgp_country }}{{ not loop.last ? ',': '.' }}
                                                 {% endfor %}
                                             </span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <i aria-hidden="true" style="display: none;"
+                                       class="fas fa-download click-download"></i>
                                 </div>
-                                <i id="bar-chart-download" aria-hidden="true"
-                                   class="fas fa-download click-download"></i>
+                            </div>
+                            <div class="content-world-average">
+                                {{ cardWorld.card( 'Drivers', componentDrivers, directoryURL, true ) }}
+                                {{ cardWorld.card( 'Actors and activities', componentActors, directoryURL ) }}
+                                {{ cardWorld.card( 'Food environment', componentFood, directoryURL ) }}
+                                {{ cardWorld.card( 'Consumer behavior', componentConsumer, directoryURL ) }}
+                                {{ cardWorld.card( 'Outcomes', componentOutcomes, directoryURL ) }}
                             </div>
                         </div>
                         <div class="grid-tab-indicators">
                             <div class="indicators-tabs">
                                 <ul class="tabs">
                                     <li id="tab-drivers" data-component-id="component-drivers"
-                                        data-accordion-id='accordion-drivers'>
+                                        data-accordion-id='accordion-drivers' data-world-id="world-drivers">
                                         <a href="#indicator-drivers">Drivers</a></li>
                                     <li id="tab-actors-activities" data-component-id="component-actors-and-activities"
-                                        data-accordion-id='accordion-actors-activities'>
+                                        data-accordion-id='accordion-actors-activities'
+                                        data-world-id="world-actors-and-activities">
                                         <a href="#indicator-actors-activities">Actors and activities</a></li>
                                     <li id="tab-food-environment" data-component-id="component-food-environment"
-                                        data-accordion-id='accordion-food-environment'>
+                                        data-accordion-id='accordion-food-environment'
+                                        data-world-id="world-food-environment">
                                         <a href="#indicator-food-environment">Food environment</a></li>
                                     <li id="tab-consumer-behavior" data-component-id="component-consumer-behavior"
-                                        data-accordion-id='accordion-consumer-behavior'>
+                                        data-accordion-id='accordion-consumer-behavior'
+                                        data-world-id="world-consumer-behavior">
                                         <a href="#indicator-consumer-behavior">Consumer behavior</a></li>
                                     <li id="tab-outcomes" data-component-id="component-outcomes"
-                                        data-accordion-id='accordion-outcomes'>
+                                        data-accordion-id='accordion-outcomes' data-world-id="world-outcomes">
                                         <a href="#indicator-outcomes">Outcomes</a></li>
                                 </ul>
                                 <div class="tab_container">
@@ -192,7 +237,9 @@
 
                                     {% if countryFields.download_doc_country is not empty %}
                                         <div class="content-download-doc">
-                                            <a class="btn-download-doc" href="{{ countryFields.download_doc_country.url }}" download="Data source {{ country }}">
+                                            <a class="btn-download-doc"
+                                               href="{{ countryFields.download_doc_country.url }}"
+                                               download="Data source {{ country }}">
                                                 Data source
                                                 <svg width="18" height="21" viewBox="0 0 18 21" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
