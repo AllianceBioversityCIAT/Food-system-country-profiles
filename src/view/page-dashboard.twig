@@ -11,12 +11,14 @@
                 </div>
                 <div class="navigation-menu">
                     {% for item in countries %}
-                        <a href="{{ function( 'get_permalink', post.ID ) }}?country={{ item.slug }}"
-                           class="{{ country == item.slug ? 'current-menu-item': '' }} menu-item">
-                            <div class="dashboard-list-item-index">
-                            </div>
-                            <p class="menu-title">{{ item.name }}</p>
-                        </a>
+                        {% if item.count >= 25 %}
+                            <a href="{{ function( 'get_permalink', post.ID ) }}?country={{ item.slug }}"
+                               class="{{ country == item.slug ? 'current-menu-item': '' }} menu-item">
+                                <div class="dashboard-list-item-index">
+                                </div>
+                                <p class="menu-title">{{ item.name }}</p>
+                            </a>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -112,7 +114,7 @@
                     <div class="grid-indicators-graph">
 
                         <div id="grid-graph-bar" class="grid-graph-bar">
-                            <div class="content-graph-bar">
+                            <div id="content-graph-bar-download" class="content-graph-bar">
                                 <div class="graph-bar-title-download">
                                     <p id="graph-bar-title" class="graph-bar-title"></p>
                                     <i id="bar-chart-download" aria-hidden="true"

@@ -135,7 +135,7 @@ jQuery( document ).ready( ( $ ) => {
     const titleGraph = $( '#graph-bar-title' ).text();
     $( '.download-radar' ).remove();
 
-    html2canvas( document.getElementById( 'grid-graph-bar' ), {
+    html2canvas( document.getElementById( 'content-graph-bar-download' ), {
       allowTaint: true,
       useCORS: true,
       backgroundColor: 'rgba(255, 255, 255, 1)',
