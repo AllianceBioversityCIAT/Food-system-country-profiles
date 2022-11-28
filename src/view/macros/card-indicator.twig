@@ -1,0 +1,36 @@
+{% macro indicator( posts, first ) %}
+    {% set getFieldsIndicator = '' %}
+
+    {% for indicator in posts %}
+        {% set getFieldsIndicator = function( 'get_fields', indicator.ID ) %}
+        <div {{ loop.first ? 'id="first-indicator-selected"' }}
+                class="indicator-option {{ (loop.first and first ) ? 'active' }}" data-indicator='{{ getFieldsIndicator|json_encode() }}'
+                data-indicator-title='{{ indicator.post_title }}'>
+            <div class="title-indicator">
+                <div class="title">
+                    {{ indicator.post_title }} <span>({{ indicator.meta( 'period_initial' ) }} - {{ indicator.meta( 'period_recent' ) }})</span>
+                </div>
+                <div class="kg">{{ indicator.meta( 'indicator_units' ) }}</div>
+                <div class="description">{{ indicator.meta( 'short_description_indicator' ) }}</div>
+            </div>
+            <div class="initial">
+                <span class="value">{{ indicator.meta( 'country_initial_measure' ) }}</span>
+                <span class="period">{{ indicator.meta( 'period_initial' ) }}</span>
+            </div>
+            <div class="last">
+                <span class="value">{{ indicator.meta( 'country_last_measure' ) }}</span>
+                <span class="period">{{ indicator.meta( 'period_recent' ) }}</span>
+            </div>
+            <div class="variation">
+                <span class="value">{{ indicator.meta( 'country_difference' ) }}</span>
+                <span class="period">difference</span>
+            </div>
+            <div class="status">
+                <span class="{{ indicator.meta( 'country_final_status' ) }}">{{ indicator.meta( 'country_final_status' )|capitalize }}</span>
+                <span class="comparison-world {{ indicator.meta( 'country_better_than_world' ) == 'true' ? 'better' : 'worse' }} ">
+                    {{ indicator.meta( 'country_comparison_with_world' )|capitalize }}
+                </span>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}

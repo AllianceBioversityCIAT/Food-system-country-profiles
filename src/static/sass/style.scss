@@ -1,0 +1,38 @@
+@import "variables-site/version";
+
+@import "variables-site/variables-site";
+
+body {
+  .elementor-location-header .elementor-element
+  .elementor-widget-nav-menu .elementor-nav-menu {
+
+    &.current-menu-parent a.has-submenu {
+      color: #8FFA8C;
+    }
+  }
+
+  &.country-narrative-template-default.single-country-narrative {
+    .elementor-location-header .elementor-element
+    .elementor-widget-nav-menu .elementor-nav-menu .county-profiles-pages {
+
+      a.has-submenu {
+        color: #8FFA8C;
+      }
+
+      ul.sub-menu li:first-child {
+        background-color: #212130;
+
+        a.elementor-sub-item {
+          color: #8FFA8C;
+        }
+      }
+    }
+  }
+
+  .menu-item.menu-item-object-country-narrative {
+    img {
+      width: 21px;
+      height: 21px;
+    }
+  }
+}
