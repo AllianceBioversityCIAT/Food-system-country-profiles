@@ -17,7 +17,7 @@ function register_custom_acf_fields_taxonomy_country() {
                         'required'          => 1,
                         'conditional_logic' => 0,
                         'post_type'         => [
-                            0 => 'page',
+                            0 => 'country-narrative',
                         ],
                         'taxonomy'          => '',
                         'allow_null'        => 0,
