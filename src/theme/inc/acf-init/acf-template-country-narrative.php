@@ -71,7 +71,7 @@ function register_custom_acf_fields_template_country_narrative() {
                         'instructions'      => '',
                         'required'          => 1,
                         'conditional_logic' => 0,
-                        'wrapper'      => [
+                        'wrapper'           => [
                             'width' => '50',
                         ],
                     ],
@@ -130,7 +130,7 @@ function register_custom_acf_fields_template_country_narrative() {
                         'instructions'      => '',
                         'required'          => 1,
                         'conditional_logic' => 0,
-                        'wrapper'      => [
+                        'wrapper'           => [
                             'width' => '50',
                         ],
                     ],
@@ -189,7 +189,7 @@ function register_custom_acf_fields_template_country_narrative() {
                         'instructions'      => '',
                         'required'          => 1,
                         'conditional_logic' => 0,
-                        'wrapper'      => [
+                        'wrapper'           => [
                             'width' => '50',
                         ],
                     ],
@@ -248,7 +248,7 @@ function register_custom_acf_fields_template_country_narrative() {
                         'instructions'      => '',
                         'required'          => 1,
                         'conditional_logic' => 0,
-                        'wrapper'      => [
+                        'wrapper'           => [
                             'width' => '50',
                         ],
                     ],
@@ -307,7 +307,7 @@ function register_custom_acf_fields_template_country_narrative() {
                         'instructions'      => '',
                         'required'          => 1,
                         'conditional_logic' => 0,
-                        'wrapper'      => [
+                        'wrapper'           => [
                             'width' => '50',
                         ],
                     ],
@@ -315,11 +315,11 @@ function register_custom_acf_fields_template_country_narrative() {
                 'location'              => [
                     [
                         [
-                            'param'    => 'post_template',
+                            'param'    => 'post_type',
                             'operator' => '==',
-                            'value'    => 'page-countries.php',
+                            'value'    => 'country-narrative',
                         ],
-                    ]
+                    ],
                 ],
                 'menu_order'            => 0,
                 'position'              => 'acf_after_title',

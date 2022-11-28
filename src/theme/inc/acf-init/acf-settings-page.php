@@ -14,14 +14,13 @@ function register_custom_acf_fields_settings_page() {
                 'fields'                => [
                     [
                         'key'               => 'field_settings_tab_1',
-                        'label'             => 'Create indicators',
-                        'name'              => '',
+                        'label'             => 'Download Template',
+                        'name'              => 'settings_tab_1',
                         'type'              => 'tab',
                         'instructions'      => '',
                         'required'          => 0,
                         'conditional_logic' => 0,
                         'placement'         => 'top',
-                        'endpoint'          => 1,
                     ],
                     [
                         'key'               => 'field_download_create_indicators',
@@ -37,6 +36,16 @@ function register_custom_acf_fields_settings_page() {
                             'class' => '',
                             'id'    => 'download-create-indicators',
                         ],
+                    ],
+                    [
+                        'key'               => 'field_settings_tab_2',
+                        'label'             => 'Create indicators',
+                        'name'              => 'settings_tab_2',
+                        'type'              => 'tab',
+                        'instructions'      => '',
+                        'required'          => 0,
+                        'conditional_logic' => 0,
+                        'placement'         => 'top',
                     ],
                     [
                         'key'               => 'field_indicator_country',

@@ -4,11 +4,14 @@
 
 body {
   .elementor-location-header .elementor-element
-  .elementor-widget-nav-menu .elementor-nav-menu .current-menu-parent a.has-submenu {
-    color: #8FFA8C;
+  .elementor-widget-nav-menu .elementor-nav-menu {
+
+    &.current-menu-parent a.has-submenu {
+      color: #8FFA8C;
+    }
   }
 
-  &.page-template-page-countries.page-template-page-countries-php {
+  &.country-narrative-template-default.single-country-narrative {
     .elementor-location-header .elementor-element
     .elementor-widget-nav-menu .elementor-nav-menu .county-profiles-pages {
 
@@ -23,6 +26,13 @@ body {
           color: #8FFA8C;
         }
       }
+    }
+  }
+
+  .menu-item.menu-item-object-country-narrative {
+    img {
+      width: 21px;
+      height: 21px;
     }
   }
 }
