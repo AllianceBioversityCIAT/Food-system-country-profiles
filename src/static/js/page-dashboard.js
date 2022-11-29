@@ -6,7 +6,7 @@ jQuery( document ).ready( ( $ ) => {
   const colorStatus       = {
     'excellent': '#8EF041',
     'good': '#55EBFF',
-    'fair': '#FFD326',
+    'fair': '#ffeb00',
     'concerning': '#F1B51B',
     'very-concerning': '#F15B1B'
   };
@@ -466,6 +466,11 @@ jQuery( document ).ready( ( $ ) => {
               label: function(context) {
                 return $toText[ context.dataIndex ];
               },
+              title: function(context) {
+                console.log(context)
+                let title = context[0].label.replaceAll(',', ' ');
+                return title;
+              }
             },
           }
         },
@@ -511,9 +516,9 @@ jQuery( document ).ready( ( $ ) => {
         convertPercentage( percentageGA )
       ],
       toText: [
-        convertPercentageToTextCountry( percentageC, component, country ),
-        convertPercentageToTextCountry( percentageGN, component, country ),
-        convertPercentageToTextCountry( percentageGDP, component, country ),
+        convertPercentageToTextCountry( percentageC, 'for ' + country ),
+        convertPercentageToTextCountry( percentageGN, 'within the neighbor countries' ),
+        convertPercentageToTextCountry( percentageGDP, 'within GDP-similar countries' ),
         convertPercentageToTextWorld( percentageGA )
       ],
     };
@@ -540,22 +545,22 @@ jQuery( document ).ready( ( $ ) => {
     return 0
   }
 
-  function convertPercentageToTextCountry( number, component, country ) {
+  function convertPercentageToTextCountry( number, component ) {
 
     if ( number >= 85 && number <= 100 ) {
-      return '85%-100% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+      return '85%-100% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
 
     } else if ( number >= 65 && number <= 84 ) {
-      return '65%-84% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+      return '65%-84% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
 
     } else if ( number >= 50 && number <= 64 ) {
-      return '50%-64% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+      return '50%-64% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
 
     } else if ( number >= 25 && number <= 49 ) {
-      return '25%-49% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+      return '25%-49% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
 
     } else if ( number >= 0 && number <= 24 ) {
-      return '0%-24% of all indicators for ' + component + ' in ' + country + ' are doing better than the same indicators in the rest of the World';
+      return '0%-24% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
     }
 
     return ''
