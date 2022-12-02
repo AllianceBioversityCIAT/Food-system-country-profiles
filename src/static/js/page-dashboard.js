@@ -462,12 +462,15 @@ jQuery( document ).ready( ( $ ) => {
             bodyFont: {
               weight: 'bold',
             },
+            afterLabel: true,
             callbacks: {
               label: function(context) {
                 return $toText[ context.dataIndex ];
               },
+              footer: function(context) {
+                return 'better than the same indicators in the rest of the world';
+              },
               title: function(context) {
-                console.log(context)
                 let title = context[0].label.replaceAll(',', ' ');
                 return title;
               }
@@ -548,19 +551,19 @@ jQuery( document ).ready( ( $ ) => {
   function convertPercentageToTextCountry( number, component ) {
 
     if ( number >= 85 && number <= 100 ) {
-      return '85%-100% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
+      return '85%-100% of all indicators ' + component + ' are doing ';
 
     } else if ( number >= 65 && number <= 84 ) {
-      return '65%-84% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
+      return '65%-84% of all indicators ' + component + ' are doing ';
 
     } else if ( number >= 50 && number <= 64 ) {
-      return '50%-64% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
+      return '50%-64% of all indicators ' + component + ' are doing ';
 
     } else if ( number >= 25 && number <= 49 ) {
-      return '25%-49% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
+      return '25%-49% of all indicators ' + component + ' are doing ';
 
     } else if ( number >= 0 && number <= 24 ) {
-      return '0%-24% of all indicators ' + component + ' are doing better than the same indicators in the rest of the world';
+      return '0%-24% of all indicators ' + component + ' are doing ';
     }
 
     return ''
