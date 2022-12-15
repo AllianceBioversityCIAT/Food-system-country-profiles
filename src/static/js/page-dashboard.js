@@ -1,8 +1,8 @@
 jQuery( document ).ready( ( $ ) => {
-  const colorCountry      = '#9049C9';
-  const colorGN           = '#DB56F0';
-  const colorGDP          = '#FF94D4';
-  const colorGA           = '#FC50A2';
+  const colorCountry      = '#AA55EE';
+  const colorGN           = '#FDADDD';
+  const colorGDP          = '#8995FF';
+  const colorGA           = '#A5C057';
   const colorStatus       = {
     'excellent': '#8EF041',
     'good': '#55EBFF',
@@ -28,7 +28,7 @@ jQuery( document ).ready( ( $ ) => {
   const lineContainer     = document.getElementById( 'line-chart' );
   const radarContainer    = document.getElementById( 'radar-chart' ).getContext( "2d" );
   const barContainer      = document.getElementById( "bar-chart" );
-  const barGroupColors    = [ '#9049C9', '#DB56F0', '#FF94D4', '#FC50A2' ];
+  const barGroupColors    = [ colorCountry, colorGN, colorGDP, colorGA ];
   const chartLabels       = [ constantVars.country, 'Geographic neighbors', 'Countries with similar GDP per capita', 'World average' ]
   let barGroupXLabels     = [];
   var chartBarGroup;
@@ -413,7 +413,6 @@ jQuery( document ).ready( ( $ ) => {
       4: 'Good',
       5: 'Excellent'
     };
-    const $backgroundColor = [ '#7732AE', '#B13FC4', '#D56CAB', '#C52B74' ];
 
     $( '#graph-bar-title' ).html( $componentTitle );
 
@@ -424,7 +423,7 @@ jQuery( document ).ready( ( $ ) => {
       chartBar.destroy();
     }
 
-    createChartBar( yLabels, $backgroundColor, $data.percentage, $data.toText )
+    createChartBar( yLabels, barGroupColors, $data.percentage, $data.toText )
   }
 
   /**
