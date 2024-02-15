@@ -17,12 +17,6 @@ function register_required_plugins() {
             'force_activation' => true,
         ),
         array(
-            'name'             => 'Timber',
-            'slug'             => 'timber-library',
-            'required'         => true,
-            'force_activation' => true,
-        ),
-        array(
             'name'             => 'Advanced Custom Fields PRO',
             'slug'             => 'advanced-custom-fields-pro',
             'required'         => true,
